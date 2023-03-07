@@ -69,6 +69,7 @@ MU_TEST(test5) {
 	// ASSERTS
 	mu_assert_int_eq(ft_strlen(expected_cmds), ft_strlen(result_cmds));
 	mu_assert_string_eq(expected_cmds, result_cmds);
+
 }
 
 MU_TEST_SUITE(test_suite) {
