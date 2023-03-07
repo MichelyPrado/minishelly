@@ -10,15 +10,18 @@ LIBFT_PATH						=						./libft
 LIBFT							=						$(LIBFT_PATH)/libft.a
 
 SRC								=						minishell.c \
-														$(addprefix utils/,  \
-																			)
-
+														get_envp.c
 OBJ								=						$(SRC:%.c=%.o)
 
-all:							$(NAME)
+all:							$(LIBFT) $(NAME)
+
+%.o: %.c $(HEADERS)
+	$(CC)	 $(CCFLAGS) -c $< -o $@
+
+$(LIBFT):
+								$(MAKE) -C $(LIBFT_PATH)
 
 $(NAME):						$(OBJ)
-								$(MAKE) -C $(LIBFT_PATH)
 								$(CC) $(CCFLAGS) $(OBJ) $(RL) $(LIBFT) -o $(NAME)
 
 clean:

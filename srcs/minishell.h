@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/06 17:26:54 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/07 16:49:34 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,14 @@ typedef struct s_minishelly
 	char **path;
 }	t_minishelly;
 
-void exit_check(char *str);
-int count_str_envp(char **envp);
-void get_envp(char **envp, t_minishelly *data);
+void		exit_check(char *str);
 
+// Get Envp
+int			count_str_envp(char **envp);
+void		get_envp(char **envp, t_minishelly *data);
+void		split_paths(char **env, t_minishelly *data);
 
+// Parser
+char    	*split_pipe(char *str, char c);
 
 #endif
