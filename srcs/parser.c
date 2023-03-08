@@ -17,12 +17,14 @@ char    *split_pipe(char *str, char c)
     int     i;
     int     c_pipe;
     char    *s;
+    int     pipes;
 
     i = 0;
     c_pipe = 0;
     if (str == NULL)
         return (NULL);
-    s = ft_calloc(sizeof(char), ft_strlen(str) + 3);
+    pipes = count_pipes(str, c);
+    s = ft_calloc(sizeof(char), pipes + 1);
     while(str[i])
     {
         if (str[i] == '|')
@@ -37,7 +39,25 @@ char    *split_pipe(char *str, char c)
         s[i + c_pipe] = str[i];
         i++;
     }
-    if (*str)
-        free(str);
     return (s);
+}
+
+int    count_pipes(char *str, char c)
+{
+    int     i;
+    int     j;
+
+    i = 0;
+    j = 0;
+    if (str == NULL)
+        return (0);
+    while(str[i])
+    {
+        if (str[i] == '|')
+        {
+            j += 2;
+        }
+        i++;
+    }
+    return (i + j);
 }

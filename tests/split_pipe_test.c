@@ -13,6 +13,7 @@ MU_TEST(test1) {
 
 	// ASSERTS
 	mu_assert_string_eq(expected_cmds, result_cmds);
+	free(result_cmds);
 }
 
 MU_TEST(test2) {
@@ -27,6 +28,7 @@ MU_TEST(test2) {
 	// ASSERTS
 	mu_assert_int_eq(ft_strlen(expected_cmds), ft_strlen(result_cmds));
 	mu_assert_string_eq(expected_cmds, result_cmds);
+	free(result_cmds);
 }
 
 MU_TEST(test3) {
@@ -41,6 +43,7 @@ MU_TEST(test3) {
 	// ASSERTS
 	mu_assert_int_eq(ft_strlen(expected_cmds), ft_strlen(result_cmds));
 	mu_assert_string_eq(expected_cmds, result_cmds);
+	free(result_cmds);
 }
 
 MU_TEST(test4) {
@@ -55,6 +58,7 @@ MU_TEST(test4) {
 	// ASSERTS
 	mu_assert_int_eq(ft_strlen(expected_cmds), ft_strlen(result_cmds));
 	mu_assert_string_eq(expected_cmds, result_cmds);
+	free(result_cmds);
 }
 
 MU_TEST(test5) {
@@ -69,6 +73,7 @@ MU_TEST(test5) {
 	// ASSERTS
 	mu_assert_int_eq(ft_strlen(expected_cmds), ft_strlen(result_cmds));
 	mu_assert_string_eq(expected_cmds, result_cmds);
+	free(result_cmds);
 
 }
 

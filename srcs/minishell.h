@@ -77,5 +77,6 @@ void		split_paths(char **env, t_minishelly *data);
 
 // Parser
 char    	*split_pipe(char *str, char c);
+int    		count_pipes(char *str, char c);
 
 #endif
