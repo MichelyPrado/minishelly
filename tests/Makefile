@@ -11,8 +11,8 @@ L_GREENB		=			\033[1;32m
 DIR				=			../srcs/
 DIR_OUTS		=			./outs/
 XEC_OUTS		=			$(wildcard $(DIR_OUTS)*)
-YOUR_FILES		=			$(addprefix $(DIR), get_envp.c) # Add your files with the function you can test
-TESTS			=			get_envp_test # Add your test names without .c
+YOUR_FILES		=			$(addprefix $(DIR), get_envp.c parser.c) # Add your files with the function you can test
+TESTS			=			get_envp_test split_pipe_test # Add your test names without .c
 HEADERS_TEST 	= 			minunit.h
 ################ CONFIG YOUR PROJECT #############
 FLAGS 			= 			-Wall -Werror -Wextra
