@@ -63,9 +63,9 @@
 
 typedef struct s_minishelly
 {
-	char *str;
-	char **e;
-	char **path;
+	char	*str;
+	char	**e;
+	char	**path;
 }	t_minishelly;
 
 void		exit_check(char *str);
@@ -76,7 +76,8 @@ void		get_envp(char **envp, t_minishelly *data);
 void		split_paths(char **env, t_minishelly *data);
 
 // Parser
-char    	*split_pipe(char *str, char c);
-int    		count_pipes(char *str, char c);
+int			add_letter(int i, int j, char c);
+char		*split_pipe(char *str, char c);
+int			count_pipes(char *str, char c);
 
 #endif

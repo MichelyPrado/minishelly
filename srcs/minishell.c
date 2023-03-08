@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void exit_check(char *str)
+void	exit_check(char *str)
 {
 	if (strncmp(str, "exit", strlen(str) - 1) == 0)
 	{
@@ -21,7 +21,7 @@ void exit_check(char *str)
 	}
 }
 
-static void args_check(int argc)
+static void	args_check(int argc)
 {
 	if (argc != 1)
 	{
@@ -30,7 +30,7 @@ static void args_check(int argc)
 	}
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	t_minishelly	data;
 

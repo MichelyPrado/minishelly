@@ -12,52 +12,55 @@
 
 #include "minishell.h"
 
-char    *split_pipe(char *str, char c)
+int	add_letter(int i, int j, char c)
 {
-    int     i;
-    int     c_pipe;
-    char    *s;
-    int     pipes;
-
-    i = 0;
-    c_pipe = 0;
-    if (str == NULL)
-        return (NULL);
-    pipes = count_pipes(str, c);
-    s = ft_calloc(sizeof(char), pipes + 1);
-    while(str[i])
-    {
-        if (str[i] == '|')
-        {
-            s[i + c_pipe] = c;
-            c_pipe++;
-            s[i + c_pipe] = str[i];
-            c_pipe++;
-            s[i + c_pipe] = c;
-            i++;
-        }
-        s[i + c_pipe] = str[i];
-        i++;
-    }
-    return (s);
+	s[i + j] = c;
+	return (1);
 }
 
-int    count_pipes(char *str, char c)
+char	*split_pipe(char *str, char c)
 {
-    int     i;
-    int     j;
+	int		i;
+	int		c_pipe;
+	char	*s;
+	int		pipes;
 
-    i = 0;
-    j = 0;
-    if (str == NULL)
-        return (0);
-    while(str[i])
-    {
-        if (str[i] == '|')
-        {
-            j += 2;
-        }
-        i++;
-    }
-    return (i + j);
+	i = 0;
+	c_pipe = 0;
+	if (str == NULL)
+		return (NULL);
+	pipes = count_pipes(str, c);
+	s = ft_calloc(sizeof(char), pipes + 1);
+	while (str[i])
+	{
+		if (str[i] == '|')
+		{
+			c_pipe += add_letter(i, c_pipe, c);
+			c_pipe += add_letter(i, c_pipe, str[i]);
+			i += add_letter(i, c_pipe, c);
+		}
+		s[i + c_pipe] = str[i];
+		i++;
+	}
+	return (s);
+}
+
+int	count_pipes(char *str, char c)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (str == NULL)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == '|')
+		{
+			j += 2;
+		}
+		i++;
+	}
+	return (i + j);
 }
