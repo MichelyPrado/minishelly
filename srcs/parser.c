@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser.NO_PRINT                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,40 +12,37 @@
 
 #include "minishell.h"
 
-int	add_letter(int i, int j, char c)
+int	add_letter(char *s, int i, int j, char c)
 {
 	s[i + j] = c;
 	return (1);
 }
 
-char	*split_pipe(char *str, char c)
+char	*symbol_delimiter(char *src)
 {
 	int		i;
 	int		c_pipe;
-	char	*s;
-	int		pipes;
+	char	*dst;
+	int		delimiters;
 
 	i = 0;
 	c_pipe = 0;
-	if (str == NULL)
+	if (src == NULL)
 		return (NULL);
-	pipes = count_pipes(str, c);
-	s = ft_calloc(sizeof(char), pipes + 1);
-	while (str[i])
+	delimiters = count_delimiter(src);
+	dst = ft_calloc(sizeof(char), delimiters + 1);
+	while (src[i])
 	{
-		if (str[i] == '|')
-		{
-			c_pipe += add_letter(i, c_pipe, c);
-			c_pipe += add_letter(i, c_pipe, str[i]);
-			i += add_letter(i, c_pipe, c);
-		}
-		s[i + c_pipe] = str[i];
+		i += add_delimiters('|', &c_pipe, &dst[i], &src[i]);
+		i += add_delimiters('<', &c_pipe, &dst[i], &src[i]);
+		i += add_delimiters('>', &c_pipe, &dst[i], &src[i]);
+		dst[i + c_pipe] = src[i];
 		i++;
 	}
-	return (s);
+	return (dst);
 }
 
-int	count_pipes(char *str, char c)
+int	count_delimiter(char *str)
 {
 	int		i;
 	int		j;
@@ -56,11 +53,25 @@ int	count_pipes(char *str, char c)
 		return (0);
 	while (str[i])
 	{
-		if (str[i] == '|')
+		if (str[i] == '|' || str[i] == '<' || str[i] == '>')
 		{
 			j += 2;
 		}
 		i++;
 	}
 	return (i + j);
+}
+
+int	add_delimiters(char symbol, int *c_pipe, char *s, char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == symbol)
+	{
+		*c_pipe += add_letter(s, i, *c_pipe, NO_PRINT);
+		*c_pipe += add_letter(s, i, *c_pipe, str[i]);
+		i += add_letter(s, i, *c_pipe, NO_PRINT);
+	}
+	return (i);
 }

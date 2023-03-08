@@ -61,6 +61,8 @@
 //  libft
 # include "./libft/libft.h"
 
+# define NO_PRINT '*'
+
 typedef struct s_minishelly
 {
 	char	*str;
@@ -76,8 +78,9 @@ void		get_envp(char **envp, t_minishelly *data);
 void		split_paths(char **env, t_minishelly *data);
 
 // Parser
-int			add_letter(int i, int j, char c);
-char		*split_pipe(char *str, char c);
-int			count_pipes(char *str, char c);
+int			add_letter(char *s, int i, int j, char c);
+char		*symbol_delimiter(char *str);
+int			count_delimiter(char *str);
+int			add_delimiters(char symbol, int *c_pipe, char *s, char *str);
 
 #endif
