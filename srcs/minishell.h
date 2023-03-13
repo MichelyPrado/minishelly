@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/07 16:49:34 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/13 15:08:51 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ void		exit_check(char *str);
 int			count_str_envp(char **envp);
 void		get_envp(char **envp, t_minishelly *data);
 void		split_paths(char **env, t_minishelly *data);
+void		delete_envp_item(t_minishelly *mini, char *str);
+void		clean_env(char **new_envp);
+
 
 // Parser
 int			add_letter(char *s, int i, int j, char c);

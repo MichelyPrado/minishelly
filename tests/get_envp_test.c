@@ -2,19 +2,6 @@
 #include "../srcs/minishell.h"
 #include "../srcs/libft/libft.h"
 
-void	clean_env(char **new_envp)
-{
-	int	i;
-
-	i = 0;
-	while (new_envp[i])
-	{
-		free(new_envp[i]);
-		i++;
-	}
-	free(new_envp);
-}
-
 MU_TEST(prim_arg) {
 	// CONFIG
 	t_minishelly	mini;
