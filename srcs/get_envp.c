@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:39:24 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/03/13 16:32:42 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/13 18:41:16 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,26 @@ void	split_paths(char **env, t_minishelly *data)
 
 void	delete_envp_item(t_minishelly *mini, char *str)
 {
-	int		qtt_envp;
-	char	**aux;
 	int		i;
-	int		len;
 	int		j;
-	
-	j = 0;
-	qtt_envp = count_str_envp(mini->e);
-	len = 0;
+	int		len;
+	char	**aux;
+	int		amount_items;
+
 	i = 0;
-	aux = (char**)ft_calloc(sizeof(char*), qtt_envp);
+	j = 0;
+	len = 0;
+	amount_items = count_str_envp(mini->e);
+	aux = (char **) ft_calloc(sizeof(char *), amount_items);
 	while (mini->e[i + j])
 	{
 		if (ft_strncmp(mini->e[i + j], str, len) == 0)
 			j = 1;
 		aux[i] = ft_strdup(mini->e[i + j]);
-		i++;	
+		i++;
 	}
 	clean_env(mini->e);
 	mini->e = aux;
-	
 }
 
 void	clean_env(char **new_envp)
