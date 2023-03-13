@@ -12,32 +12,32 @@
 
 #include "minishell.h"
 
-int count_str_envp(char **envp)
+int	count_str_envp(char **envp)
 {
-    int len;
-    
-    len = 0;
-    while(*envp != NULL && envp[len])
-        len++;
-    return(len);
+	int	len;
+
+	len = 0;
+	while (*envp != NULL && envp[len])
+		len++;
+	return (len);
 }
 
-void    split_paths(char **env, t_minishelly *data)
+void	split_paths(char **env, t_minishelly *data)
 {
 	while (ft_strncmp("PATH", *env, 4))
 		env++;
 	data->path = ft_split((*env + 5), ':');
 }
 
-void    get_envp(char **envp, t_minishelly *data)
+void	get_envp(char **envp, t_minishelly *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	data->e = (char **)ft_calloc(sizeof(char *), count_str_envp(envp) + 1);
-    while(envp[i])
-    {
-        data->e[i] = ft_strdup(envp[i]);
-        i++;
-    }
+	while (envp[i])
+	{
+		data->e[i] = ft_strdup(envp[i]);
+		i++;
+	}
 }

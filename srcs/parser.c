@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parser.NO_PRINT                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,32 +12,66 @@
 
 #include "minishell.h"
 
-char    *split_pipe(char *str, char c)
+int	add_letter(char *s, int i, int j, char c)
 {
-    int     i;
-    int     c_pipe;
-    char    *s;
+	s[i + j] = c;
+	return (1);
+}
 
-    i = 0;
-    c_pipe = 0;
-    if (str == NULL)
-        return (NULL);
-    s = ft_calloc(sizeof(char), ft_strlen(str) + 3);
-    while(str[i])
-    {
-        if (str[i] == '|')
-        {
-            s[i + c_pipe] = c;
-            c_pipe++;
-            s[i + c_pipe] = str[i];
-            c_pipe++;
-            s[i + c_pipe] = c;
-            i++;
-        }
-        s[i + c_pipe] = str[i];
-        i++;
-    }
-    if (*str)
-        free(str);
-    return (s);
+char	*symbol_delimiter(char *src)
+{
+	int		i;
+	int		c_pipe;
+	char	*dst;
+	int		delimiters;
+
+	i = 0;
+	c_pipe = 0;
+	if (src == NULL)
+		return (NULL);
+	delimiters = count_delimiter(src);
+	dst = ft_calloc(sizeof(char), delimiters + 1);
+	while (src[i])
+	{
+		i += add_delimiters('|', &c_pipe, &dst[i], &src[i]);
+		i += add_delimiters('<', &c_pipe, &dst[i], &src[i]);
+		i += add_delimiters('>', &c_pipe, &dst[i], &src[i]);
+		dst[i + c_pipe] = src[i];
+		i++;
+	}
+	return (dst);
+}
+
+int	count_delimiter(char *str)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (str == NULL)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == '|' || str[i] == '<' || str[i] == '>')
+		{
+			j += 2;
+		}
+		i++;
+	}
+	return (i + j);
+}
+
+int	add_delimiters(char symbol, int *c_pipe, char *s, char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == symbol)
+	{
+		*c_pipe += add_letter(s, i, *c_pipe, NO_PRINT);
+		*c_pipe += add_letter(s, i, *c_pipe, str[i]);
+		i += add_letter(s, i, *c_pipe, NO_PRINT);
+	}
+	return (i);
 }
