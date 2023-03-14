@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 16:39:24 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/03/13 18:41:16 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/14 15:53:19 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	delete_envp_item(t_minishelly *mini, char *str)
 	i = 0;
 	j = 0;
 	len = 0;
+	if (!str || !mini->e)
+		return ;
 	amount_items = count_str_envp(mini->e);
 	aux = (char **) ft_calloc(sizeof(char *), amount_items);
 	while (mini->e[i + j])
