@@ -1,4 +1,4 @@
-#include "../minunit-42/minunit.h"
+#include "./minunit-42/minunit.h"
 #include "../srcs/minishell.h"
 #include "../srcs/libft/libft.h"
 

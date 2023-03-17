@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/07 16:49:34 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/17 16:34:17 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,13 @@ typedef struct s_minishelly
 void		exit_check(char *str);
 
 // Get Envp
-int			count_str_envp(char **envp);
+int			count_envp_items(char **envp);
 void		get_envp(char **envp, t_minishelly *data);
 void		split_paths(char **env, t_minishelly *data);
+void		delete_envp_item(t_minishelly *mini, char *str);
+void		clean_env(char **new_envp);
+void		add_envp_item(t_minishelly *mini, char *key, char *value);
+size_t		search_envp(char **envp, char *key);
 
 // Parser
 int			add_letter(char *s, int i, int j, char c);
