@@ -22,7 +22,7 @@ MU_TEST(test) {
 MU_TEST(test1) {
 	// CONFIG
 	char			*key = "TERM";
-	int				expected_index = 66;
+	int				expected_index = 63;
 	int				result_index;
 	t_minishelly	mini;
 	extern char		**environ;
@@ -39,7 +39,7 @@ MU_TEST(test1) {
 MU_TEST(test2) {
 	// CONFIG
 	char			*key = "PIMENTA";
-	int				expected_index = 0;
+	int				expected_index = -1;
 	int				result_index;
 	t_minishelly	mini;
 	extern char		**environ;
@@ -56,7 +56,7 @@ MU_TEST(test2) {
 MU_TEST(test3) {
 	// CONFIG
 	char			*key = "";
-	int				expected_index = 0;
+	int				expected_index = -1;
 	int				result_index;
 	t_minishelly	mini;
 	extern char		**environ;
@@ -73,7 +73,7 @@ MU_TEST(test3) {
 MU_TEST(test4) {
 	// CONFIG
 	char			*key = NULL;
-	int				expected_index = 0;
+	int				expected_index = -1;
 	int				result_index;
 	t_minishelly	mini;
 	extern char		**environ;
@@ -90,7 +90,7 @@ MU_TEST(test4) {
 MU_TEST(test5) {
 	// CONFIG
 	char			*key = "BANANADA";
-	int				expected_index = 0;
+	int				expected_index = -1;
 	int				result_index;
 	t_minishelly	mini = (t_minishelly) {0};
 	extern char		**environ;

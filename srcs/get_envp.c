@@ -75,11 +75,7 @@ void	add_envp_item(t_minishelly *mini, char *key, char *value)
 	}
 	clean_env(mini->e);
 	mini->e = aux;
-	len = (ft_strlen(key) + ft_strlen(value) + 2);
-	mini->e[i] = ft_calloc(sizeof(char), len);
-	ft_strlcat(mini->e[i], key, len);
-	ft_strlcat(mini->e[i], "=", len);
-	ft_strlcat(mini->e[i], value, len);
+	mini->e[i] = join_key_value(key, value);
 }
 
 size_t	search_envp(char **envp, char *key)
@@ -90,7 +86,7 @@ size_t	search_envp(char **envp, char *key)
 	len = 0;
 	p = NULL;
 	if (!key || !envp)
-		return (0);
+		return (-1);
 	while (*envp != NULL && envp[len])
 	{
 		p = ft_strchr(envp[len], '=');
@@ -100,7 +96,32 @@ size_t	search_envp(char **envp, char *key)
 			return (len);
 		len++;	
 	}
-	return (0);
+	return (-1);
+}
+
+char	*join_key_value(char *key, char *value)
+{
+	char	*dst;
+	int		len;
+	
+	len = (ft_strlen(key) + ft_strlen(value) + 2);
+	dst = ft_calloc(sizeof(char), len);
+	ft_strlcat(dst, key, len);
+	ft_strlcat(dst, "=", len);
+	ft_strlcat(dst, value, len);
+	return(dst);
+}
+
+
+void edit_envp(t_minishelly *mini, char *key, char *new_value)
+{
+	int i;
+
+	i = search_envp(mini->e, key);
+	if (i < 0)
+		return ;
+	free(mini->e[i]);
+	mini->e[i] = join_key_value(key, new_value);
 }
 
 void	clean_env(char **new_envp)

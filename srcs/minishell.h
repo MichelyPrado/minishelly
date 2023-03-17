@@ -80,6 +80,8 @@ void		delete_envp_item(t_minishelly *mini, char *str);
 void		clean_env(char **new_envp);
 void		add_envp_item(t_minishelly *mini, char *key, char *value);
 size_t		search_envp(char **envp, char *key);
+char		*join_key_value(char *key, char *value);
+void		edit_envp(t_minishelly *mini, char *key, char *new_value);
 
 // Parser
 int			add_letter(char *s, int i, int j, char c);
