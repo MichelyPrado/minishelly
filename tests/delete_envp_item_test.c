@@ -60,7 +60,7 @@ MU_TEST(Passando_uma_estrutura_nula_o_resultado_deve_ser_o_mesmo_da_entrada) {
 	extern char		**environ;
 
 	// ACT
-	mini.e = (char){0};
+	//mini.e = (char){0};
 	delete_envp_item(&mini, deleted_item);
 	// ASSERTS
 	mu_assert(NULL == mini.e, "The return env is not null");
