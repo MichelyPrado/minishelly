@@ -119,7 +119,7 @@ MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(test7);
 }
 
-int main(int argc, char *argv[]) {
+int main() {
 	MU_RUN_SUITE(test_suite);
 	MU_REPORT();
 	return MU_EXIT_CODE;

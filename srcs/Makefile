@@ -9,8 +9,10 @@ RM								=						rm -rf
 LIBFT_PATH						=						./libft
 LIBFT							=						$(LIBFT_PATH)/libft.a
 
-SRC								=						minishell.c \
-														get_envp.c
+SRC								=						minishell.c			\
+														handle_env.c		\
+														envp_utils.c		\
+														handle_path.c
 OBJ								=						$(SRC:%.c=%.o)
 
 all:							$(LIBFT) $(NAME)
