@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:14:22 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/03/18 16:13:36 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/18 17:52:19 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,9 @@ char	*join_key_value(char *key, char *value)
 	char	*dst;
 	int		len;
 
-	len = (ft_strlen(key) + ft_strlen(value) + 2);
+	len = (ft_strlen(key) + ft_strlen(value) + 1);
 	dst = ft_calloc(sizeof(char), len);
 	ft_strlcat(dst, key, len);
-	ft_strlcat(dst, "=", len);
 	if (value)
 		ft_strlcat(dst, value, len);
 	else

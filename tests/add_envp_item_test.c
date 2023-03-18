@@ -5,7 +5,7 @@
 MU_TEST(Passando_key_como_MINISHELL_value_com_Minishelly_e_as_variaveis_de_ambiente_precisa_ter_MINISHELL_eq_MiniSHelly_como_ultimo_item_de_envp) {
 	// CONFIG
 	int				i = 0;
-	char			*key = "MINISHELL";
+	char			*key = "MINISHELL=";
 	char			*value = "Minishelly";
 	char			*expected_insert = "MINISHELL=Minishelly";
 	t_minishelly	*mini = &((t_minishelly){0});
@@ -28,7 +28,7 @@ MU_TEST(Passando_key_como_MINISHELL_value_com_Minishelly_e_as_variaveis_de_ambie
 MU_TEST(Passando_uma_variavel_existente_key_como_PATH_value_com_PATHS_e_as_variaveis_de_ambiente_precisa_ter_NULL_como_ultimo_item_de_envp) {
 	// CONFIG
 	extern char		**environ;
-	char			*key = "PATH";
+	char			*key = "PATH=";
 	int				i = search_envp(environ, key);
 	char			*value = environ[i] + keylen(environ[i]);
 	char			*expected_insert = NULL;
@@ -76,7 +76,7 @@ MU_TEST(Passando_key_como_NULL_com_value_WHAT_o_env_deve_permanecer_o_mesmo) {
 MU_TEST(Passando_key_como_KLEYTON_com_value_NULL_o_env_possuir_a_variavel_KLEYTON_eq_NULL) {
 	// CONFIG
 	extern char		**environ;
-	char			*key = "KLEYTON";
+	char			*key = "KLEYTON=";
 	char			*value = NULL;
 	char			*expected_insert = "KLEYTON=";
 	t_minishelly	*mini = &((t_minishelly){0});
@@ -100,7 +100,7 @@ MU_TEST(Passando_key_como_KLEYTON_com_value_NULL_o_env_possuir_a_variavel_KLEYTO
 MU_TEST(Passando_key_como_KLEYTON_com_value_RASTA_para_um_env_nulo_o_env_deve_possuir_somente_a_nova_variavel) {
 	// CONFIG
 	extern char		**environ;
-	char			*key = "KLEYTON";
+	char			*key = "KLEYTON=";
 	char			*value = "RASTA";
 	t_minishelly	*mini = &((t_minishelly){0});
 	int				i;

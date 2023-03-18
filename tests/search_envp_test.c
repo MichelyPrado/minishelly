@@ -22,7 +22,7 @@ MU_TEST(passando_a_variavel_USER_deve_retornar_1) {
 MU_TEST(passando_a_variavel_TERM_deve_retornar_36) {
 	// CONFIG
 	char			*key = "TERM";
-	int				expected_index = 36;
+	int				expected_index = 37;
 	int				result_index;
 	t_minishelly	mini;
 	extern char		**environ;
