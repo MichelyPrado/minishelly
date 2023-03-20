@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/03/18 09:36:09 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/20 19:47:27 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	add_letter(char *s, int i, int j, char c)
+int	add_no_printable(char *s, int i, int j, char c)
 {
 	s[i + j] = c;
 	return (1);
@@ -69,9 +69,9 @@ int	add_delimiters(char symbol, int *c_pipe, char *s, char *str)
 	i = 0;
 	if (str[i] == symbol)
 	{
-		*c_pipe += add_letter(s, i, *c_pipe, NO_PRINT);
-		*c_pipe += add_letter(s, i, *c_pipe, str[i]);
-		i += add_letter(s, i, *c_pipe, NO_PRINT);
+		*c_pipe += add_no_printable(s, i, *c_pipe, NO_PRINT);
+		*c_pipe += add_no_printable(s, i, *c_pipe, str[i]);
+		i += add_no_printable(s, i, *c_pipe, NO_PRINT);
 	}
 	return (i);
 }

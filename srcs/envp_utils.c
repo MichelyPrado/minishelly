@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   envp_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:14:22 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/03/18 17:52:19 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/20 19:44:32 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_envp_items(char **envp)
+int	count_vars(char **envp)
 {
 	int	len;
 
@@ -33,21 +33,6 @@ size_t	keylen(char *var_env)
 	return (p - var_env);
 }
 
-char	*join_key_value(char *key, char *value)
-{
-	char	*dst;
-	int		len;
-
-	len = (ft_strlen(key) + ft_strlen(value) + 1);
-	dst = ft_calloc(sizeof(char), len);
-	ft_strlcat(dst, key, len);
-	if (value)
-		ft_strlcat(dst, value, len);
-	else
-		ft_strlcat(dst, "", len);
-	return (dst);
-}
-
 void	clean_env(char **new_envp)
 {
 	int	i;
@@ -61,4 +46,16 @@ void	clean_env(char **new_envp)
 	}
 	if (new_envp)
 		free(new_envp);
+}
+
+char	**alloc_envp(t_minishelly *mini, int space)
+{
+	char	**aux;
+	size_t	amount;
+	
+	amount = count_vars(mini->e);
+	aux = (char **) ft_calloc(sizeof(char *), amount + space);
+	if (!aux)
+		return (NULL);
+	return (aux);
 }

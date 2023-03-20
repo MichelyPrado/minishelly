@@ -6,7 +6,7 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/20 16:49:28 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/03/20 19:47:22 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,28 @@ typedef struct s_minishelly
 
 void		exit_check(char *str);
 
-// Get Envp
-int			count_envp_items(char **envp);
-void		get_envp(char **envp, t_minishelly *data);
-void		split_paths(char **env, t_minishelly *data);
-void		ft_unset(t_minishelly *mini, char *key);
-void		clean_env(char **new_envp);
-void		add_envp_item(t_minishelly *mini, char *key, char *value);
-ssize_t		search_envp(char **envp, char *key);
-char		*join_key_value(char *key, char *value);
-void		edit_envp(t_minishelly *mini, char *key, char *new_value);
+// Envp Utils
 size_t		keylen(char *var_env);
-void		slice_unset(t_minishelly *mini, char *key, char **aux);
+int			count_vars(char **envp);
+void		clean_env(char **new_envp);
+char		**alloc_envp(t_minishelly *mini, int space);
+
+// Handle Env
+void		ft_unset(t_minishelly *mini, char *key);
+void		ft_export(t_minishelly *mini, char *key, char *value);
+ssize_t		search_envp(char **envp, char *key);
+void		edit_envp(t_minishelly *mini, char *key, char *new_value);
+void		get_envp(char **envp, t_minishelly *data);
+
+// slice
 void		slice_add(t_minishelly *mini, char **aux, char *key, char *value);
+void		slice_unset(t_minishelly *mini, char *key, char **aux);
+
+// handle path
+void		split_paths(char **env, t_minishelly *data);
+
 // Parser
-int			add_letter(char *s, int i, int j, char c);
+int			add_no_printable(char *s, int i, int j, char c);
 char		*symbol_delimiter(char *str);
 int			count_delimiter(char *str);
 int			add_delimiters(char symbol, int *c_pipe, char *s, char *str);

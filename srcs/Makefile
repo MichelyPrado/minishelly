@@ -12,7 +12,8 @@ LIBFT							=						$(LIBFT_PATH)/libft.a
 SRC								=						minishell.c			\
 														handle_env.c		\
 														envp_utils.c		\
-														handle_path.c
+														handle_path.c		\
+														slice.c 			
 OBJ								=						$(SRC:%.c=%.o)
 
 all:							$(LIBFT) $(NAME)
