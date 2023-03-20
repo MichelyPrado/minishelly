@@ -2,6 +2,26 @@
 #include "../srcs/minishell.h"
 #include "../srcs/libft/libft.h"
 
+void	comp_strs(char **environ, char *expected, t_minishelly *mini, char *key)
+{
+	char	*p = NULL;
+	int		i = 0;
+
+	while (environ[i])
+	{
+		p = ft_strchr(environ[i], '=');
+		if (p == NULL)
+			break ;
+		if (!ft_strncmp(environ[i], key, p - environ[i]))
+			mu_assert_string_eq(expected, mini->e[i]);
+		else
+			mu_assert_string_eq(environ[i], mini->e[i]);
+		if (!environ[i])
+			break ;
+		i++;
+	}
+}
+
 MU_TEST(Passando_key_como_MINISHELL_value_com_Minishelly_e_as_variaveis_de_ambiente_precisa_ter_MINISHELL_eq_MiniSHelly_como_ultimo_item_de_envp) {
 	// CONFIG
 	int				i = 0;
@@ -25,13 +45,14 @@ MU_TEST(Passando_key_como_MINISHELL_value_com_Minishelly_e_as_variaveis_de_ambie
 	clean_env(mini->e);
 }
 
-MU_TEST(Passando_uma_variavel_existente_key_como_PATH_value_com_PATHS_e_as_variaveis_de_ambiente_precisa_ter_NULL_como_ultimo_item_de_envp) {
+MU_TEST(Passando_uma_variavel_existente_KEY_como_PATH_e_outro_value_da_variavel_tem_que_ser_atualizado) {
 	// CONFIG
+
 	extern char		**environ;
 	char			*key = "PATH=";
 	int				i = search_envp(environ, key);
-	char			*value = environ[i] + keylen(environ[i]);
-	char			*expected_insert = NULL;
+	char			*value = "/go";
+	char			*expected_insert = "PATH=/go";
 	t_minishelly	*mini = &((t_minishelly){0});
 
 	// ACT
@@ -40,12 +61,7 @@ MU_TEST(Passando_uma_variavel_existente_key_como_PATH_value_com_PATHS_e_as_varia
 
 	// ASSERTS
 	i = 0;
-	while (environ[i])
-	{
-		mu_assert_string_eq(environ[i], mini->e[i]);
-		i++;
-	}
-	mu_assert_string_eq(expected_insert, mini->e[i]);
+	comp_strs(environ, expected_insert, mini, key);
 	clean_env(mini->e);
 }
 
@@ -116,7 +132,7 @@ MU_TEST(Passando_key_como_KLEYTON_com_value_RASTA_para_um_env_nulo_o_env_deve_po
 
 MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(Passando_key_como_MINISHELL_value_com_Minishelly_e_as_variaveis_de_ambiente_precisa_ter_MINISHELL_eq_MiniSHelly_como_ultimo_item_de_envp);
-	MU_RUN_TEST(Passando_uma_variavel_existente_key_como_PATH_value_com_PATHS_e_as_variaveis_de_ambiente_precisa_ter_NULL_como_ultimo_item_de_envp);
+	MU_RUN_TEST(Passando_uma_variavel_existente_KEY_como_PATH_e_outro_value_da_variavel_tem_que_ser_atualizado);
 	MU_RUN_TEST(Passando_key_como_NULL_com_value_WHAT_o_env_deve_permanecer_o_mesmo);
 	MU_RUN_TEST(Passando_key_como_KLEYTON_com_value_NULL_o_env_possuir_a_variavel_KLEYTON_eq_NULL);
 	MU_RUN_TEST(Passando_key_como_KLEYTON_com_value_RASTA_para_um_env_nulo_o_env_deve_possuir_somente_a_nova_variavel);

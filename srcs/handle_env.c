@@ -6,7 +6,7 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:21:28 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/03/20 16:19:18 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:49:54 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ft_unset(t_minishelly *mini, char *key)
 {
-	
 	int		len;
 	char	**aux;
 
@@ -65,17 +64,19 @@ void	add_envp_item(t_minishelly *mini, char *key, char *value)
 		return ;
 	}
 	else if (search_envp(mini->e, key) >= 0)
+	{
+		edit_envp(mini, key, value);
 		return ;
+	}
 	amount = count_envp_items(mini->e);
 	aux = (char **) ft_calloc(sizeof(char *), amount + 2);
 	if (!aux)
 		return ;
-	slice_add_envp(mini, aux, key, value);
+	slice_add(mini, aux, key, value);
 }
 
-void	slice_add_envp(t_minishelly *mini, char **aux, char *key, char *value)
+void	slice_add(t_minishelly *mini, char **aux, char *key, char *value)
 {
-	
 	int		i;
 
 	i = 0;
