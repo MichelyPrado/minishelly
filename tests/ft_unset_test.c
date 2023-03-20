@@ -40,7 +40,7 @@ MU_TEST(Passando_uma_variavel_de_ambiente_existente_o_resultado_deve_ser_envp_se
 
 	// ACT
 	get_envp(environ, mini);
-	delete_envp_item(mini, deleted_item);
+	ft_unset(mini, deleted_item);
 
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);
@@ -56,7 +56,7 @@ MU_TEST(Passando_uma_variavel_de_ambiente_nula_o_resultado_deve_ser_o_mesmo_da_e
 
 	// ACT
 	get_envp(environ, mini);
-	delete_envp_item(mini, deleted_item);
+	ft_unset(mini, deleted_item);
 
 	// ASSERTS
 	while (environ[i])
@@ -75,7 +75,7 @@ MU_TEST(passando_a_variavel_de_ambiente_PATH_o_env_deve_ser_todas_as_outras_vari
 
 	// ACT
 	get_envp(environ, mini);
-	delete_envp_item(mini, deleted_item);
+	ft_unset(mini, deleted_item);
 
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);
@@ -89,7 +89,7 @@ MU_TEST(Passando_uma_estrutura_nula_o_resultado_deve_ser_o_mesmo_da_entrada) {
 	extern char		**environ;
 
 	// ACT
-	delete_envp_item(mini, deleted_item);
+	ft_unset(mini, deleted_item);
 	// ASSERTS
 	mu_assert(NULL == mini->e, "The return env is not null");
 }
@@ -103,7 +103,7 @@ MU_TEST(passando_a_ultima_variavel_de_ambiente__o_resultado_deve_ser_env_sem_a_u
 
 	// ACT
 	get_envp(environ, mini);
-	delete_envp_item(mini, deleted_item);
+	ft_unset(mini, deleted_item);
 
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);
@@ -120,7 +120,7 @@ MU_TEST(passando_uma_variavel_inexistente_deve_retornar_o_mesmo_env) {
 
 	// ACT
 	get_envp(environ, mini);
-	delete_envp_item(mini, deleted_item);
+	ft_unset(mini, deleted_item);
 
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);
@@ -135,7 +135,7 @@ MU_TEST(Passando_a_variavel_TERM_o_resultado_deve_ser_env_sem_a_variavel_TERM_ne
 
 	// ACT
 	get_envp(environ, mini);
-	delete_envp_item(mini, deleted_item);
+	ft_unset(mini, deleted_item);
 
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);

@@ -3,24 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   handle_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:21:28 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/03/18 17:29:47 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:19:18 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	delete_envp_item(t_minishelly *mini, char *key)
+void	ft_unset(t_minishelly *mini, char *key)
 {
-	int		i;
-	int		j;
+	
 	int		len;
 	char	**aux;
 
-	i = 0;
-	j = 0;
 	len = 0;
 	if (!key || !mini->e)
 		return ;
@@ -28,6 +25,20 @@ void	delete_envp_item(t_minishelly *mini, char *key)
 		return ;
 	len = count_envp_items(mini->e);
 	aux = (char **) ft_calloc(sizeof(char *), len + 1);
+	slice_unset(mini, key, aux);
+	clean_env(mini->e);
+	mini->e = aux;
+}
+
+void	slice_unset(t_minishelly *mini, char *key, char **aux)
+{
+	int		i;
+	int		j;
+	int		len;
+
+	i = 0;
+	j = 0;
+	len = 0;
 	while (mini->e[i + j])
 	{
 		len = keylen(mini->e[i]);
@@ -38,17 +49,13 @@ void	delete_envp_item(t_minishelly *mini, char *key)
 		aux[i] = ft_strdup(mini->e[i + j]);
 		i++;
 	}
-	clean_env(mini->e);
-	mini->e = aux;
 }
 
 void	add_envp_item(t_minishelly *mini, char *key, char *value)
 {
-	int		i;
 	char	**aux;
 	int		amount;
 
-	i = 0;
 	if (!key)
 		return ;
 	if (!mini->e)
@@ -63,6 +70,15 @@ void	add_envp_item(t_minishelly *mini, char *key, char *value)
 	aux = (char **) ft_calloc(sizeof(char *), amount + 2);
 	if (!aux)
 		return ;
+	slice_add_envp(mini, aux, key, value);
+}
+
+void	slice_add_envp(t_minishelly *mini, char **aux, char *key, char *value)
+{
+	
+	int		i;
+
+	i = 0;
 	while (mini->e[i])
 	{
 		aux[i] = ft_strdup(mini->e[i]);

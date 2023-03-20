@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/18 12:25:18 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:19:35 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,15 @@ void		exit_check(char *str);
 int			count_envp_items(char **envp);
 void		get_envp(char **envp, t_minishelly *data);
 void		split_paths(char **env, t_minishelly *data);
-void		delete_envp_item(t_minishelly *mini, char *key);
+void		ft_unset(t_minishelly *mini, char *key);
 void		clean_env(char **new_envp);
 void		add_envp_item(t_minishelly *mini, char *key, char *value);
 ssize_t		search_envp(char **envp, char *key);
 char		*join_key_value(char *key, char *value);
 void		edit_envp(t_minishelly *mini, char *key, char *new_value);
 size_t		keylen(char *var_env);
+void		slice_unset(t_minishelly *mini, char *key, char **aux);
+void		slice_add_envp(t_minishelly *mini, char **aux, char *key, char *value);
 // Parser
 int			add_letter(char *s, int i, int j, char c);
 char		*symbol_delimiter(char *str);

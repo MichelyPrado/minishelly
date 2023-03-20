@@ -12,7 +12,7 @@ DIR				=			../srcs/
 DIR_OUTS		=			./outs/
 EXEC_OUTS		=			$(wildcard $(DIR_OUTS)*)
 YOUR_FILES		=			$(addprefix $(DIR), envp_utils.c handle_env.c handle_path.c parser.c) # Add your files with the function you can test
-TESTS			=			get_envp_test split_pipe_test delete_envp_item_test add_envp_item_test search_envp_test edit_envp_test # Add your test names without .c
+TESTS			=			get_envp_test split_pipe_test ft_unset_test add_envp_item_test search_envp_test edit_envp_test # Add your test names without .c
 HEADERS_TEST 	= 			minunit.h
 ################ CONFIG YOUR PROJECT #############
 FLAGS 			= 			-Wall -Werror -Wextra
@@ -24,7 +24,7 @@ $(TESTS): $(HEADERS)
 	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
 
 $(EXEC_OUTS):
-	@echo  "$(L_YELLOWB)$@:$(L_WHITE) " && valgrind $@
+#@echo  "$(L_YELLOWB)$@:$(L_WHITE) " && valgrind -q $@
 
 clean:
 	@rm			-f $(SRCS:.c=.o)
