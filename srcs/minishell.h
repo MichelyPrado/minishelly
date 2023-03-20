@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/17 16:34:17 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/18 12:25:18 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ void		exit_check(char *str);
 int			count_envp_items(char **envp);
 void		get_envp(char **envp, t_minishelly *data);
 void		split_paths(char **env, t_minishelly *data);
-void		delete_envp_item(t_minishelly *mini, char *str);
+void		delete_envp_item(t_minishelly *mini, char *key);
 void		clean_env(char **new_envp);
 void		add_envp_item(t_minishelly *mini, char *key, char *value);
-size_t		search_envp(char **envp, char *key);
+ssize_t		search_envp(char **envp, char *key);
 char		*join_key_value(char *key, char *value);
 void		edit_envp(t_minishelly *mini, char *key, char *new_value);
-
+size_t		keylen(char *var_env);
 // Parser
 int			add_letter(char *s, int i, int j, char c);
 char		*symbol_delimiter(char *str);

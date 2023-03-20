@@ -2,7 +2,7 @@
 #include "../srcs/minishell.h"
 #include "../srcs/libft/libft.h"
 
-MU_TEST(test) {
+MU_TEST(passando_a_variavel_USER_deve_retornar_1) {
 	// CONFIG
 	char			*key = "USER";
 	int				expected_index = 1;
@@ -19,10 +19,10 @@ MU_TEST(test) {
 	clean_env(mini.e);
 }
 
-MU_TEST(test1) {
+MU_TEST(passando_a_variavel_TERM_deve_retornar_36) {
 	// CONFIG
 	char			*key = "TERM";
-	int				expected_index = 63;
+	int				expected_index = 37;
 	int				result_index;
 	t_minishelly	mini;
 	extern char		**environ;
@@ -36,7 +36,7 @@ MU_TEST(test1) {
 	clean_env(mini.e);
 }
 
-MU_TEST(test2) {
+MU_TEST(Passando_uma_variavel_inexistente_retonar_menos_1) {
 	// CONFIG
 	char			*key = "PIMENTA";
 	int				expected_index = -1;
@@ -53,7 +53,7 @@ MU_TEST(test2) {
 	clean_env(mini.e);
 }
 
-MU_TEST(test3) {
+MU_TEST(passando_uma_variavel_vazia_retornar_menos_1) {
 	// CONFIG
 	char			*key = "";
 	int				expected_index = -1;
@@ -70,7 +70,7 @@ MU_TEST(test3) {
 	clean_env(mini.e);
 }
 
-MU_TEST(test4) {
+MU_TEST(passando_uma_variavel_nula_retorna_menos_1) {
 	// CONFIG
 	char			*key = NULL;
 	int				expected_index = -1;
@@ -87,7 +87,7 @@ MU_TEST(test4) {
 	clean_env(mini.e);
 }
 
-MU_TEST(test5) {
+MU_TEST(passando_um_env_nulo_retornar_menos_1) {
 	// CONFIG
 	char			*key = "BANANADA";
 	int				expected_index = -1;
@@ -103,15 +103,15 @@ MU_TEST(test5) {
 }
 
 MU_TEST_SUITE(test_suite) {
-	MU_RUN_TEST(test);
-	MU_RUN_TEST(test1);
-	MU_RUN_TEST(test2);
-	MU_RUN_TEST(test3);
-	MU_RUN_TEST(test4);
-	MU_RUN_TEST(test5);
+	MU_RUN_TEST(passando_a_variavel_USER_deve_retornar_1);
+	MU_RUN_TEST(passando_a_variavel_TERM_deve_retornar_36);
+	MU_RUN_TEST(Passando_uma_variavel_inexistente_retonar_menos_1);
+	MU_RUN_TEST(passando_uma_variavel_vazia_retornar_menos_1);
+	MU_RUN_TEST(passando_uma_variavel_nula_retorna_menos_1);
+	MU_RUN_TEST(passando_um_env_nulo_retornar_menos_1);
 }
 
-int main(int argc, char *argv[]) {
+int main() {
 	MU_RUN_SUITE(test_suite);
 	MU_REPORT();
 	return MU_EXIT_CODE;
