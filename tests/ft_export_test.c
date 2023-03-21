@@ -33,7 +33,7 @@ MU_TEST(Passando_key_como_MINISHELL_value_com_Minishelly_e_as_variaveis_de_ambie
 
 	// ACT
 	get_envp(environ, mini);
-	add_envp_item(mini, key, value);
+	ft_export(mini, key, value);
 
 	// ASSERTS
 	while (environ[i])
@@ -57,7 +57,7 @@ MU_TEST(Passando_uma_variavel_existente_KEY_como_PATH_e_outro_value_da_variavel_
 
 	// ACT
 	get_envp(environ, mini);
-	add_envp_item(mini, key, value);
+	ft_export(mini, key, value);
 
 	// ASSERTS
 	i = 0;
@@ -76,7 +76,7 @@ MU_TEST(Passando_key_como_NULL_com_value_WHAT_o_env_deve_permanecer_o_mesmo) {
 
 	// ACT
 	get_envp(environ, mini);
-	add_envp_item(mini, key, value);
+	ft_export(mini, key, value);
 
 	// ASSERTS
 	i = 0;
@@ -100,7 +100,7 @@ MU_TEST(Passando_key_como_KLEYTON_com_value_NULL_o_env_possuir_a_variavel_KLEYTO
 
 	// ACT
 	get_envp(environ, mini);
-	add_envp_item(mini, key, value);
+	ft_export(mini, key, value);
 
 	// ASSERTS
 	i = 0;
@@ -122,7 +122,7 @@ MU_TEST(Passando_key_como_KLEYTON_com_value_RASTA_para_um_env_nulo_o_env_deve_po
 	int				i;
 
 	// ACT
-	add_envp_item(mini, key, value);
+	ft_export(mini, key, value);
 
 	// ASSERTS
 	mu_assert_string_eq("KLEYTON=RASTA", mini->e[0]);

@@ -6,13 +6,13 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/03/18 09:36:09 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/20 21:46:21 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	add_letter(char *s, int i, int j, char c)
+int	add_character(char *s, int i, int j, char c)
 {
 	s[i + j] = c;
 	return (1);
@@ -69,9 +69,9 @@ int	add_delimiters(char symbol, int *c_pipe, char *s, char *str)
 	i = 0;
 	if (str[i] == symbol)
 	{
-		*c_pipe += add_letter(s, i, *c_pipe, NO_PRINT);
-		*c_pipe += add_letter(s, i, *c_pipe, str[i]);
-		i += add_letter(s, i, *c_pipe, NO_PRINT);
+		*c_pipe += add_character(s, i, *c_pipe, NO_PRINT);
+		*c_pipe += add_character(s, i, *c_pipe, str[i]);
+		i += add_character(s, i, *c_pipe, NO_PRINT);
 	}
 	return (i);
 }
