@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:14:22 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/03/20 21:47:19 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:33:10 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ char	**alloc_env(char **env, int slots)
 
 /* valida se env está vazia e alloca um espaço
 e insere valor se sim. */
-int	env_empty(t_minishelly *mini, char *key, char *value)
+int	env_empty(t_sys_config *mini, char *key, char *value)
 {
-	if (!mini->e)
+	if (!mini->env)
 	{
-		mini->e = (char **) ft_calloc(sizeof(char *), 2);
-		mini->e[0] = join_key_value(key, value);
+		mini->env = (char **) ft_calloc(sizeof(char *), 2);
+		mini->env[0] = join_key_value(key, value);
 		return (1);
 	}
 	return (0);

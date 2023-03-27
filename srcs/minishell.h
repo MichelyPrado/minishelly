@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/20 21:47:02 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/27 19:02:10 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,41 +61,55 @@
 //  libft
 # include "./libft/libft.h"
 
+# define SQUOTE 39
+# define DQUOTE 34
 # define NO_PRINT '*'
 # define CHAR_NULL 1
 # define MORE_ONE_SPACE 2
 
-typedef struct s_minishelly
+typedef struct s_token
+{
+	char			**cmds;
+	char			*operator;
+	char			type;
+	void			*content;
+	struct s_token	*next;
+}	t_token;
+
+typedef struct s_sys_config
 {
 	char	*str;
-	char	**e;
+	char	**env;
+	int		nlen_parser;
+	char	*new_parser;
 	char	**path;
-}	t_minishelly;
+}	t_sys_config;
 
 void		exit_check(char *str);
 
 // Get Envp
-void		get_envp(char **envp, t_minishelly *data);
-void		ft_export(t_minishelly *mini, char *key, char *value);
-void		ft_unset(t_minishelly *mini, char *key);
-int			edit_envp(t_minishelly *mini, char *key, char *new_value);
+void		get_envp(char **envp, t_sys_config *data);
+void		ft_export(t_sys_config *mini, char *key, char *value);
+void		ft_unset(t_sys_config *mini, char *key);
+int			edit_envp(t_sys_config *mini, char *key, char *new_value);
 ssize_t		search_envp(char **envp, char *key);
 
 // Env Utils
 int			amount_vars(char **envp);
 char		**alloc_env(char **env, int slots);
 void		clean_env(char **new_envp);
-int			env_empty(t_minishelly *mini, char *key, char *value);
+int			env_empty(t_sys_config *mini, char *key, char *value);
 size_t		keylen(char *var_env);
 char		*join_key_value(char *key, char *value); // trocar por ft_strjoin
 
 // Handle  Path
-void		split_paths(char **env, t_minishelly *data);
+void		split_paths(char **env, t_sys_config *data);
 
 // Parser
-int			add_character(char *s, int i, int j, char c);
-char		*symbol_delimiter(char *str);
+int			add_character(char *dst, int j, char c);
+void		symbol_delimiter(char *src, t_sys_config *mini);
 int			count_delimiter(char *str);
-int			add_delimiters(char symbol, int *c_pipe, char *s, char *str);
+int			add_delimiters(char symbol, int *j, char *dst, char *actual_char);
+int			check_next(char symbol, char *str);
 
 #endif

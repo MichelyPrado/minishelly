@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/07 16:05:56 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:30:47 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	args_check(int argc)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_minishelly	data;
+	t_sys_config	data;
 
 	args_check(argc);
 	if (!*argv)

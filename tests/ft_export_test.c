@@ -2,7 +2,7 @@
 #include "../srcs/minishell.h"
 #include "../srcs/libft/libft.h"
 
-void	comp_strs(char **environ, char *expected, t_minishelly *mini, char *key)
+void	comp_strs(char **environ, char *expected, t_sys_config *mini, char *key)
 {
 	char	*p = NULL;
 	int		i = 0;
@@ -13,9 +13,9 @@ void	comp_strs(char **environ, char *expected, t_minishelly *mini, char *key)
 		if (p == NULL)
 			break ;
 		if (!ft_strncmp(environ[i], key, p - environ[i]))
-			mu_assert_string_eq(expected, mini->e[i]);
+			mu_assert_string_eq(expected, mini->env[i]);
 		else
-			mu_assert_string_eq(environ[i], mini->e[i]);
+			mu_assert_string_eq(environ[i], mini->env[i]);
 		if (!environ[i])
 			break ;
 		i++;
@@ -28,7 +28,7 @@ MU_TEST(Passando_key_como_MINISHELL_value_com_Minishelly_e_as_variaveis_de_ambie
 	char			*key = "MINISHELL=";
 	char			*value = "Minishelly";
 	char			*expected_insert = "MINISHELL=Minishelly";
-	t_minishelly	*mini = &((t_minishelly){0});
+	t_sys_config	*mini = &((t_sys_config){0});
 	extern char		**environ;
 
 	// ACT
@@ -38,11 +38,11 @@ MU_TEST(Passando_key_como_MINISHELL_value_com_Minishelly_e_as_variaveis_de_ambie
 	// ASSERTS
 	while (environ[i])
 	{
-		mu_assert_string_eq(environ[i], mini->e[i]);
+		mu_assert_string_eq(environ[i], mini->env[i]);
 		i++;
 	}
-	mu_assert_string_eq(expected_insert, mini->e[i]);
-	clean_env(mini->e);
+	mu_assert_string_eq(expected_insert, mini->env[i]);
+	clean_env(mini->env);
 }
 
 MU_TEST(Passando_uma_variavel_existente_KEY_como_PATH_e_outro_value_da_variavel_tem_que_ser_atualizado) {
@@ -53,7 +53,7 @@ MU_TEST(Passando_uma_variavel_existente_KEY_como_PATH_e_outro_value_da_variavel_
 	int				i = search_envp(environ, key);
 	char			*value = "/go";
 	char			*expected_insert = "PATH=/go";
-	t_minishelly	*mini = &((t_minishelly){0});
+	t_sys_config	*mini = &((t_sys_config){0});
 
 	// ACT
 	get_envp(environ, mini);
@@ -62,7 +62,7 @@ MU_TEST(Passando_uma_variavel_existente_KEY_como_PATH_e_outro_value_da_variavel_
 	// ASSERTS
 	i = 0;
 	comp_strs(environ, expected_insert, mini, key);
-	clean_env(mini->e);
+	clean_env(mini->env);
 }
 
 MU_TEST(Passando_key_como_NULL_com_value_WHAT_o_env_deve_permanecer_o_mesmo) {
@@ -71,7 +71,7 @@ MU_TEST(Passando_key_como_NULL_com_value_WHAT_o_env_deve_permanecer_o_mesmo) {
 	char			*key = NULL;
 	char			*value = "test";
 	char			*expected_insert = NULL;
-	t_minishelly	*mini = &((t_minishelly){0});
+	t_sys_config	*mini = &((t_sys_config){0});
 	int				i;
 
 	// ACT
@@ -82,11 +82,11 @@ MU_TEST(Passando_key_como_NULL_com_value_WHAT_o_env_deve_permanecer_o_mesmo) {
 	i = 0;
 	while (environ[i])
 	{
-		mu_assert_string_eq(environ[i], mini->e[i]);
+		mu_assert_string_eq(environ[i], mini->env[i]);
 		i++;
 	}
-	mu_assert_string_eq(expected_insert, mini->e[i]);
-	clean_env(mini->e);
+	mu_assert_string_eq(expected_insert, mini->env[i]);
+	clean_env(mini->env);
 }
 
 MU_TEST(Passando_key_como_KLEYTON_com_value_NULL_o_env_possuir_a_variavel_KLEYTON_eq_NULL) {
@@ -95,7 +95,7 @@ MU_TEST(Passando_key_como_KLEYTON_com_value_NULL_o_env_possuir_a_variavel_KLEYTO
 	char			*key = "KLEYTON=";
 	char			*value = NULL;
 	char			*expected_insert = "KLEYTON=";
-	t_minishelly	*mini = &((t_minishelly){0});
+	t_sys_config	*mini = &((t_sys_config){0});
 	int				i;
 
 	// ACT
@@ -106,11 +106,11 @@ MU_TEST(Passando_key_como_KLEYTON_com_value_NULL_o_env_possuir_a_variavel_KLEYTO
 	i = 0;
 	while (environ[i])
 	{
-		mu_assert_string_eq(environ[i], mini->e[i]);
+		mu_assert_string_eq(environ[i], mini->env[i]);
 		i++;
 	}
-	mu_assert_string_eq(expected_insert, mini->e[i]);
-	clean_env(mini->e);
+	mu_assert_string_eq(expected_insert, mini->env[i]);
+	clean_env(mini->env);
 }
 
 MU_TEST(Passando_key_como_KLEYTON_com_value_RASTA_para_um_env_nulo_o_env_deve_possuir_somente_a_nova_variavel) {
@@ -118,16 +118,16 @@ MU_TEST(Passando_key_como_KLEYTON_com_value_RASTA_para_um_env_nulo_o_env_deve_po
 	extern char		**environ;
 	char			*key = "KLEYTON=";
 	char			*value = "RASTA";
-	t_minishelly	*mini = &((t_minishelly){0});
+	t_sys_config	*mini = &((t_sys_config){0});
 	int				i;
 
 	// ACT
 	ft_export(mini, key, value);
 
 	// ASSERTS
-	mu_assert_string_eq("KLEYTON=RASTA", mini->e[0]);
-	mu_assert(NULL == mini->e[1], "Position is not NULL");
-	clean_env(mini->e);
+	mu_assert_string_eq("KLEYTON=RASTA", mini->env[0]);
+	mu_assert(NULL == mini->env[1], "Position is not NULL");
+	clean_env(mini->env);
 }
 
 MU_TEST_SUITE(test_suite) {

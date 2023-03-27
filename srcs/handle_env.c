@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:21:28 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/03/20 21:43:21 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:33:07 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* Exclui a variavel informada caso ela
 exista em env. */
-void	ft_unset(t_minishelly *mini, char *key)
+void	ft_unset(t_sys_config *mini, char *key)
 {
 	int		i;
 	int		j;
@@ -22,27 +22,27 @@ void	ft_unset(t_minishelly *mini, char *key)
 
 	i = 0;
 	j = 0;
-	if (!key || !mini->e)
+	if (!key || !mini->env)
 		return ;
-	if (search_envp(mini->e, key) < 0)
+	if (search_envp(mini->env, key) < 0)
 		return ;
-	aux = alloc_env(mini->e, CHAR_NULL);
-	while (mini->e[i + j])
+	aux = alloc_env(mini->env, CHAR_NULL);
+	while (mini->env[i + j])
 	{
-		if (ft_strncmp(mini->e[i + j], key, keylen(mini->e[i])) == 0)
+		if (ft_strncmp(mini->env[i + j], key, keylen(mini->env[i])) == 0)
 			j = 1;
-		if (!mini->e[i + j])
+		if (!mini->env[i + j])
 			break ;
-		aux[i] = ft_strdup(mini->e[i + j]);
+		aux[i] = ft_strdup(mini->env[i + j]);
 		i++;
 	}
-	clean_env(mini->e);
-	mini->e = aux;
+	clean_env(mini->env);
+	mini->env = aux;
 }
 
 /* Cria uma nova variavel em env se não existir ou
 edita caso exista. */
-void	ft_export(t_minishelly *mini, char *key, char *value)
+void	ft_export(t_sys_config *mini, char *key, char *value)
 {
 	int		i;
 	char	**aux;
@@ -53,16 +53,16 @@ void	ft_export(t_minishelly *mini, char *key, char *value)
 		return ;
 	if (edit_envp(mini, key, value))
 		return ;
-	aux = alloc_env(mini->e, MORE_ONE_SPACE);
+	aux = alloc_env(mini->env, MORE_ONE_SPACE);
 	i = 0;
-	while (mini->e[i])
+	while (mini->env[i])
 	{
-		aux[i] = ft_strdup(mini->e[i]);
+		aux[i] = ft_strdup(mini->env[i]);
 		i++;
 	}
-	clean_env(mini->e);
-	mini->e = aux;
-	mini->e[i] = join_key_value(key, value);
+	clean_env(mini->env);
+	mini->env = aux;
+	mini->env[i] = join_key_value(key, value);
 }
 
 /* Realiza uma busca na env pela key paramentro
@@ -89,31 +89,31 @@ ssize_t	search_envp(char **envp, char *key)
 }
 
 /* Edita uma variavel que já exista em env */
-int	edit_envp(t_minishelly *mini, char *key, char *new_value)
+int	edit_envp(t_sys_config *mini, char *key, char *new_value)
 {
 	int	i;
 
-	if (!mini->e || !key)
+	if (!mini->env || !key)
 		return (0);
-	i = search_envp(mini->e, key);
+	i = search_envp(mini->env, key);
 	if (i < 0)
 		return (0);
-	free(mini->e[i]);
-	mini->e[i] = join_key_value(key, new_value);
+	free(mini->env[i]);
+	mini->env[i] = join_key_value(key, new_value);
 	return (1);
 }
 
 /* Pega todas as variaveis de ambiente e alloca
 na struct.*/
-void	get_envp(char **envp, t_minishelly *data)
+void	get_envp(char **envp, t_sys_config *data)
 {
 	int	i;
 
 	i = 0;
-	data->e = (char **)ft_calloc(sizeof(char *), amount_vars(envp) + 1);
+	data->env = (char **)ft_calloc(sizeof(char *), amount_vars(envp) + 1);
 	while (envp[i])
 	{
-		data->e[i] = ft_strdup(envp[i]);
+		data->env[i] = ft_strdup(envp[i]);
 		i++;
 	}
 }

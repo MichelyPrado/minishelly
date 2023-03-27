@@ -7,7 +7,7 @@ MU_TEST(alter_o_valor_da_variavel_USER_para_cruz) {
 	char			*key = "USER=";
 	char			*value = "cruz";
 	char			*expected_str = "USER=cruz";
-	t_minishelly	mini;
+	t_sys_config	mini;
 	extern char		**environ;
 
 	// ACT
@@ -15,8 +15,8 @@ MU_TEST(alter_o_valor_da_variavel_USER_para_cruz) {
 	edit_envp(&mini, key, value);
 
 	// ASSERTS
-	mu_assert_string_eq(mini.e[search_envp(environ, key)], expected_str);
-	clean_env(mini.e);
+	mu_assert_string_eq(mini.env[search_envp(environ, key)], expected_str);
+	clean_env(mini.env);
 }
 
 MU_TEST(passar_uma_key_nula_e_um_valor_valido_env_deve_ser_a_mesma) {
@@ -25,7 +25,7 @@ MU_TEST(passar_uma_key_nula_e_um_valor_valido_env_deve_ser_a_mesma) {
 	char			*key = NULL;
 	char			*value = "cruz";
 	char			*expected_str = NULL;
-	t_minishelly	*mini = &((t_minishelly) {0});
+	t_sys_config	*mini = &((t_sys_config) {0});
 	extern char		**environ;
 
 	// ACT
@@ -36,10 +36,10 @@ MU_TEST(passar_uma_key_nula_e_um_valor_valido_env_deve_ser_a_mesma) {
 	i = 0;
 	while (environ[i])
 	{
-		mu_assert_string_eq(environ[i], mini->e[i]);
+		mu_assert_string_eq(environ[i], mini->env[i]);
 		i++;
 	}
-	clean_env(mini->e);
+	clean_env(mini->env);
 }
 
 MU_TEST(passar_variavel_USER_com_value_NULL_deve_ser_USER_eq) {
@@ -47,7 +47,7 @@ MU_TEST(passar_variavel_USER_com_value_NULL_deve_ser_USER_eq) {
 	char			*key = "USER=";
 	char			*value = NULL;
 	char			*expected_str = "USER=";
-	t_minishelly	*mini = &((t_minishelly) {0});
+	t_sys_config	*mini = &((t_sys_config) {0});
 	extern char		**environ;
 
 	// ACT
@@ -55,8 +55,8 @@ MU_TEST(passar_variavel_USER_com_value_NULL_deve_ser_USER_eq) {
 	edit_envp(mini, key, value);
 
 	// ASSERTS
-	mu_assert_string_eq(mini->e[search_envp(environ, key)], expected_str);
-	clean_env(mini->e);
+	mu_assert_string_eq(mini->env[search_envp(environ, key)], expected_str);
+	clean_env(mini->env);
 }
 
 MU_TEST(passar_variavel_USER_com_value_dapaulin_e_env_NULL_deve_ser_env_NULL) {
@@ -64,14 +64,14 @@ MU_TEST(passar_variavel_USER_com_value_dapaulin_e_env_NULL_deve_ser_env_NULL) {
 	char			*key = "USER=";
 	char			*value = "dapaulin";
 	char			*expected_str = NULL;
-	t_minishelly	*mini = &((t_minishelly) {0});
+	t_sys_config	*mini = &((t_sys_config) {0});
 	extern char		**environ;
 
 	// ACT
 	edit_envp(mini, key, value);
 
 	// ASSERTS
-	mu_assert(NULL == mini->e, "Position is not NULL");
+	mu_assert(NULL == mini->env, "Position is not NULL");
 }
 
 MU_TEST_SUITE(test_suite) {
