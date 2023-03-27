@@ -12,7 +12,7 @@ int	findlast(char **env)
 	return (i - 1);
 }
 
-void	comp_strs(char **environ, char *deleted_item, t_minishelly *mini)
+void	comp_strs(char **environ, char *deleted_item, t_sys_config *mini)
 {
 	char	*p = NULL;
 	int		i = 0;
@@ -25,7 +25,7 @@ void	comp_strs(char **environ, char *deleted_item, t_minishelly *mini)
 			break ;
 		if (!ft_strncmp(environ[i + j], deleted_item, p - environ[i + j]))
 			j = 1;
-		mu_assert_string_eq(environ[i + j], mini->e[i]);
+		mu_assert_string_eq(environ[i + j], mini->env[i]);
 		if (!environ[i + j])
 			break ;
 		i++;
@@ -35,7 +35,7 @@ void	comp_strs(char **environ, char *deleted_item, t_minishelly *mini)
 MU_TEST(Passando_uma_variavel_de_ambiente_existente_o_resultado_deve_ser_envp_sem_a_variavel_informada) {
 	// CONFIG
 	char			*deleted_item = "GJS_DEBUG_TOPICS";
-	t_minishelly	*mini = &((t_minishelly) {0});
+	t_sys_config	*mini = &((t_sys_config) {0});
 	extern char		**environ;
 
 	// ACT
@@ -44,14 +44,14 @@ MU_TEST(Passando_uma_variavel_de_ambiente_existente_o_resultado_deve_ser_envp_se
 
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);
-	clean_env(mini->e);
+	clean_env(mini->env);
 }
 
 MU_TEST(Passando_uma_variavel_de_ambiente_nula_o_resultado_deve_ser_o_mesmo_da_entrada) {
 	// CONFIG
 	int				i = 0;
 	char			*deleted_item = NULL;
-	t_minishelly	*mini = &((t_minishelly) {0});
+	t_sys_config	*mini = &((t_sys_config) {0});
 	extern char		**environ;
 
 	// ACT
@@ -61,16 +61,16 @@ MU_TEST(Passando_uma_variavel_de_ambiente_nula_o_resultado_deve_ser_o_mesmo_da_e
 	// ASSERTS
 	while (environ[i])
 	{
-		mu_assert_string_eq(environ[i], mini->e[i]);
+		mu_assert_string_eq(environ[i], mini->env[i]);
 		i++;
 	}
-	clean_env(mini->e);
+	clean_env(mini->env);
 }
 
 MU_TEST(passando_a_variavel_de_ambiente_PATH_o_env_deve_ser_todas_as_outras_variaveis_menos_PATH) {
 	// CONFIG
 	char			*deleted_item = "PATH";
-	t_minishelly	*mini = &((t_minishelly) {0});
+	t_sys_config	*mini = &((t_sys_config) {0});
 	extern char		**environ;
 
 	// ACT
@@ -79,19 +79,19 @@ MU_TEST(passando_a_variavel_de_ambiente_PATH_o_env_deve_ser_todas_as_outras_vari
 
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);
-	clean_env(mini->e);
+	clean_env(mini->env);
 }
 
 MU_TEST(Passando_uma_estrutura_nula_o_resultado_deve_ser_o_mesmo_da_entrada) {
 	// CONFIG
 	char			*deleted_item = "USER";
-	t_minishelly	*mini = &((t_minishelly) {0});
+	t_sys_config	*mini = &((t_sys_config) {0});
 	extern char		**environ;
 
 	// ACT
 	ft_unset(mini, deleted_item);
 	// ASSERTS
-	mu_assert(NULL == mini->e, "The return env is not null");
+	mu_assert(NULL == mini->env, "The return env is not null");
 }
 
 MU_TEST(passando_a_ultima_variavel_de_ambiente__o_resultado_deve_ser_env_sem_a_ultima_variavel) {
@@ -99,7 +99,7 @@ MU_TEST(passando_a_ultima_variavel_de_ambiente__o_resultado_deve_ser_env_sem_a_u
 	extern char		**environ;
 	int				last = findlast(environ);
 	char			*deleted_item = ft_substr(environ[last], 0, keylen(environ[last]));
-	t_minishelly	*mini = &((t_minishelly) {0});
+	t_sys_config	*mini = &((t_sys_config) {0});
 
 	// ACT
 	get_envp(environ, mini);
@@ -107,7 +107,7 @@ MU_TEST(passando_a_ultima_variavel_de_ambiente__o_resultado_deve_ser_env_sem_a_u
 
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);
-	clean_env(mini->e);
+	clean_env(mini->env);
 	if (*deleted_item)
 		free(deleted_item);
 }
@@ -115,7 +115,7 @@ MU_TEST(passando_a_ultima_variavel_de_ambiente__o_resultado_deve_ser_env_sem_a_u
 MU_TEST(passando_uma_variavel_inexistente_deve_retornar_o_mesmo_env) {
 	// CONFIG
 	char			*deleted_item = "BANANADA";
-	t_minishelly	*mini = &((t_minishelly) {0});
+	t_sys_config	*mini = &((t_sys_config) {0});
 	extern char		**environ;
 
 	// ACT
@@ -124,13 +124,13 @@ MU_TEST(passando_uma_variavel_inexistente_deve_retornar_o_mesmo_env) {
 
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);
-	clean_env(mini->e);
+	clean_env(mini->env);
 }
 
 MU_TEST(Passando_a_variavel_TERM_o_resultado_deve_ser_env_sem_a_variavel_TERM_nenhuma_outra_fora_essa) {
 	// CONFIG
 	char			*deleted_item = "TERM";
-	t_minishelly	*mini = &((t_minishelly) {0});
+	t_sys_config	*mini = &((t_sys_config) {0});
 	extern char		**environ;
 
 	// ACT
@@ -139,7 +139,7 @@ MU_TEST(Passando_a_variavel_TERM_o_resultado_deve_ser_env_sem_a_variavel_TERM_ne
 
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);
-	clean_env(mini->e);
+	clean_env(mini->env);
 }
 
 MU_TEST_SUITE(test_suite) {

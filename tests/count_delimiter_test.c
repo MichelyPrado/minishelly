@@ -80,6 +80,19 @@ MU_TEST(test6) {
 	mu_assert_int_eq(expected, result);
 }
 
+MU_TEST(test7) {
+	// CONFIG
+	char			*str			= "echo \" | > \" minishelly";
+	int				expected		= 23;
+	int				result;
+
+	// ACT
+	result = count_delimiter(str);
+
+	// ASSERTS
+	mu_assert_int_eq(expected, result);
+}
+
 MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(test1);
 	MU_RUN_TEST(test2);
@@ -87,6 +100,7 @@ MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(test4);
 	MU_RUN_TEST(test5);
 	MU_RUN_TEST(test6);
+	MU_RUN_TEST(test7);
 }
 
 int main() {

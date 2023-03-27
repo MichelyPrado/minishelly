@@ -7,16 +7,16 @@ MU_TEST(passando_a_variavel_USER_deve_retornar_1) {
 	char			*key = "USER";
 	int				expected_index = 1;
 	int				result_index;
-	t_minishelly	mini;
+	t_sys_config	mini;
 	extern char		**environ;
 
 	// ACT
 	get_envp(environ, &mini);
-	result_index = search_envp(mini.e, key);
+	result_index = search_envp(mini.env, key);
 
 	// ASSERTS
 	mu_assert_int_eq(expected_index, result_index);
-	clean_env(mini.e);
+	clean_env(mini.env);
 }
 
 MU_TEST(passando_a_variavel_TERM_deve_retornar_36) {
@@ -24,16 +24,16 @@ MU_TEST(passando_a_variavel_TERM_deve_retornar_36) {
 	char			*key = "TERM";
 	int				expected_index = 35;
 	int				result_index;
-	t_minishelly	mini;
+	t_sys_config	mini;
 	extern char		**environ;
 
 	// ACT
 	get_envp(environ, &mini);
-	result_index = search_envp(mini.e, key);
+	result_index = search_envp(mini.env, key);
 
 	// ASSERTS
 	mu_assert_int_eq(expected_index, result_index);
-	clean_env(mini.e);
+	clean_env(mini.env);
 }
 
 MU_TEST(Passando_uma_variavel_inexistente_retonar_menos_1) {
@@ -41,16 +41,16 @@ MU_TEST(Passando_uma_variavel_inexistente_retonar_menos_1) {
 	char			*key = "PIMENTA";
 	int				expected_index = -1;
 	int				result_index;
-	t_minishelly	mini;
+	t_sys_config	mini;
 	extern char		**environ;
 
 	// ACT
 	get_envp(environ, &mini);
-	result_index = search_envp(mini.e, key);
+	result_index = search_envp(mini.env, key);
 
 	// ASSERTS
 	mu_assert_int_eq(expected_index, result_index);
-	clean_env(mini.e);
+	clean_env(mini.env);
 }
 
 MU_TEST(passando_uma_variavel_vazia_retornar_menos_1) {
@@ -58,16 +58,16 @@ MU_TEST(passando_uma_variavel_vazia_retornar_menos_1) {
 	char			*key = "";
 	int				expected_index = -1;
 	int				result_index;
-	t_minishelly	mini;
+	t_sys_config	mini;
 	extern char		**environ;
 
 	// ACT
 	get_envp(environ, &mini);
-	result_index = search_envp(mini.e, key);
+	result_index = search_envp(mini.env, key);
 
 	// ASSERTS
 	mu_assert_int_eq(expected_index, result_index);
-	clean_env(mini.e);
+	clean_env(mini.env);
 }
 
 MU_TEST(passando_uma_variavel_nula_retorna_menos_1) {
@@ -75,16 +75,16 @@ MU_TEST(passando_uma_variavel_nula_retorna_menos_1) {
 	char			*key = NULL;
 	int				expected_index = -1;
 	int				result_index;
-	t_minishelly	mini;
+	t_sys_config	mini;
 	extern char		**environ;
 
 	// ACT
 	get_envp(environ, &mini);
-	result_index = search_envp(mini.e, key);
+	result_index = search_envp(mini.env, key);
 
 	// ASSERTS
 	mu_assert_int_eq(expected_index, result_index);
-	clean_env(mini.e);
+	clean_env(mini.env);
 }
 
 MU_TEST(passando_um_env_nulo_retornar_menos_1) {
@@ -92,11 +92,11 @@ MU_TEST(passando_um_env_nulo_retornar_menos_1) {
 	char			*key = "BANANADA";
 	int				expected_index = -1;
 	int				result_index;
-	t_minishelly	mini = (t_minishelly) {0};
+	t_sys_config	mini = (t_sys_config) {0};
 	extern char		**environ;
 
 	// ACT
-	result_index = search_envp(mini.e, key);
+	result_index = search_envp(mini.env, key);
 
 	// ASSERTS
 	mu_assert_int_eq(expected_index, result_index);

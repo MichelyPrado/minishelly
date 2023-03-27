@@ -12,7 +12,7 @@ DIR				=			../srcs/
 DIR_OUTS		=			./outs/
 EXEC_OUTS		=			$(wildcard $(DIR_OUTS)*)
 YOUR_FILES		=			$(addprefix $(DIR), envp_utils.c handle_env.c handle_path.c parser.c) # Add your files with the function you can test
-TESTS			=			get_envp_test split_pipe_test ft_unset_test ft_export_test search_envp_test edit_envp_test # Add your test names without .c
+TESTS			=			get_envp_test split_pipe_test ft_unset_test ft_export_test search_envp_test edit_envp_test count_delimiter_test # Add your test names without .c
 HEADERS_TEST 	= 			minunit.h
 ################ CONFIG YOUR PROJECT #############
 FLAGS 			= 			-Wall -Werror -Wextra
@@ -32,6 +32,9 @@ clean:
 fclean:			clean
 	@rm 		-f $(EXEC_OUTS)
 	@cd 		$(DIR) && $(MAKE) $@
+
+n:
+	norminette ../srcs/
 
 re: fclean all
 
