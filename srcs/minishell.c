@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/27 16:30:47 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/27 19:42:16 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,28 @@ static void	args_check(int argc)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_sys_config	data;
+	t_sys_config	mini;
+	char			**token;
 
 	args_check(argc);
 	if (!*argv)
 		return (0);
-	get_envp(envp, &data);
+	token = NULL;
+	mini = (t_sys_config){0};
+	get_envp(envp, &mini);
 	while (1)
 	{
-		data.str = readline("Minishelly: ");
-		add_history(data.str);
-		exit_check(data.str);
+		mini.str = readline("Minishelly: ");
+		symbol_delimiter(mini.str, &mini);
+		if (mini.new_parser)
+		token = ft_split(mini.new_parser, -1);
+		while (*token)
+		{
+			printf("\n'%s'\n", *token);
+			token++;
+		}
+		add_history(mini.str);
+		exit_check(mini.str);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/27 19:02:10 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/27 19:57:24 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,27 @@
 
 # define SQUOTE 39
 # define DQUOTE 34
-# define NO_PRINT '*'
+# define NO_PRINT -1
 # define CHAR_NULL 1
 # define MORE_ONE_SPACE 2
+
+//======== Define types ========\\/
+typedef enum e_types
+{
+	OP_AND,
+	OP_OR,
+	OP_PIPE,
+	OP_OUTPUT,
+	OP_INPUT,
+	OP_UNTIL,
+	OP_APPEND
+}	t_types;
 
 typedef struct s_token
 {
 	char			**cmds;
 	char			*operator;
 	char			type;
-	void			*content;
 	struct s_token	*next;
 }	t_token;
 
