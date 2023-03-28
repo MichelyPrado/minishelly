@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/28 09:13:34 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/28 11:28:56 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,29 +98,35 @@ typedef struct s_sys_config
 
 void		exit_check(char *str);
 
-// Get Envp
-void		get_envp(char **envp, t_sys_config *data);
-void		ft_export(t_sys_config *mini, char *key, char *value);
+// Handle Env
 void		ft_unset(t_sys_config *mini, char *key);
-int			edit_envp(t_sys_config *mini, char *key, char *new_value);
+void		ft_export(t_sys_config *mini, char *key, char *value);
 ssize_t		search_envp(char **envp, char *key);
+int			edit_envp(t_sys_config *mini, char *key, char *new_value);
+void		get_envp(char **envp, t_sys_config *data);
 
 // Env Utils
 int			amount_vars(char **envp);
-char		**alloc_env(char **env, int slots);
-void		clean_env(char **new_envp);
-int			env_empty(t_sys_config *mini, char *key, char *value);
 size_t		keylen(char *var_env);
+void		clean_env(char **new_envp);
+char		**alloc_env(char **env, int slots);
+int			env_empty(t_sys_config *mini, char *key, char *value);
+
+// Tools Box
 char		*join_key_value(char *key, char *value); // trocar por ft_strjoin
 
 // Handle  Path
 void		split_paths(char **env, t_sys_config *data);
 
 // Parser
-int			add_character(char *dst, int j, char c);
+int			add_delimiters(char symbol, int *j, char *dst, char *actual_char);
 void		symbol_delimiter(char *src, t_sys_config *mini);
 int			count_delimiter(char *str);
-int			add_delimiters(char symbol, int *j, char *dst, char *actual_char);
+
+// Parser Utils
+int			add_character(char *dst, int j, char c);
 int			check_next(char symbol, char *str);
+int			check_quotes(char *src, char quote, int *i);
+int			jump_quotes(char *src, t_sys_config *mini, char quote, int *i);
 
 #endif

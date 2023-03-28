@@ -13,7 +13,9 @@ SRC								=						minishell.c			\
 														handle_env.c		\
 														envp_utils.c		\
 														handle_path.c		\
-														parser.c
+														parser.c			\
+														tools_box.c			\
+														parser_utils.c
 OBJ								=						$(SRC:%.c=%.o)
 
 all:							$(LIBFT) $(NAME)
