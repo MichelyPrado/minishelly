@@ -1,3 +1,4 @@
 *.o
 minishell
 /tests/outs/*
+libft.a
