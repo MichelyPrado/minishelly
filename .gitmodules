@@ -1,6 +1,0 @@
-[submodule "srcs/libft"]
-	path = srcs/libft
-	url = git@github.com:MichelyPrado/libft.git
-[submodule "tests/minunit-42"]
-	path = tests/minunit-42
-	url = git@github.com:TDD-42/minunit-42.git
