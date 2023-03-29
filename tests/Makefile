@@ -11,20 +11,24 @@ L_GREENB		=			\033[1;32m
 DIR				=			../srcs/
 DIR_OUTS		=			./outs/
 EXEC_OUTS		=			$(wildcard $(DIR_OUTS)*)
-YOUR_FILES		=			$(addprefix $(DIR), envp_utils.c handle_env.c handle_path.c parser.c) # Add your files with the function you can test
-TESTS			=			get_envp_test split_pipe_test ft_unset_test ft_export_test search_envp_test edit_envp_test count_delimiter_test # Add your test names without .c
+LIBFT			=			../srcs/libft/
+YOUR_FILES		=			$(addprefix $(DIR), envp_utils.c handle_env.c handle_path.c parser.c parser_utils.c tools_box.c list_token.c) # Add your files with the function you can test
+TESTS			=			get_envp_test split_pipe_test ft_unset_test ft_export_test search_envp_test edit_envp_test count_delimiter_test list_token_test # Add your test names without .c
 HEADERS_TEST 	= 			minunit.h
 ################ CONFIG YOUR PROJECT #############
 FLAGS 			= 			-Wall -Werror -Wextra
 ################ RULES		##################
-all: 		$(TESTS) $(EXEC_OUTS)
-	@echo $(EXEC_OUTS)
+all: 		$(LIBFT) $(TESTS) $(EXEC_OUTS)
+#	@echo $(EXEC_OUTS)
+
+$(LIBFT):
+	@cd 		$(LIBFT) && $(MAKE)
 
 $(TESTS): $(HEADERS)
 	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
 
 $(EXEC_OUTS):
-	@echo  "$(L_YELLOWB)$@:$(L_WHITE) " && $@
+#	@echo  "$(L_YELLOWB)$@:$(L_WHITE) " && $@
 
 clean:
 	@rm			-f $(SRCS:.c=.o)
@@ -38,4 +42,4 @@ n:
 
 re: fclean all
 
-.PHONY: re fclean clean all $(TESTS) $(EXEC_OUTS)
+.PHONY: re fclean clean all $(TESTS) $(EXEC_OUTS) $(LIBFT)
