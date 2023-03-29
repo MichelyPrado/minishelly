@@ -157,6 +157,22 @@ MU_TEST(test10) {
 
 }
 
+MU_TEST(test11) {
+	// CONFIG
+	t_sys_config	conf			= (t_sys_config){0};
+	char			*cmds_pipe		= "echo test |                  |  cat";
+	char			*expected_cmds 	= "echo test *|*                  *|*  cat";
+
+	// ACT
+	symbol_delimiter(cmds_pipe, &conf);
+
+	// ASSERTS
+	mu_assert_string_eq(expected_cmds, conf.new_parser);
+	mu_assert_int_eq(ft_strlen(expected_cmds), ft_strlen(conf.new_parser));
+	free(conf.new_parser);
+
+}
+
 
 MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(test1);
@@ -169,6 +185,7 @@ MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(test8);
 	MU_RUN_TEST(test9);
 	MU_RUN_TEST(test10);
+	MU_RUN_TEST(test11);
 }
 
 int main() {
