@@ -25,7 +25,8 @@ SRC								=						minishell.c			\
 														handle_path.c		\
 														parser.c			\
 														tools_box.c			\
-														parser_utils.c
+														parser_utils.c		\
+														list_token.c
 OBJ								=						$(SRC:%.c=%.o)
 
 

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/28 11:28:56 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/29 00:33:00 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,15 @@ typedef enum e_types
 	OP_OUTPUT,
 	OP_INPUT,
 	OP_UNTIL,
-	OP_APPEND
+	OP_APPEND,
+	OP_CMD
 }	t_types;
 
 typedef struct s_token
 {
 	char			**cmds;
 	char			*operator;
-	char			type;
+	int				type;
 	struct s_token	*next;
 }	t_token;
 
@@ -128,5 +129,8 @@ int			add_character(char *dst, int j, char c);
 int			check_next(char symbol, char *str);
 int			check_quotes(char *src, char quote, int *i);
 int			jump_quotes(char *src, t_sys_config *mini, char quote, int *i);
+
+// List Token
+t_token		*ft_token_new(char **cmds, char *operator, int type);
 
 #endif
