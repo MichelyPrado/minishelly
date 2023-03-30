@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/29 00:33:00 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/03/30 19:03:14 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,5 +132,9 @@ int			jump_quotes(char *src, t_sys_config *mini, char quote, int *i);
 
 // List Token
 t_token		*ft_token_new(char **cmds, char *operator, int type);
+t_token		*ft_token_last(t_token *node);
+void		ft_token_add_end(t_token **node, t_token *new);
+void		free_cmds(char **cmds);
+void		ft_token_free(t_token **node);
 
 #endif

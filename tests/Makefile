@@ -19,7 +19,7 @@ HEADERS_TEST 	= 			minunit.h
 FLAGS 			= 			-Wall -Werror -Wextra
 ################ RULES		##################
 all: 		$(LIBFT) $(TESTS) $(EXEC_OUTS)
-#	@echo $(EXEC_OUTS)
+	@echo $(EXEC_OUTS)
 
 $(LIBFT):
 	@cd 		$(LIBFT) && $(MAKE)
@@ -28,7 +28,7 @@ $(TESTS): $(HEADERS)
 	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
 
 $(EXEC_OUTS):
-#	@echo  "$(L_YELLOWB)$@:$(L_WHITE) " && $@
+	@echo  "$(L_YELLOWB)$@:$(L_WHITE) " && $@
 
 clean:
 	@rm			-f $(SRCS:.c=.o)
