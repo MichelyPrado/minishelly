@@ -25,7 +25,7 @@ MU_TEST(testa_se_os_dois_primeiras_variaveis_de_ambiente_foram_alocadas) {
 
 	// ASSERTS
 	mu_assert_string_eq("GJS_DEBUG_TOPICS=JS ERROR;JS LOG", (mini.env)[0]);
-	mu_assert_string_eq("USER=msilva-p", (mini.env)[1]);
+	mu_assert_string_eq("USER=dapaulin", (mini.env)[1]);
 	clean_env(mini.env);
 }
 
