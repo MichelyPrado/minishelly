@@ -6,7 +6,7 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 00:06:05 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/03/30 19:02:49 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/03/30 21:35:20 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_token_add_end(t_token **node, t_token *new)
 	t_token	*tail;
 
 	if (!node || !new)
-		return (NULL);
+		return ;
 	tail = ft_token_last(*node);
 	if (tail == NULL)
 		*node = new;

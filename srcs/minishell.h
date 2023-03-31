@@ -6,7 +6,7 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/30 19:03:14 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/03/30 21:31:26 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,21 +70,22 @@
 //======== Define types ========\\/
 typedef enum e_types
 {
-	OP_AND,
+	OP_AND = 360,
 	OP_OR,
 	OP_PIPE,
 	OP_OUTPUT,
 	OP_INPUT,
 	OP_UNTIL,
 	OP_APPEND,
-	OP_CMD
+	OP_CMD,
+	OP_BUILTIN
 }	t_types;
 
 typedef struct s_token
 {
 	char			**cmds;
 	char			*operator;
-	int				type;
+	t_types			type;
 	struct s_token	*next;
 }	t_token;
 
@@ -136,5 +137,8 @@ t_token		*ft_token_last(t_token *node);
 void		ft_token_add_end(t_token **node, t_token *new);
 void		free_cmds(char **cmds);
 void		ft_token_free(t_token **node);
+
+// handle tokens
+t_types		tag_token(char *cmd);
 
 #endif
