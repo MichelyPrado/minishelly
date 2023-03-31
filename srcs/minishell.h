@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/30 21:31:26 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/03/31 14:07:03 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,21 +70,27 @@
 //======== Define types ========\\/
 typedef enum e_types
 {
-	OP_AND = 360,
-	OP_OR,
-	OP_PIPE,
-	OP_OUTPUT,
-	OP_INPUT,
-	OP_UNTIL,
-	OP_APPEND,
-	OP_CMD,
-	OP_BUILTIN
+	OP_DEFAULT = 0,
+	OP_AND = 1,
+	OP_OR = 2,
+	OP_PIPE = 3,
+	OP_OUTPUT = 4,
+	OP_INPUT = 5,
+	OP_UNTIL = 6,
+	OP_APPEND = 7,
+	OP_CMD = 8,
+	OP_EXIT = 9,
+	OP_CD = 10,
+	OP_ENV = 11,
+	OP_UNSET = 12,
+	OP_EXPORT = 13,
+	OP_PWD = 14,
+	OP_ECHO = 15
 }	t_types;
 
 typedef struct s_token
 {
-	char			**cmds;
-	char			*operator;
+	char			**token;
 	t_types			type;
 	struct s_token	*next;
 }	t_token;
@@ -132,7 +138,7 @@ int			check_quotes(char *src, char quote, int *i);
 int			jump_quotes(char *src, t_sys_config *mini, char quote, int *i);
 
 // List Token
-t_token		*ft_token_new(char **cmds, char *operator, int type);
+t_token		*ft_token_new(char **cmds, int type);
 t_token		*ft_token_last(t_token *node);
 void		ft_token_add_end(t_token **node, t_token *new);
 void		free_cmds(char **cmds);

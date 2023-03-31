@@ -3,24 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   list_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 00:06:05 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/03/30 21:35:20 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/03/31 14:01:27 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*ft_token_new(char **cmds, char *operator, int type)
+t_token	*ft_token_new(char **cmds, int type)
 {
 	t_token	*node;
 
 	node = malloc(sizeof(t_token));
 	if (!node)
 		return (NULL);
-	node->cmds = cmds;
-	node->operator = operator;
+	node->token = cmds;
 	node->type = type;
 	node->next = NULL;
 	return (node);
@@ -87,10 +86,8 @@ void	ft_token_free(t_token **node)
 	while (temp)
 	{
 		temp = head->next;
-		if (head->cmds)
-			free_cmds(head->cmds);
-		if (head->operator)
-			free(head->operator);
+		if (head->token)
+			free_cmds(head->token);
 		free(head);
 		head = temp;
 	}

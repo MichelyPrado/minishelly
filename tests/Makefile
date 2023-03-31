@@ -28,7 +28,7 @@ $(TESTS): $(HEADERS)
 	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
 
 $(EXEC_OUTS):
-#	@echo  "$(L_YELLOWB)$@:$(L_WHITE) " && $@
+	@echo  "$(L_YELLOWB)$@:$(L_WHITE) " && $@
 
 clean:
 	@rm			-f $(SRCS:.c=.o)
@@ -43,3 +43,9 @@ n:
 re: fclean all
 
 .PHONY: re fclean clean all $(TESTS) $(EXEC_OUTS) $(LIBFT)
+
+tt: tag_token_test
+
+tag_token_test:
+	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
+	$(DIR_OUTS)$@
