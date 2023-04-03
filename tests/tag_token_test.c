@@ -209,7 +209,22 @@ MU_TEST(test15) {
     //ASSERT
     mu_assert_int_eq(expected, result);
 }
+
+MU_TEST(test16) {
+	// CONFIG
+    char    *cmd = "       ";
+    t_types expected = OP_DEFAULT;
+    t_types result;
+
+    // ACT
+    result = tag_token(cmd);
+    
+    //ASSERT
+    mu_assert_int_eq(expected, result);
+}
+
 MU_TEST_SUITE(test_suite) {
+    MU_RUN_TEST(test0);
 	MU_RUN_TEST(test1);
     MU_RUN_TEST(test2);
     MU_RUN_TEST(test3);
@@ -225,6 +240,7 @@ MU_TEST_SUITE(test_suite) {
     MU_RUN_TEST(test13);
     MU_RUN_TEST(test14);
     MU_RUN_TEST(test15);
+    MU_RUN_TEST(test16);
 }
 
 int main() {

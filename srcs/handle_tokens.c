@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/31 14:51:26 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/03 16:02:25 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,9 @@ t_types tag_token(char *cmd)
         return (14);
     else if (ft_strncmp(cmd, "echo", ft_strlen(cmd)) == 0)
         return (15);
+    else if (ft_strncmp(cmd, "       ", ft_strlen(cmd)) == 0)
+        return (OP_DEFAULT);
     return (0);
 }
+
+
