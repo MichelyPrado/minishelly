@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:21:28 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/03/27 16:33:07 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/10 00:17:10 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ ssize_t	search_envp(char **envp, char *key)
 	while (envp[i])
 	{
 		len = keylen(envp[i]);
-		if (ft_strncmp(envp[i], key, len) == 0)
+		if ((keylen(key) == len) && (ft_strncmp(envp[i], key, len) == 0))
 			return (i);
 		i++;
 	}
