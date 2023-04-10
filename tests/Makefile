@@ -49,3 +49,9 @@ tt: tag_token_test
 tag_token_test:
 	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
 	$(DIR_OUTS)$@
+
+ctt: ft_create_tokens_test
+
+ft_create_tokens_test:
+	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
+	valgrind --leak-check=full $(DIR_OUTS)$@

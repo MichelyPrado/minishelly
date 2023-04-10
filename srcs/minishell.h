@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/31 14:07:03 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/10 12:40:02 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void		free_cmds(char **cmds);
 void		ft_token_free(t_token **node);
 
 // handle tokens
+t_token		*ft_create_tokens(t_sys_config *mini);
 t_types		tag_token(char *cmd);
 
 #endif
