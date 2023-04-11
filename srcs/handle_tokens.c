@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/10 16:43:59 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/10 22:58:34 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,24 @@
 // criar um node e armazenar o comando dentro
 // passa para o proximo node
 // repete até a string acabar
+
+char	*ft_token_repair(char *token)
+{
+	int	i;
+	
+	i = 0;
+	while (token[i] != '\0')
+	{
+		check_quotes(&token[i], DQUOTE, &i);
+		check_quotes(&token[i], SQUOTE, &i);
+		if (token[i] == 32)
+			token[i] = NO_PRINT;
+		if (token[i] != '\0')
+			i++;
+	}
+	return(token);
+}
+
 t_token	*ft_create_tokens(t_sys_config *mini)
 {
 	int		i;

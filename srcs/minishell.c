@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/27 19:42:16 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/10 23:44:55 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		mini.str = readline("Minishelly: ");
-		symbol_delimiter(mini.str, &mini);
+		check_readline(mini.str, &mini);
 		if (mini.new_parser)
 		token = ft_split(mini.new_parser, -1);
 		while (*token)

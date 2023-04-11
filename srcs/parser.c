@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/03/28 11:26:48 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/11 08:03:58 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	add_delimiters(char symbol, int *j, char *dst, char *actual_char)
 	return (0);
 }
 
-void	symbol_delimiter(char *src, t_sys_config *mini)
+t_err	check_readline(char *src, t_sys_config *mini)
 {
 	int		jump;
 	int		i;
@@ -42,19 +42,28 @@ void	symbol_delimiter(char *src, t_sys_config *mini)
 	j = 0;
 	jump = 0;
 	if (src == NULL)
-		return ;
+		return (ERR_NOLINE);
 	mini->nlen_parser = count_delimiter(src);
+	if (mini->nlen_parser == -1)
+		return (ERR_QUOTES);
 	mini->new_parser = ft_calloc(sizeof(char), mini->nlen_parser + 1);
 	while (src[i])
 	{
-		j += jump_quotes(&src[i], mini, DQUOTE, &i);
-		j += jump_quotes(&src[i], mini, SQUOTE, &i);
-		i += add_delimiters('|', &j, mini->new_parser, &src[i]);
-		i += add_delimiters('<', &j, mini->new_parser, &src[i]);
-		i += add_delimiters('>', &j, mini->new_parser, &src[i]);
-		i += add_delimiters('&', &j, mini->new_parser, &src[i]);
-		mini->new_parser[j++] = src[i++];
+		jump = 0;
+		jump += jump_quotes(&src[i], mini, DQUOTE, &j);
+		jump += jump_quotes(&src[i], mini, SQUOTE, &j);
+		jump += add_delimiters('|', &j, mini->new_parser, &src[i]);
+		jump += add_delimiters('<', &j, mini->new_parser, &src[i]);
+		jump += add_delimiters('>', &j, mini->new_parser, &src[i]);
+		jump += add_delimiters('&', &j, mini->new_parser, &src[i]);
+		if (!src[i + jump])
+			break ;
+		if (jump)
+			i += jump;
+		else
+			mini->new_parser[j++] = src[i++];
 	}
+	return (NO_ERR);
 }
 
 int	count_delimiter(char *readline)
@@ -68,8 +77,10 @@ int	count_delimiter(char *readline)
 		return (0);
 	while (readline[++i])
 	{
-		check_quotes(&readline[i], DQUOTE, &i);
-		check_quotes(&readline[i], SQUOTE, &i);
+		if (check_quotes(&readline[i], DQUOTE, &i) == -1)
+			return (-1);
+		if (check_quotes(&readline[i], SQUOTE, &i) == -1)
+			return (-1);
 		if (readline[i] == '|' || readline[i] == '<' \
 		|| readline[i] == '>' || readline[i] == '&')
 		{
