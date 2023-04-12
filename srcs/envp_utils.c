@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:14:22 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/03/28 11:18:55 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/10 00:17:26 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ size_t	keylen(char *var_env)
 	p = NULL;
 	p = ft_strchr(var_env, '=');
 	if (!p)
-		return (0);
+		return (ft_strlen(var_env));
 	return (p - var_env);
 }
 

@@ -2,6 +2,8 @@
 #include "../srcs/minishell.h"
 #include "../srcs/libft/libft.h"
 
+#define CONST_ENVP "USER=dapaulin TERM=xterm-256color OLDPWD=/nfs/homes/dapaulin/Documents/project-42/minishelly PWD=/nfs/homes/dapaulin/Documents/project-42/minishelly/tests L=shell LANGUAGE=en LANG=pt"
+
 int	findlast(char **env)
 {
 	int	i;
@@ -34,9 +36,9 @@ void	comp_strs(char **environ, char *deleted_item, t_sys_config *mini)
 
 MU_TEST(Passando_uma_variavel_de_ambiente_existente_o_resultado_deve_ser_envp_sem_a_variavel_informada) {
 	// CONFIG
-	char			*deleted_item = "GJS_DEBUG_TOPICS";
+	char			*deleted_item = "USER";
 	t_sys_config	*mini = &((t_sys_config) {0});
-	extern char		**environ;
+	char			**environ = ft_split(CONST_ENVP, ' ');
 
 	// ACT
 	get_envp(environ, mini);
@@ -45,6 +47,7 @@ MU_TEST(Passando_uma_variavel_de_ambiente_existente_o_resultado_deve_ser_envp_se
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);
 	clean_env(mini->env);
+	free_cmds(environ);
 }
 
 MU_TEST(Passando_uma_variavel_de_ambiente_nula_o_resultado_deve_ser_o_mesmo_da_entrada) {

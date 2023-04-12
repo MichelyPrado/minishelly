@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/27 19:42:16 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/12 15:44:52 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,54 @@ static void	args_check(int argc)
 
 int	main(int argc, char **argv, char **envp)
 {
+	char			*tmp;
+	t_err			err;
 	t_sys_config	mini;
-	char			**token;
+	t_token			*tokens;
 
+	err = 0;
+	tmp = "";
 	args_check(argc);
 	if (!*argv)
 		return (0);
-	token = NULL;
 	mini = (t_sys_config){0};
 	get_envp(envp, &mini);
+	char	*rotulo = create_prompt(6, L_GREEN, SHELLNAME, L_BLUE, " dapaulin", L_WHITE, PROP);
 	while (1)
 	{
-		mini.str = readline("Minishelly: ");
-		symbol_delimiter(mini.str, &mini);
-		if (mini.new_parser)
-		token = ft_split(mini.new_parser, -1);
-		while (*token)
+		err = 0;
+		mini.str = readline(rotulo);
+		if (ft_strlen(tmp))
 		{
-			printf("\n'%s'\n", *token);
-			token++;
+			mini.str = ft_strjoin(tmp, mini.str);
+			printf("\n%s\n", mini.str);
+		}
+		err = check_readline(mini.str, &mini);
+		if (err == ERR_NOLINE)
+			continue;
+		else if (err == ERR_QUOTES)
+		{
+			tmp = mini.str;
+			rotulo = "quote>";
+			continue;
+		}
+		else
+		{	
+			rotulo = create_prompt(6, L_GREEN, SHELLNAME, L_BLUE, " dapaulin", L_WHITE, PROP);
+			tmp = "";
+		}
+		tokens = ft_create_tokens(&mini);
+		while (tokens)
+		{
+			int i = 0;
+			printf("Operador: %i\n[", tokens->type);
+			while (tokens->token[i])
+			{
+				printf("'%s', ", tokens->token[i]);
+				i++;
+			}
+			printf("]\n");
+			tokens = tokens->next;
 		}
 		add_history(mini.str);
 		exit_check(mini.str);

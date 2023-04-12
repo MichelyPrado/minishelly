@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/03/31 14:07:03 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/11 14:27:36 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,34 @@
 //  libft
 # include "./libft/libft.h"
 
+
+# define L_RED "\033[0;31m"
+# define L_REDB "\033[1;31m"
+# define L_WHITE "\033[0;37m"
+# define L_WHITEB "\033[1;37m"
+# define L_YELLOW "\033[0;33m"
+# define L_YELLOWB "\033[1;33m"
+# define L_BLUE "\033[0;34m"
+# define L_GREEN "\033[0;32m"
+# define L_GREENB "\033[1;32m"
+
+# define SHELLNAME "Minishelly:"
+# define PROP "> "
+
 # define SQUOTE 39
 # define DQUOTE 34
 # define NO_PRINT '*'
 # define CHAR_NULL 1
 # define MORE_ONE_SPACE 2
+
+// DEFINE ERRORS
+
+typedef enum e_err
+{
+	NO_ERR = 0,
+	ERR_QUOTES = 256,
+	ERR_NOLINE
+} t_err;
 
 //======== Define types ========\\/
 typedef enum e_types
@@ -99,6 +122,7 @@ typedef struct s_sys_config
 {
 	char	*str;
 	char	**env;
+	char	*prompt;
 	int		nlen_parser;
 	char	*new_parser;
 	char	**path;
@@ -128,14 +152,14 @@ void		split_paths(char **env, t_sys_config *data);
 
 // Parser
 int			add_delimiters(char symbol, int *j, char *dst, char *actual_char);
-void		symbol_delimiter(char *src, t_sys_config *mini);
+t_err		check_readline(char *src, t_sys_config *mini);
 int			count_delimiter(char *str);
 
 // Parser Utils
 int			add_character(char *dst, int j, char c);
 int			check_next(char symbol, char *str);
 int			check_quotes(char *src, char quote, int *i);
-int			jump_quotes(char *src, t_sys_config *mini, char quote, int *i);
+int			jump_quotes(char *src, t_sys_config *mini, char quote, int *j);
 
 // List Token
 t_token		*ft_token_new(char **cmds, int type);
@@ -145,6 +169,11 @@ void		free_cmds(char **cmds);
 void		ft_token_free(t_token **node);
 
 // handle tokens
+t_token		*ft_create_tokens(t_sys_config *mini);
 t_types		tag_token(char *cmd);
+char		*ft_token_repair(char *token);
+
+// Wait input
+char		*create_prompt(int amount, ...);
 
 #endif
