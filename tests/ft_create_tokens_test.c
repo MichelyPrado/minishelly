@@ -110,7 +110,7 @@ MU_TEST(test3) {
     t_token *tokens;
     t_sys_config mini = (t_sys_config) {0};
     mini.new_parser = "echo \"batatinha frita\" *|* wc";
-    char    *n1[] = {"echo", "\"batatinha frita\"", NULL};
+    char    *n1[] = {"echo", "batatinha frita", NULL};
     char    *n2[] = {"|", NULL};
     char    *n3[] = {"wc", NULL};
 	t_token *node1 = create_token_test(n1, OP_ECHO);

@@ -47,6 +47,7 @@ MU_TEST(Passando_uma_variavel_de_ambiente_existente_o_resultado_deve_ser_envp_se
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);
 	clean_env(mini->env);
+	free_cmds(environ);
 }
 
 MU_TEST(Passando_uma_variavel_de_ambiente_nula_o_resultado_deve_ser_o_mesmo_da_entrada) {

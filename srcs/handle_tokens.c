@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/10 22:58:34 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/11 22:10:10 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,33 @@
 // passa para o proximo node
 // repete até a string acabar
 
+int	change_quotes(char *src, char quote, int *i)
+{
+	int		jump;
+	char	*p;
+
+	p = NULL;
+	if (*src == quote)
+	{
+		p = ft_strchr(src + 1, quote);
+		if (p)
+		{
+			jump = (p - src) + 1;
+			src[0] = NO_PRINT;
+			src[p - src] = NO_PRINT;
+			*i += jump;
+			if (src[(p - src) + 1] == DQUOTE)
+				change_quotes(&src[p - src] + 1, DQUOTE, i);
+			if (src[(p - src) + 1] == SQUOTE)
+				change_quotes(&src[p - src] + 1, SQUOTE, i);
+			return (jump);
+		}
+		else
+			return (-1);
+	}
+	return (0);
+}
+
 char	*ft_token_repair(char *token)
 {
 	int	i;
@@ -25,8 +52,8 @@ char	*ft_token_repair(char *token)
 	i = 0;
 	while (token[i] != '\0')
 	{
-		check_quotes(&token[i], DQUOTE, &i);
-		check_quotes(&token[i], SQUOTE, &i);
+		change_quotes(&token[i], DQUOTE, &i);
+		change_quotes(&token[i], SQUOTE, &i);
 		if (token[i] == 32)
 			token[i] = NO_PRINT;
 		if (token[i] != '\0')
@@ -48,7 +75,8 @@ t_token	*ft_create_tokens(t_sys_config *mini)
 	tokens = (t_token *) {0};
 	while (pieces[i])
 	{
-		token = ft_split(pieces[i], ' ');
+		pieces[i] = ft_token_repair(pieces[i]);
+		token = ft_split(pieces[i], NO_PRINT);
 		op = tag_token(token[0]);
 		if (op)
 			ft_token_add_end(&tokens, ft_token_new(token, op));

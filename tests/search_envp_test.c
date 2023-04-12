@@ -19,6 +19,7 @@ MU_TEST(passando_a_variavel_USER_deve_retornar_1) {
 	// ASSERTS
 	mu_assert_int_eq(expected_index, result_index);
 	clean_env(mini.env);
+	free_cmds(envp);
 }
 
 MU_TEST(passando_a_variavel_TERM_deve_retornar_31) {
@@ -36,6 +37,7 @@ MU_TEST(passando_a_variavel_TERM_deve_retornar_31) {
 	// ASSERTS
 	mu_assert_int_eq(expected_index, result_index);
 	clean_env(mini.env);
+	free_cmds(envp);
 }
 
 MU_TEST(Passando_uma_variavel_inexistente_retonar_menos_1) {
@@ -53,6 +55,7 @@ MU_TEST(Passando_uma_variavel_inexistente_retonar_menos_1) {
 	// ASSERTS
 	mu_assert_int_eq(expected_index, result_index);
 	clean_env(mini.env);
+	free_cmds(envp);
 }
 
 MU_TEST(passando_uma_variavel_vazia_retornar_menos_1) {
@@ -70,6 +73,7 @@ MU_TEST(passando_uma_variavel_vazia_retornar_menos_1) {
 	// ASSERTS
 	mu_assert_int_eq(expected_index, result_index);
 	clean_env(mini.env);
+	free_cmds(envp);
 }
 
 MU_TEST(passando_uma_variavel_nula_retorna_menos_1) {
@@ -87,6 +91,7 @@ MU_TEST(passando_uma_variavel_nula_retorna_menos_1) {
 	// ASSERTS
 	mu_assert_int_eq(expected_index, result_index);
 	clean_env(mini.env);
+	free_cmds(envp);
 }
 
 MU_TEST(passando_um_env_nulo_retornar_menos_1) {
@@ -119,6 +124,7 @@ MU_TEST(passando_a_variavel_LANG_should_be_LANG_eq_pt) {
 	// ASSERTS
 	mu_assert_int_eq(expected_index, result_index);
 	clean_env(mini.env);
+	free_cmds(envp);
 }
 
 MU_TEST_SUITE(test_suite) {

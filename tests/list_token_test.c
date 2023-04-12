@@ -20,6 +20,7 @@ MU_TEST(test) {
     }
     mu_assert_int_eq(expected_type, node->type);
     mu_assert(NULL == node->next, "Next node isn't NULL");
+    free(node);
 }
 
 MU_TEST_SUITE(test_suite) {
