@@ -28,7 +28,8 @@ SRC								=						minishell.c			\
 														parser_utils.c		\
 														list_token.c		\
 														handle_tokens.c		\
-														wait_input.c
+														wait_input.c		\
+														sys_config.c
 OBJ								=						$(SRC:%.c=%.o)
 
 

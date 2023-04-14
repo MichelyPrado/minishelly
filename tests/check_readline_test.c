@@ -238,8 +238,8 @@ MU_TEST(test) {
 
 	// ASSERTS
 	mu_assert_int_eq(NO_ERR, err);
-	mu_assert_string_eq(expected_cmds, conf.new_parser);
 	mu_assert_int_eq(ft_strlen(expected_cmds), ft_strlen(conf.new_parser));
+	mu_assert_string_eq(expected_cmds, conf.new_parser);
 	free(conf.new_parser);
 }
 

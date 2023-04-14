@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 21:25:11 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/10 19:41:28 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/12 16:19:05 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,5 @@ char	*ft_strdup(const char *s)
 		copy[i] = s[i];
 		i++;
 	}
-	//copy[i] = '\0';
 	return (copy);
 }

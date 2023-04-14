@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/11 22:10:10 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/12 16:17:54 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	change_quotes(char *src, char quote, int *i)
 char	*ft_token_repair(char *token)
 {
 	int	i;
-	
+
 	i = 0;
 	while (token[i] != '\0')
 	{
@@ -59,20 +59,20 @@ char	*ft_token_repair(char *token)
 		if (token[i] != '\0')
 			i++;
 	}
-	return(token);
+	return (token);
 }
 
 t_token	*ft_create_tokens(t_sys_config *mini)
 {
 	int		i;
 	t_types	op;
-	t_token *tokens;
+	t_token	*tokens;
 	char	**token;
 	char	**pieces;
-	
+
 	i = 0;
 	pieces = ft_split(mini->new_parser, NO_PRINT);
-	tokens = (t_token *) {0};
+	tokens = (t_token *){0};
 	while (pieces[i])
 	{
 		pieces[i] = ft_token_repair(pieces[i]);
