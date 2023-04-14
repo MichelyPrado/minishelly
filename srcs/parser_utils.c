@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 09:47:02 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/14 14:59:17 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/14 15:14:21 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,8 @@ int	jump_quotes(char *src, t_sys_config *mini, char quote, int *j)
 //função que verifica se a pos atual é ' ou ", quando ela encontrar
 //ela conta a quantidade de posições até encontrar a ' ou " que fecha
 //retorna a quantidade de posições que ela pulou (jump)
-int	check_quotes(char *src, char quote, int *i)
+int	check_quotes(char *src, char quote, int jump)
 {
-	int		jump;
 	char	*p;
 
 	p = NULL;
@@ -64,12 +63,11 @@ int	check_quotes(char *src, char quote, int *i)
 		p = ft_strchr(src + 1, quote);
 		if (p)
 		{
-			jump = (p - src) + 1;
-			*i += jump;
+			jump += (p - src) + 1;
 			if (src[(p - src) + 1] == DQUOTE)
-				return check_quotes(&src[p - src] + 1, DQUOTE, i);
+				return check_quotes(&src[p - src] + 1, DQUOTE, jump);
 			if (src[(p - src) + 1] == SQUOTE)
-				return check_quotes(&src[p - src] + 1, SQUOTE, i);
+				return check_quotes(&src[p - src] + 1, SQUOTE, jump);
 			return (jump);
 		}
 		else

@@ -134,8 +134,21 @@ MU_TEST(passing_a_string_with_open_and_no_close_simple_quotes_should_be_minus_1)
 
 MU_TEST(test) {
 	// CONFIG
-	char			*str			= "echo \' | >  minishelly\'";
-	int				expected		= 23;
+	char			*str			= "echo ' | >  minishelly'";
+	int				expected		= 24;
+	int				result;
+
+	// ACT
+	result = count_delimiter(str);
+
+	// ASSERTS
+	mu_assert_int_eq(expected, result);
+}
+
+MU_TEST(test2) {
+	// CONFIG
+	char			*str			= "echo \" | >  minishelly\"";
+	int				expected		= 24;
 	int				result;
 
 	// ACT

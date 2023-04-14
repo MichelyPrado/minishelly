@@ -42,7 +42,7 @@ MU_TEST(test) {
 
 typedef struct wait_input_test
 {
-	char	**line;	printf("\n%s\n", mini->str);
+	char	**line;
 	char	**expected_str;
 	t_err	*err;
 	int		*props;
@@ -72,7 +72,7 @@ MU_TEST(test1) {
 	t_sys_config	*mini = start_sys();
 	t_wait_input	wait = (t_wait_input) {0};	
 	wait.line = ft_split("echo \"testando isso aqui\nfinal\"", '\n');
-	wait.expected_str = (char *[]){"echo \"testando isso aqui", "echo \"testando isso aquifinal\""};
+	wait.expected_str = (char *[]){"echo \"testando isso aqui", "echo \"testando isso aqui\nfinal\""};
 	wait.err = (t_err []) {ERR_QUOTES, NO_ERR};
 	wait.props = (int []){1, 0};
 

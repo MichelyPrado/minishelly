@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/13 20:10:36 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/14 15:09:46 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ int			count_delimiter(char *str);
 // Parser Utils
 int			add_character(char *dst, int j, char c);
 int			check_next(char symbol, char *str);
-int			check_quotes(char *src, char quote, int *i);
+int			check_quotes(char *src, char quote, int jump);
 int			jump_quotes(char *src, t_sys_config *mini, char quote, int *j);
 
 // List Token

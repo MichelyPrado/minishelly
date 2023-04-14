@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/14 15:02:33 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/14 15:38:40 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,10 @@ t_err	check_readline(char *src, t_sys_config *mini)
 		jump += add_delimiters('&', &j, mini->new_parser, &src[i]);
 		if (!src[i + jump])
 			break ;
-		if (jump)
-			i += jump;
-		else
+		if (!jump)
 			mini->new_parser[j++] = src[i++];
-	}
+		i += jump;
+}
 	return (NO_ERR);
 }
 
@@ -80,12 +79,14 @@ int	count_delimiter(char *readline)
 	while (readline[++i])
 	{
 		jump = 0;
-		jump = check_quotes(&readline[i], DQUOTE, &i);
+		jump = check_quotes(&readline[i], DQUOTE, jump);
 		if (jump == -1)
 			return (-1);
-		jump = check_quotes(&readline[i], SQUOTE, &i);
+		i += jump;
+		jump = check_quotes(&readline[i], SQUOTE, jump);
 		if (jump == -1)
 			return (-1);
+		i += jump;
 		if (readline[i] == '|' || readline[i] == '<' \
 		|| readline[i] == '>' || readline[i] == '&')
 		{
@@ -94,6 +95,11 @@ int	count_delimiter(char *readline)
 			else if (check_next(readline[i], &readline[i]))
 				i++;
 			j += 2;
+		}
+		if (!readline[i])
+		{
+			i++;
+			break;
 		}
 	}
 	return (i + j);

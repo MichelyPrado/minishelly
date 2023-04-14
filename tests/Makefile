@@ -75,11 +75,11 @@ re: fclean all
 #	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
 #	valgrind --leak-check=full $(DIR_OUTS)$@
 
-#rl: wait_input_test
-#
-#wait_input_test:
-#	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
-#	valgrind --leak-check=full $(DIR_OUTS)$@
+rl: wait_input_test
+
+wait_input_test:
+	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
+	valgrind --leak-check=full $(DIR_OUTS)$@
 #
 #cd: count_delimiter_test
 #
