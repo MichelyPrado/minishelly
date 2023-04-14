@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/11 16:46:03 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/14 15:02:33 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,21 @@ int	count_delimiter(char *readline)
 {
 	int		i;
 	int		j;
+	int		jump;
 
 	i = -1;
 	j = 0;
+	jump = 0;
 	if (readline == NULL)
 		return (0);
 	while (readline[++i])
 	{
-		if (check_quotes(&readline[i], DQUOTE, &i) == -1)
+		jump = 0;
+		jump = check_quotes(&readline[i], DQUOTE, &i);
+		if (jump == -1)
 			return (-1);
-		if (check_quotes(&readline[i], SQUOTE, &i) == -1)
+		jump = check_quotes(&readline[i], SQUOTE, &i);
+		if (jump == -1)
 			return (-1);
 		if (readline[i] == '|' || readline[i] == '<' \
 		|| readline[i] == '>' || readline[i] == '&')

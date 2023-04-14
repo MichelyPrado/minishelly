@@ -132,6 +132,19 @@ MU_TEST(passing_a_string_with_open_and_no_close_simple_quotes_should_be_minus_1)
 	mu_assert_int_eq(expected, result);
 }
 
+MU_TEST(test) {
+	// CONFIG
+	char			*str			= "echo \' | >  minishelly\'";
+	int				expected		= 23;
+	int				result;
+
+	// ACT
+	result = count_delimiter(str);
+
+	// ASSERTS
+	mu_assert_int_eq(expected, result);
+}
+
 MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(passing_a_string_with_two_pipes_should_be_26);
 	MU_RUN_TEST(passing_a_string_with_OP_AND_and_OP_OR_should_be_35);
@@ -143,6 +156,7 @@ MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(passing_a_string_with_open_and_close_simple_quotes_should_be_31);
 	MU_RUN_TEST(passing_a_string_with_open_and_no_close_double_quotes_should_be_minus_1);
 	MU_RUN_TEST(passing_a_string_with_open_and_no_close_simple_quotes_should_be_minus_1);
+	MU_RUN_TEST(test);
 }
 
 int main() {

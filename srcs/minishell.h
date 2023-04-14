@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/11 14:27:36 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/13 20:10:36 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@
 //  libft
 # include "./libft/libft.h"
 
-
 # define L_RED "\033[0;31m"
 # define L_REDB "\033[1;31m"
 # define L_WHITE "\033[0;37m"
@@ -73,6 +72,7 @@
 # define L_GREENB "\033[1;32m"
 
 # define SHELLNAME "Minishelly:"
+# define PROPQUOTE "quote"
 # define PROP "> "
 
 # define SQUOTE 39
@@ -88,7 +88,7 @@ typedef enum e_err
 	NO_ERR = 0,
 	ERR_QUOTES = 256,
 	ERR_NOLINE
-} t_err;
+}	t_err;
 
 //======== Define types ========\\/
 typedef enum e_types
@@ -122,11 +122,15 @@ typedef struct s_sys_config
 {
 	char	*str;
 	char	**env;
-	char	*prompt;
 	int		nlen_parser;
 	char	*new_parser;
+	char	**prompt;
 	char	**path;
 }	t_sys_config;
+
+// Sys Config
+
+t_sys_config *start_sys();
 
 void		exit_check(char *str);
 
@@ -175,5 +179,6 @@ char		*ft_token_repair(char *token);
 
 // Wait input
 char		*create_prompt(int amount, ...);
+t_err		wait_input(t_sys_config *mini, int *prop, char *line);
 
 #endif

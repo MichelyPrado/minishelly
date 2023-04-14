@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/12 15:44:52 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/13 20:11:03 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,28 @@ static void	args_check(int argc)
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+void	print_tokens_test(t_token *tokens)
+{
+	while (tokens)
+	{
+		int i = 0;
+		printf("Operador: %i\n[", tokens->type);
+		while (tokens->token[i])
+		{
+			printf("'%s', ", tokens->token[i]);
+			i++;
+		}
+		printf("]\n");
+		tokens = tokens->next;
+	}
+}
+
+int	main(int argc, char **argv)
 {
 	char			*tmp;
 	t_err			err;
-	t_sys_config	mini;
+	int				prop;
+	t_sys_config	*mini;
 	t_token			*tokens;
 
 	err = 0;
@@ -42,47 +59,18 @@ int	main(int argc, char **argv, char **envp)
 	args_check(argc);
 	if (!*argv)
 		return (0);
-	mini = (t_sys_config){0};
-	get_envp(envp, &mini);
-	char	*rotulo = create_prompt(6, L_GREEN, SHELLNAME, L_BLUE, " dapaulin", L_WHITE, PROP);
+	mini = start_sys();
+	prop = 0;
 	while (1)
 	{
-		err = 0;
-		mini.str = readline(rotulo);
-		if (ft_strlen(tmp))
-		{
-			mini.str = ft_strjoin(tmp, mini.str);
-			printf("\n%s\n", mini.str);
-		}
-		err = check_readline(mini.str, &mini);
-		if (err == ERR_NOLINE)
+		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
 			continue;
-		else if (err == ERR_QUOTES)
-		{
-			tmp = mini.str;
-			rotulo = "quote>";
-			continue;
-		}
-		else
-		{	
-			rotulo = create_prompt(6, L_GREEN, SHELLNAME, L_BLUE, " dapaulin", L_WHITE, PROP);
-			tmp = "";
-		}
-		tokens = ft_create_tokens(&mini);
-		while (tokens)
-		{
-			int i = 0;
-			printf("Operador: %i\n[", tokens->type);
-			while (tokens->token[i])
-			{
-				printf("'%s', ", tokens->token[i]);
-				i++;
-			}
-			printf("]\n");
-			tokens = tokens->next;
-		}
-		add_history(mini.str);
-		exit_check(mini.str);
+		tokens = ft_create_tokens(mini);
+		print_tokens_test(tokens);
+		add_history(mini->str);
+		exit_check(mini->str);
 	}
 	return (0);
 }
+
+
