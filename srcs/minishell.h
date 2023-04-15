@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/14 15:09:46 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/15 17:01:10 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,14 @@
 # define NO_PRINT '*'
 # define CHAR_NULL 1
 # define MORE_ONE_SPACE 2
+
+typedef t_err (*t_function)(t_sys_config *);
+
+typedef struct s_event
+{
+	int		key;
+		
+} t_event;
 
 // DEFINE ERRORS
 
