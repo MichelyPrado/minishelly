@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/17 15:47:03 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/17 20:34:49 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,9 @@ void	print_tokens_test(t_token *tokens)
 
 int	main(int argc, char **argv)
 {
-	char			*tmp;
-	t_err			err;
 	int				prop;
 	t_sys_config	*mini;
 
-	err = 0;
-	tmp = "";
 	args_check(argc);
 	if (!*argv)
 		return (0);
@@ -67,7 +63,9 @@ int	main(int argc, char **argv)
 		mini->tokens = ft_create_tokens(mini);
 		///print_tokens_test(tokens);
 		exec_commands(mini);
-		add_history(mini->str);
+		printf("saosoaossao\n");
+		//add_history(mini->str);
+		printf("historia do carai\n");
 		exit_check(mini->str);
 	}
 	return (0);

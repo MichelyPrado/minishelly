@@ -49,7 +49,7 @@ $(LIBFT):
 								$(MAKE) -C $(LIBFT_PATH)
 
 $(NAME):						$(OBJ)
-								$(CC) $(CCFLAGS) $(OBJ) $(RL) $(LIBFT) -o $(NAME)
+								$(CC) -g3 $(CCFLAGS) $(OBJ) $(RL) $(LIBFT) -o $(NAME)
 	@echo	"$(L_GREENB)"
 	@echo	'                d8,            d8,         d8b              d8b  d8b           '
 	@echo	'               `8P            `8P          ?88              88P  88P           '
