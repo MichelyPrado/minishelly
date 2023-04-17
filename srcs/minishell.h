@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/17 16:07:41 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/17 18:25:45 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,4 +198,8 @@ int			hash_func(char *cmd, t_keyword_map *keymap);
 // Process
 void		exec_commands(t_sys_config *mini);
 
+//BUILTINS
+int			ft_env(t_sys_config *mini);
+int			ft_pwd(t_sys_config *mini);
+int			ft_echo(t_sys_config *mini);
 #endif

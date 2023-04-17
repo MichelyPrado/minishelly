@@ -18,7 +18,10 @@ RM								=						rm -rf
 
 LIBFT_PATH						=						./libft
 LIBFT							=						$(LIBFT_PATH)/libft.a
-
+PATH_BUILTINS					=						./builtins/
+BUILTINS						=						$(addprefix $(PATH_BUILTINS), \
+														cd.c echo.c env.c exit.c export.c \
+														pwd.c unset.c)
 SRC								=						minishell.c			\
 														handle_env.c		\
 														envp_utils.c		\
@@ -31,7 +34,8 @@ SRC								=						minishell.c			\
 														wait_input.c		\
 														sys_config.c		\
 														hash.c				\
-														process.c
+														process.c			\
+														$(BUILTINS)			
 OBJ								=						$(SRC:%.c=%.o)
 
 

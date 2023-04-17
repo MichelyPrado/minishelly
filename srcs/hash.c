@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:04:31 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/16 20:00:53 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/17 19:01:33 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		hash_func(char *cmd, t_keyword_map *keymap)
 	i = 0;
 	while (i < 14)
 	{
-		if (strcmp(cmd, keymap[i].keyword) == 0)
+		if (ft_strcmp(cmd, keymap[i].keyword) == 0)
 			return keymap[i].type;
 		i++;
 	}
