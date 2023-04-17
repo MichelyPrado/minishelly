@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/15 17:01:10 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/17 16:07:41 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,9 @@
 # define CHAR_NULL 1
 # define MORE_ONE_SPACE 2
 
-typedef t_err (*t_function)(t_sys_config *);
-
-typedef struct s_event
-{
-	int		key;
-		
-} t_event;
+//typedef t_err (*t_function)(t_sys_config *);
 
 // DEFINE ERRORS
-
 typedef enum e_err
 {
 	NO_ERR = 0,
@@ -119,6 +112,12 @@ typedef enum e_types
 	OP_ECHO = 15
 }	t_types;
 
+typedef struct s_keyword_map
+{
+	char		*keyword;
+	t_types		type;
+}				t_keyword_map;
+
 typedef struct s_token
 {
 	char			**token;
@@ -132,9 +131,12 @@ typedef struct s_sys_config
 	char	**env;
 	int		nlen_parser;
 	char	*new_parser;
+	t_token	*tokens;
 	char	**prompt;
 	char	**path;
 }	t_sys_config;
+
+typedef int (*process_function)(t_sys_config *);
 
 // Sys Config
 
@@ -183,10 +185,17 @@ void		ft_token_free(t_token **node);
 // handle tokens
 t_token		*ft_create_tokens(t_sys_config *mini);
 t_types		tag_token(char *cmd);
+int			ft_isspace(char *str);
 char		*ft_token_repair(char *token);
 
 // Wait input
 char		*create_prompt(int amount, ...);
 t_err		wait_input(t_sys_config *mini, int *prop, char *line);
+
+// HASH
+int			hash_func(char *cmd, t_keyword_map *keymap);
+
+// Process
+void		exec_commands(t_sys_config *mini);
 
 #endif

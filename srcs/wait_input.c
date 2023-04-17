@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:39:43 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/15 15:13:22 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:32:36 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ t_err	wait_input(t_sys_config *mini, int *prop, char *line)
 	static char	*tmp;
 	
 	err = 0;
-	static int i;
 	cat = NULL;
 	if (tmp)
 	{

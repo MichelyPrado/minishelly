@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/12 16:17:54 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:24:57 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,38 +104,23 @@ int	ft_isspace(char *str)
 
 t_types	tag_token(char *cmd)
 {
-	int	size;
-
-	size = ft_strlen(cmd);
-	if (!cmd || ft_isspace(cmd))
-		return (OP_DEFAULT);
-	if (ft_strncmp(cmd, "&&", size) == 0)
-		return (OP_AND);
-	else if (ft_strncmp(cmd, "|", size) == 0)
-		return (OP_PIPE);
-	else if (ft_strncmp(cmd, "||", size) == 0)
-		return (OP_OR);
-	else if (ft_strncmp(cmd, ">", size) == 0)
-		return (OP_OUTPUT);
-	else if (ft_strncmp(cmd, "<", size) == 0)
-		return (OP_INPUT);
-	else if (ft_strncmp(cmd, "<<", size) == 0)
-		return (OP_UNTIL);
-	else if (ft_strncmp(cmd, ">>", size) == 0)
-		return (OP_APPEND);
-	else if (ft_strncmp(cmd, "exit", size) == 0)
-		return (OP_EXIT);
-	else if (ft_strncmp(cmd, "cd", size) == 0)
-		return (OP_CD);
-	else if (ft_strncmp(cmd, "env", size) == 0)
-		return (OP_ENV);
-	else if (ft_strncmp(cmd, "unset", size) == 0)
-		return (OP_UNSET);
-	else if (ft_strncmp(cmd, "export", size) == 0)
-		return (OP_EXPORT);
-	else if (ft_strncmp(cmd, "pwd", size) == 0)
-		return (OP_PWD);
-	else if (ft_strncmp(cmd, "echo", size) == 0)
-		return (OP_ECHO);
-	return (OP_CMD);
+	t_keyword_map *keymap;
+	
+	keymap = (t_keyword_map[]){
+		{"&&", OP_AND},
+		{"|", OP_PIPE},
+		{"||", OP_OR},
+		{">", OP_OUTPUT},
+		{"<", OP_INPUT},
+		{"<<", OP_UNTIL},
+		{">>", OP_APPEND},
+		{"exit", OP_EXIT},
+		{"cd", OP_CD},
+		{"env", OP_ENV},
+		{"unset", OP_UNSET},
+		{"export", OP_EXPORT},
+		{"pwd", OP_PWD},
+		{"echo", OP_ECHO}
+	};
+	return (hash_func(cmd, keymap));
 }

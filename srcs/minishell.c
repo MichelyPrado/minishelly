@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/13 20:11:03 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:47:03 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	main(int argc, char **argv)
 	t_err			err;
 	int				prop;
 	t_sys_config	*mini;
-	t_token			*tokens;
 
 	err = 0;
 	tmp = "";
@@ -65,8 +64,9 @@ int	main(int argc, char **argv)
 	{
 		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
 			continue;
-		tokens = ft_create_tokens(mini);
-		print_tokens_test(tokens);
+		mini->tokens = ft_create_tokens(mini);
+		///print_tokens_test(tokens);
+		exec_commands(mini);
 		add_history(mini->str);
 		exit_check(mini->str);
 	}

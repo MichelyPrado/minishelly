@@ -12,7 +12,7 @@ DIR				=			../srcs/
 DIR_OUTS		=			./outs/
 EXEC_OUTS		=			$(wildcard $(DIR_OUTS)*)
 LIBFT			=			../srcs/libft/
-YOUR_FILES		=			$(addprefix $(DIR), envp_utils.c handle_env.c handle_path.c parser.c parser_utils.c tools_box.c list_token.c handle_tokens.c wait_input.c sys_config.c) # Add your files with the function you can test
+YOUR_FILES		=			$(addprefix $(DIR), envp_utils.c handle_env.c handle_path.c parser.c parser_utils.c tools_box.c list_token.c handle_tokens.c wait_input.c sys_config.c hash.c ) # Add your files with the function you can test
 TESTS			=			get_envp_test check_readline_test ft_unset_test ft_export_test search_envp_test edit_envp_test count_delimiter_test list_token_test tag_token_test ft_token_repair_test create_prompt_test ft_create_tokens_test # Add your test names without .c
 HEADERS_TEST 	= 			minunit.h
 ################ CONFIG YOUR PROJECT #############
@@ -75,9 +75,15 @@ re: fclean all
 #	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
 #	valgrind --leak-check=full $(DIR_OUTS)$@
 
-rl: wait_input_test
+#rl: wait_input_test
+#
+#wait_input_test:
+#	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
+#	valgrind --leak-check=full $(DIR_OUTS)$@
 
-wait_input_test:
+h: hash_func_test
+
+hash_func_test:
 	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
 	valgrind --leak-check=full $(DIR_OUTS)$@
 #
