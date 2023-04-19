@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/01 22:44:13 by msilva-p          #+#    #+#              #
-#    Updated: 2023/04/19 13:08:58 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/04/19 13:59:18 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,8 +77,8 @@ clean: title_clean
 	@$(RM) $(OBJS)
 	@echo "$(YELLOW)$(CLEAN)  Arquivos objetos removidos$(RESET)"
 
-fclean: title_fclean
-	@$(RM) $(OBJS) $(NAME)
+fclean: clean title_fclean
+	@$(RM) $(NAME)
 	@echo "$(YELLOW)$(CLEAN)  Arquivos objetos e $(NAME) removidos$(RESET)"
 
 re: fclean all

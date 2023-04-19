@@ -5,64 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/18 21:13:08 by dapaulin         ###   ########.fr       */
+/*   Created: 2023/04/19 13:44:11 by dapaulin          #+#    #+#             */
+/*   Updated: 2023/04/19 13:46:43 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "./includes/minishell.h"
 
-static void	args_check(int argc)
+int main(int argc, char **argv)
 {
-	if (argc != 1)
-	{
-		printf("Invalid number of arguments!\n");
-		exit(EXIT_FAILURE);
-	}
-}
-
-void	print_tokens_test(t_token *tokens)
-{
-	int	i;
-
-	while (tokens)
-	{
-		i = 0;
-		printf("Operador: %i\n[", tokens->type);
-		while (tokens->token[i])
-		{
-			printf("'%s', ", tokens->token[i]);
-			i++;
-		}
-		printf("]\n");
-		tokens = tokens->next;
-	}
-}
-
-int	main(int argc, char **argv)
-{
-	int				prop;
-	t_sys_config	*mini;
-	extern char		**environ;
-
-	args_check(argc);
-	if (!*argv)
-		return (0);
-	mini = start_sys(environ);
-	prop = 0;
-	while (1)
-	{
-		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
-			continue ;
-		mini->tokens = ft_create_tokens(mini);
-		exec_commands(mini);
-		ft_token_free(&mini->tokens);
-		if (mini->new_parser)
-			free(mini->new_parser);
-		mini->new_parser = NULL;
-		mini->nlen_parser = 0;
-		free(mini->str);
-		mini->str = NULL;
-	}
-	return (0);
+    extern char **environ;
+    
+    return minishelly(argc, argv, environ);
 }

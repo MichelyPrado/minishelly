@@ -6,11 +6,11 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:32:25 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/18 19:57:40 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/19 13:53:10 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
 int	b_export(t_sys_config *mini)
 {
