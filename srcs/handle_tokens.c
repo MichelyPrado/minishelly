@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/17 15:24:57 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/18 05:15:31 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,23 +104,23 @@ int	ft_isspace(char *str)
 
 t_types	tag_token(char *cmd)
 {
-	t_keyword_map *keymap;
-	
+	t_keyword_map	*keymap;
+
 	keymap = (t_keyword_map[]){
-		{"&&", OP_AND},
-		{"|", OP_PIPE},
-		{"||", OP_OR},
-		{">", OP_OUTPUT},
-		{"<", OP_INPUT},
-		{"<<", OP_UNTIL},
-		{">>", OP_APPEND},
-		{"exit", OP_EXIT},
-		{"cd", OP_CD},
-		{"env", OP_ENV},
-		{"unset", OP_UNSET},
-		{"export", OP_EXPORT},
-		{"pwd", OP_PWD},
-		{"echo", OP_ECHO}
+	{"&&", OP_AND},
+	{"|", OP_PIPE},
+	{"||", OP_OR},
+	{">", OP_OUTPUT},
+	{"<", OP_INPUT},
+	{"<<", OP_UNTIL},
+	{">>", OP_APPEND},
+	{"exit", OP_EXIT},
+	{"cd", OP_CD},
+	{"env", OP_ENV},
+	{"unset", OP_UNSET},
+	{"export", OP_EXPORT},
+	{"pwd", OP_PWD},
+	{"echo", OP_ECHO}
 	};
 	return (hash_func(cmd, keymap));
 }

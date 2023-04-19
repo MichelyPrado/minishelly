@@ -16,7 +16,7 @@ RL								=						-l readline
 
 RM								=						rm -rf
 
-LIBFT_PATH						=						./libft
+LIBFT_PATH						=						./libft/
 LIBFT							=						$(LIBFT_PATH)/libft.a
 PATH_BUILTINS					=						./builtins/
 BUILTINS						=						$(addprefix $(PATH_BUILTINS), \
@@ -41,15 +41,14 @@ OBJ								=						$(SRC:%.c=%.o)
 
 all:							$(LIBFT) $(NAME) 
 
-
 %.o: %.c $(HEADERS)
 	$(CC)	 $(CCFLAGS) -c $< -o $@
 
 $(LIBFT):
-								$(MAKE) -C $(LIBFT_PATH)
+								@$(MAKE) -C $(LIBFT_PATH) --no-print-directory
 
 $(NAME):						$(OBJ)
-								$(CC) -g3 $(CCFLAGS) $(OBJ) $(RL) $(LIBFT) -o $(NAME)
+								@$(CC) -g3 $(CCFLAGS) $(OBJ) $(RL) $(LIBFT) $(PRINT) -o $(NAME)
 	@echo	"$(L_GREENB)"
 	@echo	'                d8,            d8,         d8b              d8b  d8b           '
 	@echo	'               `8P            `8P          ?88              88P  88P           '
@@ -64,13 +63,13 @@ $(NAME):						$(OBJ)
 	@echo	"$(L_WHITE)"
 
 clean:
-								$(MAKE) -C $(LIBFT_PATH) clean
-								$(RM) $(OBJ)
+								@$(MAKE) -C $(LIBFT_PATH) clean --no-print-directory
+								@$(RM) $(OBJ)
 
 fclean:							clean
-								$(MAKE) -C $(LIBFT_PATH) fclean
-								$(RM) $(NAME)
+								@$(MAKE) -C $(LIBFT_PATH) fclean --no-print-directory
+								@$(RM) $(NAME)
 
 re:								fclean all
 
-.PHONY:							all clean fclean re
+.PHONY:							all clean fclean re $(LIBFT)

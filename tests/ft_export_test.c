@@ -2,6 +2,14 @@
 #include "../srcs/minishell.h"
 #include "../srcs/libft/libft.h"
 
+char			*c_env[] = { "USER=dapaulin",
+							 "TERM=xterm-256color",
+							 "OLDPWD=/nfs/homes/dapaulin/Documents/project-42/minishelly",
+							 "PWD=/nfs/homes/dapaulin/Documents/project-42/minishelly/tests",
+							 "LANG=pt",
+							 NULL
+							};
+
 void	comp_strs(char **environ, char *expected, t_sys_config *mini, char *key)
 {
 	char	*p = NULL;
@@ -33,7 +41,7 @@ MU_TEST(Passando_key_como_MINISHELL_value_com_Minishelly_e_as_variaveis_de_ambie
 
 	// ACT
 	get_envp(environ, mini);
-	ft_export(mini, key, value);
+	ft_export(&mini->env, key, value);
 
 	// ASSERTS
 	while (environ[i])
@@ -57,7 +65,7 @@ MU_TEST(Passando_uma_variavel_existente_KEY_como_PATH_e_outro_value_da_variavel_
 
 	// ACT
 	get_envp(environ, mini);
-	ft_export(mini, key, value);
+	ft_export(&mini->env, key, value);
 
 	// ASSERTS
 	i = 0;
@@ -76,7 +84,7 @@ MU_TEST(Passando_key_como_NULL_com_value_WHAT_o_env_deve_permanecer_o_mesmo) {
 
 	// ACT
 	get_envp(environ, mini);
-	ft_export(mini, key, value);
+	ft_export(&mini->env, key, value);
 
 	// ASSERTS
 	i = 0;
@@ -100,7 +108,7 @@ MU_TEST(Passando_key_como_KLEYTON_com_value_NULL_o_env_possuir_a_variavel_KLEYTO
 
 	// ACT
 	get_envp(environ, mini);
-	ft_export(mini, key, value);
+	ft_export(&mini->env, key, value);
 
 	// ASSERTS
 	i = 0;
@@ -122,11 +130,41 @@ MU_TEST(Passando_key_como_KLEYTON_com_value_RASTA_para_um_env_nulo_o_env_deve_po
 	int				i;
 
 	// ACT
-	ft_export(mini, key, value);
+	ft_export(&mini->env, key, value);
 
 	// ASSERTS
 	mu_assert_string_eq("KLEYTON=RASTA", mini->env[0]);
 	mu_assert(NULL == mini->env[1], "Position is not NULL");
+	clean_env(mini->env);
+}
+
+MU_TEST(Passando_key_como_KLEYTON_sem_eq_deve_possuir_somente_a_nova_variavel) {
+	// CONFIG
+	char			*key = "KLEYTON";
+	char			*value = NULL;
+	t_sys_config	*mini = &((t_sys_config){0});
+	int				i;
+	char			*expected_env[] = { "USER=dapaulin",
+							 "TERM=xterm-256color",
+							 "OLDPWD=/nfs/homes/dapaulin/Documents/project-42/minishelly",
+							 "PWD=/nfs/homes/dapaulin/Documents/project-42/minishelly/tests",
+							 "LANG=pt",
+							 "KLEYTON",
+							 NULL
+							};
+
+	// ACT
+	get_envp(c_env, mini);
+	ft_export(&mini->env, key, value);
+
+	// ASSERTS
+	i = 0;
+	while (expected_env[i])
+	{
+		mu_assert_string_eq(expected_env[i], mini->env[i]);
+		i++;
+	}
+	mu_assert_string_eq(expected_env[i], mini->env[i]);
 	clean_env(mini->env);
 }
 
@@ -136,6 +174,7 @@ MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(Passando_key_como_NULL_com_value_WHAT_o_env_deve_permanecer_o_mesmo);
 	MU_RUN_TEST(Passando_key_como_KLEYTON_com_value_NULL_o_env_possuir_a_variavel_KLEYTON_eq_NULL);
 	MU_RUN_TEST(Passando_key_como_KLEYTON_com_value_RASTA_para_um_env_nulo_o_env_deve_possuir_somente_a_nova_variavel);
+	MU_RUN_TEST(Passando_key_como_KLEYTON_sem_eq_deve_possuir_somente_a_nova_variavel);
 }
 
 int main() {

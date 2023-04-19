@@ -10,7 +10,7 @@ typedef struct wait_input_test
 	int		*props;
 }		t_wait_input;
 
-void	clean_sys_config(t_sys_config *mini, t_wait_input *wait, int p, int pp)
+void	clean_sys_config(t_sys_config *mini)
 {
 	int	i;
 
@@ -18,11 +18,6 @@ void	clean_sys_config(t_sys_config *mini, t_wait_input *wait, int p, int pp)
 	clean_env(mini->env);
 	if (mini->str)
 		free(mini->str);
-	i = 0;
-	while (p && wait->line[i])
-		free(wait->line[i++]);
-	if (pp && wait->line)
-		free(wait->line);
 	i = 0;
 	while (mini->prompt[i])
 		free(mini->prompt[i++]);
@@ -51,10 +46,11 @@ void	run_mu_test(t_sys_config *mini, t_wait_input *wait) {
 	}
 }
 
+extern char		**environ;
+
 MU_TEST(test) {
 	// CONFIG
-	extern char		**envirion;
-	t_sys_config	*mini = start_sys();
+	t_sys_config	*mini = start_sys(environ);
 	int				prop = 0;
 	char			*line = ft_strdup("echo testando isso aqui");
 	char			*expected_str = "echo testando isso aqui";
@@ -67,13 +63,12 @@ MU_TEST(test) {
 	// ASSERTS
 	mu_assert_string_eq(expected_str, mini->str);
 	mu_assert_int_eq(err_expected, err);
-	clean_sys_config(mini, NULL, 0, 0);
+	clean_sys_config(mini);
 }
 
 MU_TEST(test1) {
 	// CONFIG
-	extern char		**envirion;
-	t_sys_config	*mini = start_sys();
+	t_sys_config	*mini = start_sys(environ);
 	t_wait_input	wait = (t_wait_input) {0};	
 	wait.line = ft_split("echo \"testando isso aqui\nfinal\"", '\n');
 	wait.expected_str = (char *[]){"echo \"testando isso aqui", "echo \"testando isso aqui\nfinal\""};
@@ -82,14 +77,14 @@ MU_TEST(test1) {
 
 	// ACT
 	run_mu_test(mini, &wait);
-	clean_sys_config(mini, &wait, 1, 1);
-
+	clean_sys_config(mini);
+	if (wait.line)
+		free(wait.line);
 }
 
 MU_TEST(test2) {
 	// CONFIG
-	extern char		**envirion;
-	t_sys_config	*mini = start_sys();
+	t_sys_config	*mini = start_sys(environ);
 	t_wait_input	wait = (t_wait_input) {0};	
 	wait.line = ft_split("echo 'testando isso aqui\nfinal'", '\n');
 	wait.expected_str = (char *[]){"echo 'testando isso aqui", "echo 'testando isso aqui\nfinal'"};
@@ -98,13 +93,14 @@ MU_TEST(test2) {
 
 	// ACT
 	run_mu_test(mini, &wait);
-	clean_sys_config(mini, &wait, 1, 1);
+	clean_sys_config(mini);
+	if (wait.line)
+		free(wait.line);
 }
 
 MU_TEST(test3) {
 	// CONFIG
-	extern char		**envirion;
-	t_sys_config	*mini = start_sys();
+	t_sys_config	*mini = start_sys(environ);
 	t_wait_input	wait = (t_wait_input) {0};	
 	wait.line = (char *[]){ft_strdup("echo 'testando isso aqui"), \
 						   ft_strdup(""), \
@@ -119,8 +115,7 @@ MU_TEST(test3) {
 
 	// ACT
 	run_mu_test(mini, &wait);
-	free(wait.line);
-	clean_sys_config(mini, &wait, 1, 0);
+	clean_sys_config(mini);
 }
 
 MU_TEST_SUITE(test_suite) {

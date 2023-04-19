@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:14:22 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/10 00:17:26 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/18 11:34:24 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,7 @@ void	clean_env(char **new_envp)
 
 	i = 0;
 	while (new_envp[i])
-	{
-		if (new_envp[i])
-			free(new_envp[i]);
-		i++;
-	}
+		free(new_envp[i++]);
 	if (new_envp)
 		free(new_envp);
 }
@@ -70,12 +66,12 @@ char	**alloc_env(char **env, int slots)
 
 /* valida se env está vazia e alloca um espaço
 e insere valor se sim. */
-int	env_empty(t_sys_config *mini, char *key, char *value)
+int	env_empty(char ***env, char *key, char *value)
 {
-	if (!mini->env)
+	if (!(*env))
 	{
-		mini->env = (char **) ft_calloc(sizeof(char *), 2);
-		mini->env[0] = join_key_value(key, value);
+		(*env) = (char **) ft_calloc(sizeof(char *), 2);
+		(*env)[0] = join_key_value(key, value);
 		return (1);
 	}
 	return (0);

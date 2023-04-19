@@ -12,7 +12,7 @@ MU_TEST(alter_o_valor_da_variavel_USER_para_cruz) {
 
 	// ACT
 	get_envp(environ, &mini);
-	edit_envp(&mini, key, value);
+	edit_envp(&mini.env, key, value);
 
 	// ASSERTS
 	mu_assert_string_eq(mini.env[search_envp(environ, key)], expected_str);
@@ -30,7 +30,7 @@ MU_TEST(passar_uma_key_nula_e_um_valor_valido_env_deve_ser_a_mesma) {
 
 	// ACT
 	get_envp(environ, mini);
-	edit_envp(mini, key, value);
+	edit_envp(&mini->env, key, value);
 
 	// ASSERTS
 	i = 0;
@@ -52,7 +52,7 @@ MU_TEST(passar_variavel_USER_com_value_NULL_deve_ser_USER_eq) {
 
 	// ACT
 	get_envp(environ, mini);
-	edit_envp(mini, key, value);
+	edit_envp(&mini->env, key, value);
 
 	// ASSERTS
 	mu_assert_string_eq(mini->env[search_envp(environ, key)], expected_str);
@@ -68,7 +68,7 @@ MU_TEST(passar_variavel_USER_com_value_dapaulin_e_env_NULL_deve_ser_env_NULL) {
 	extern char		**environ;
 
 	// ACT
-	edit_envp(mini, key, value);
+	edit_envp(&mini->env, key, value);
 
 	// ASSERTS
 	mu_assert(NULL == mini->env, "Position is not NULL");

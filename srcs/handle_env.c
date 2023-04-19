@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:21:28 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/17 20:04:00 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/18 14:59:50 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,27 @@ void	ft_unset(t_sys_config *mini, char *key)
 
 /* Cria uma nova variavel em env se não existir ou
 edita caso exista. */
-void	ft_export(t_sys_config *mini, char *key, char *value)
+void	ft_export(char ***env, char *key, char *value)
 {
 	int		i;
 	char	**aux;
 
 	if (!key)
 		return ;
-	if (env_empty(mini, key, value))
+	if (env_empty(env, key, value))
 		return ;
-	if (edit_envp(mini, key, value))
+	if (edit_envp(env, key, value))
 		return ;
-	aux = alloc_env(mini->env, MORE_ONE_SPACE);
+	aux = alloc_env(*env, MORE_ONE_SPACE);
 	i = 0;
-	while (mini->env[i])
+	while ((*env)[i])
 	{
-		aux[i] = ft_strdup(mini->env[i]);
+		aux[i] = ft_strdup((*env)[i]);
 		i++;
 	}
-	clean_env(mini->env);
-	mini->env = aux;
-	mini->env[i] = join_key_value(key, value);
+	clean_env((*env));
+	*env = aux;
+	(*env)[i] = join_key_value(key, value);
 }
 
 /* Realiza uma busca na env pela key paramentro
@@ -87,17 +87,17 @@ ssize_t	search_envp(char **envp, char *key)
 }
 
 /* Edita uma variavel que já exista em env */
-int	edit_envp(t_sys_config *mini, char *key, char *new_value)
+int	edit_envp(char ***env, char *key, char *new_value)
 {
 	int	i;
 
-	if (!mini->env || !key)
+	if (!(*env) || !key)
 		return (0);
-	i = search_envp(mini->env, key);
+	i = search_envp((*env), key);
 	if (i < 0)
 		return (0);
-	free(mini->env[i]);
-	mini->env[i] = join_key_value(key, new_value);
+	free((*env)[i]);
+	(*env)[i] = join_key_value(key, new_value);
 	return (1);
 }
 

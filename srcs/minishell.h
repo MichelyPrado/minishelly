@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/17 19:26:08 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/19 13:00:14 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@
 # include <term.h>
 
 //  libft
-# include "./libft/libft.h"
+# include "./libft/includes/libft.h"
+# include "./libft/includes/ft_printf.h"
 
 # define L_RED "\033[0;31m"
 # define L_REDB "\033[1;31m"
@@ -136,71 +137,73 @@ typedef struct s_sys_config
 	char	**path;
 }	t_sys_config;
 
-typedef int (*process_function)(t_sys_config *);
+typedef int	(*t_process_function)(t_sys_config *);
 
 // Sys Config
-
-t_sys_config *start_sys();
-
-void		exit_check(char *str);
+t_sys_config	*start_sys(char **environ);
+void			clean_sys(t_sys_config *mini);
+void			clean_strlist(char ***strs);
 
 // Handle Env
-void		ft_unset(t_sys_config *mini, char *key);
-void		ft_export(t_sys_config *mini, char *key, char *value);
-ssize_t		search_envp(char **envp, char *key);
-int			edit_envp(t_sys_config *mini, char *key, char *new_value);
-void		get_envp(char **envp, t_sys_config *data);
+void			ft_unset(t_sys_config *mini, char *key);
+void			ft_export(char ***env, char *key, char *value);
+ssize_t			search_envp(char **envp, char *key);
+int				edit_envp(char ***env, char *key, char *new_value);
+void			get_envp(char **envp, t_sys_config *data);
 
 // Env Utils
-int			amount_vars(char **envp);
-size_t		keylen(char *var_env);
-void		clean_env(char **new_envp);
-char		**alloc_env(char **env, int slots);
-int			env_empty(t_sys_config *mini, char *key, char *value);
+int				amount_vars(char **envp);
+size_t			keylen(char *var_env);
+void			clean_env(char **new_envp);
+char			**alloc_env(char **env, int slots);
+int				env_empty(char ***env, char *key, char *value);
 
 // Tools Box
-char		*join_key_value(char *key, char *value); // trocar por ft_strjoin
+char			*join_key_value(char *key, char *value); // trocar por ft_strjoin
 
 // Handle  Path
-void		split_paths(char **env, t_sys_config *data);
+void			split_paths(char **env, t_sys_config *data);
 
 // Parser
-int			add_delimiters(char symbol, int *j, char *dst, char *actual_char);
-t_err		check_readline(char *src, t_sys_config *mini);
-int			count_delimiter(char *str);
+int				add_delimiters(char symbol, int *j, char *dst, char *actual_char);
+t_err			check_readline(char *src, t_sys_config *mini);
+int				count_delimiter(char *str);
 
 // Parser Utils
-int			add_character(char *dst, int j, char c);
-int			check_next(char symbol, char *str);
-int			check_quotes(char *src, char quote, int jump);
-int			jump_quotes(char *src, t_sys_config *mini, char quote, int *j);
+int				add_character(char *dst, int j, char c);
+int				check_next(char symbol, char *str);
+int				check_quotes(char *src, char quote, int jump);
+int				jump_quotes(char *src, t_sys_config *mini, char quote, int *j);
 
 // List Token
-t_token		*ft_token_new(char **cmds, int type);
-t_token		*ft_token_last(t_token *node);
-void		ft_token_add_end(t_token **node, t_token *new);
-void		free_cmds(char **cmds);
-void		ft_token_free(t_token **node);
+t_token			*ft_token_new(char **cmds, int type);
+t_token			*ft_token_last(t_token *node);
+void			ft_token_add_end(t_token **node, t_token *new);
+void			free_cmds(char **cmds);
+void			ft_token_free(t_token **node);
 
 // handle tokens
-t_token		*ft_create_tokens(t_sys_config *mini);
-t_types		tag_token(char *cmd);
-int			ft_isspace(char *str);
-char		*ft_token_repair(char *token);
+t_token			*ft_create_tokens(t_sys_config *mini);
+t_types			tag_token(char *cmd);
+int				ft_isspace(char *str);
+char			*ft_token_repair(char *token);
 
 // Wait input
-char		*create_prompt(int amount, ...);
-t_err		wait_input(t_sys_config *mini, int *prop, char *line);
+t_err			wait_input(t_sys_config *mini, int *prop, char *line);
+char			*create_prompt(int amount, ...);
 
 // HASH
-int			hash_func(char *cmd, t_keyword_map *keymap);
+int				hash_func(char *cmd, t_keyword_map *keymap);
 
 // Process
-void		exec_commands(t_sys_config *mini);
+void			exec_commands(t_sys_config *mini);
 
 //BUILTINS
-int			ft_env(t_sys_config *mini);
-int			ft_pwd(t_sys_config *mini);
-int			ft_echo(t_sys_config *mini);
-int			ft_cd(t_sys_config *mini);
+int				ft_env(t_sys_config *mini);
+int				ft_pwd(t_sys_config *mini);
+int				ft_echo(t_sys_config *mini);
+int				ft_cd(t_sys_config *mini);
+int				ft_exit(t_sys_config *mini);
+int				b_export(t_sys_config *mini);
+int				b_unset(t_sys_config *mini);
 #endif

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/14 15:38:40 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/18 05:19:11 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_err	check_readline(char *src, t_sys_config *mini)
 		if (!jump)
 			mini->new_parser[j++] = src[i++];
 		i += jump;
-}
+	}
 	return (NO_ERR);
 }
 
@@ -99,7 +99,7 @@ int	count_delimiter(char *readline)
 		if (!readline[i])
 		{
 			i++;
-			break;
+			break ;
 		}
 	}
 	return (i + j);

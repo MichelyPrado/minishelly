@@ -11,21 +11,46 @@ L_GREENB		=			\033[1;32m
 DIR				=			../srcs/
 DIR_OUTS		=			./outs/
 EXEC_OUTS		=			$(wildcard $(DIR_OUTS)*)
-LIBFT			=			../srcs/libft/
-YOUR_FILES		=			$(addprefix $(DIR), envp_utils.c handle_env.c handle_path.c parser.c parser_utils.c tools_box.c list_token.c handle_tokens.c wait_input.c sys_config.c hash.c ) # Add your files with the function you can test
-TESTS			=			get_envp_test check_readline_test ft_unset_test ft_export_test search_envp_test edit_envp_test count_delimiter_test list_token_test tag_token_test ft_token_repair_test create_prompt_test ft_create_tokens_test # Add your test names without .c
+GNL				=			$(addprefix ./get_next_line/, get_next_line.c get_next_line_utils.c)
+YOUR_FILES		=			$(addprefix $(DIR), envp_utils.o handle_env.o \
+												handle_path.o handle_tokens.o \
+												hash.o list_token.o parser.o \
+												parser_utils.o process.o \
+												sys_config.o tools_box.o \
+												wait_input.o) \
+							$(addprefix $(DIR)builtins/, cd.o echo.o env.o \
+												exit.o export.o pwd.o unset.o) \
+												# Add your files with the function you can test
+TESTS			=			check_readline_test \
+							count_delimiter_test \
+							create_prompt_test \
+							edit_envp_test \
+							ft_create_tokens_test \
+							ft_export_test \
+							ft_token_repair_test \
+							ft_unset_test \
+							get_envp_test \
+							hash_func_test \
+							list_token_test \
+							search_envp_test \
+							tag_token_test \
+							wait_input_test \
+							b_export_test \
+							# Add your test names without .c
 HEADERS_TEST 	= 			minunit.h
 ################ CONFIG YOUR PROJECT #############
 FLAGS 			= 			-Wall -Werror -Wextra
 ################ RULES		##################
-all: 		$(LIBFT) $(TESTS) $(EXEC_OUTS)
+all: 		mini $(TESTS) $(EXEC_OUTS)
 
+mini:
+	@cd 		$(DIR) && $(MAKE)
 
 $(LIBFT):
 	@cd 		$(LIBFT) && $(MAKE)
 
 $(TESTS): $(HEADERS)
-	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
+	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(GNL) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
 
 $(EXEC_OUTS):
 	@echo  "$(L_YELLOWB)$@:$(L_WHITE) " && valgrind --leak-check=full -q $@
@@ -81,11 +106,11 @@ re: fclean all
 #	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
 #	valgrind --leak-check=full $(DIR_OUTS)$@
 
-h: hash_func_test
-
-hash_func_test:
-	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
-	valgrind --leak-check=full $(DIR_OUTS)$@
+#h: hash_func_test
+#
+#hash_func_test:
+#	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
+#	valgrind --leak-check=full $(DIR_OUTS)$@
 #
 #cd: count_delimiter_test
 #

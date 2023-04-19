@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 09:47:02 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/14 15:14:21 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/18 05:19:47 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	check_quotes(char *src, char quote, int jump)
 		{
 			jump += (p - src) + 1;
 			if (src[(p - src) + 1] == DQUOTE)
-				return check_quotes(&src[p - src] + 1, DQUOTE, jump);
+				return (check_quotes(&src[p - src] + 1, DQUOTE, jump));
 			if (src[(p - src) + 1] == SQUOTE)
-				return check_quotes(&src[p - src] + 1, SQUOTE, jump);
+				return (check_quotes(&src[p - src] + 1, SQUOTE, jump));
 			return (jump);
 		}
 		else
