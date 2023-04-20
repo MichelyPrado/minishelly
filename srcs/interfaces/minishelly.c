@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/19 13:48:11 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/19 19:38:23 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	args_check(int argc)
 	}
 }
 
+//função que faz a identificação dos tipos dos tokens
 void	print_tokens_test(t_token *tokens)
 {
 	int	i;
@@ -55,6 +56,7 @@ int	minishelly(int argc, char **argv, char **environ)
 			continue ;
 		mini->tokens = ft_create_tokens(mini);
 		exec_commands(mini);
+		add_history(mini->str);
 		ft_token_free(&mini->tokens);
 		if (mini->new_parser)
 			free(mini->new_parser);

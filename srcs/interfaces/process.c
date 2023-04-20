@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:48:47 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/19 19:18:34 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,48 @@ int	turn_void(t_sys_config *mini)
 	return (0);
 }
 
+int	exec_program(t_sys_config *mini)
+{
+	execve(*mini->tokens->token, mini->tokens->token, mini->env);
+	return (0);
+}
+
 t_process_function	*array_functions(void)
 {
 	t_process_function	*array_process;
 
 	array_process = (t_process_function *)malloc(sizeof(t_process_function) * 16);
-	array_process[0] = turn_void;
-	array_process[1] = turn_void;
-	array_process[2] = turn_void;
-	array_process[3] = turn_void;
-	array_process[4] = turn_void;
-	array_process[5] = turn_void;
-	array_process[6] = turn_void;
-	array_process[7] = turn_void;
-	array_process[8] = turn_void;
-	array_process[9] = ft_exit;
-	array_process[10] = ft_cd;
-	array_process[11] = ft_env;
-	array_process[12] = b_unset;
-	array_process[13] = b_export;
-	array_process[14] = ft_pwd;
-	array_process[15] = ft_echo;
+	array_process[OP_DEFAULT] = turn_void;
+	array_process[OP_AND] = turn_void;
+	array_process[OP_OR] = turn_void;
+	array_process[OP_PIPE] = turn_void;
+	array_process[OP_OUTPUT] = turn_void;
+	array_process[OP_INPUT] = turn_void;
+	array_process[OP_UNTIL] = turn_void;
+	array_process[OP_APPEND] = turn_void;
+	array_process[OP_CMD] = exec_program;
+	array_process[OP_EXIT] = ft_exit;
+	array_process[OP_CD] = ft_cd;
+	array_process[OP_ENV] = ft_env;
+	array_process[OP_UNSET] = b_unset;
+	array_process[OP_EXPORT] = b_export;
+	array_process[OP_PWD] = ft_pwd;
+	array_process[OP_ECHO] = ft_echo;
 	return (array_process);
 }
 
 void	exec_commands(t_sys_config *mini)
 {
 	t_process_function	*array_process;
+	int	status;
+	int pid;
 
+	pid = 0;
 	array_process = array_functions();
-	array_process[mini->tokens->type](mini);
+	if (mini->tokens->type == OP_CMD)
+		pid = fork();
+	if (pid == 0)
+		array_process[mini->tokens->type](mini);
+	waitpid(pid, &status, 0);
 	return ;
 }

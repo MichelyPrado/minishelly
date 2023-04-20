@@ -41,7 +41,7 @@ TPATH_ENVIRON							=				environ_tests/
 TESTS_ENVIRON							=				$(addprefix $(TPATH_ENVIRON), 								\
 														search_envp_test			edit_envp_test	 				\
 														get_envp_test 				ft_unset_test 					\
-														ft_export_test )
+														ft_export_test 				ft_is_cmd_test)
 TPATH_INTERFACES						=				interfaces_tests/
 TESTS_INTERFACES						=				$(addprefix $(TPATH_INTERFACES),			 				\
 														wait_input_test 			create_prompt_test)

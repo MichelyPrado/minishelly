@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 18:21:24 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:53:02 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/19 18:56:06 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ int	ft_echo(t_sys_config *mini)
 
 	i = 1;
 	new_line = 1;
-	if (ft_strcmp(mini->tokens->token[i], "-n") == 0)
+	if (mini->tokens->token[1])
 	{
-		new_line = 0;
-		i++;
-	}
-	while (mini->tokens->token[i])
-	{
-		printf("%s", mini->tokens->token[i]);
-		if (mini->tokens->token[i + 1])
-			printf(" ");
-		i++;
+		if (ft_strcmp(mini->tokens->token[i], "-n") == 0 && i++)
+			new_line = 0;
+		while (mini->tokens->token[i] != NULL)
+		{
+			ft_printf("%s", mini->tokens->token[i]);
+			if (mini->tokens->token[i + 1])
+				ft_printf(" ");
+			i++;
+		}
 	}
 	if (new_line == 1)
 		printf("\n");
