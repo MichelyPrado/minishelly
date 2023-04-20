@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/19 20:24:45 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/20 01:14:04 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@
 
 //  libft
 # include "../libft/includes/libft.h"
-# include "../libft/includes/ft_printf.h"
+#include "../libft/includes/ft_printf.h"
 
 # define L_RED "\033[0;31m"
 # define L_REDB "\033[1;31m"
@@ -163,7 +163,7 @@ char			*join_key_value(char *key, char *value); // trocar por ft_strjoin
 
 // Handle  Path
 void			split_paths(char **env, t_sys_config *data);
-int				ft_is_cmd(char **token, char **path);
+int				cmd_path_valid(char **token, char **path);
 
 // Parser
 int				add_delimiters(char symbol, int *j, char *dst, char *actual_char);

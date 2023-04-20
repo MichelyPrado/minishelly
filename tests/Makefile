@@ -41,7 +41,7 @@ TPATH_ENVIRON							=				environ_tests/
 TESTS_ENVIRON							=				$(addprefix $(TPATH_ENVIRON), 								\
 														search_envp_test			edit_envp_test	 				\
 														get_envp_test 				ft_unset_test 					\
-														ft_export_test 				ft_is_cmd_test)
+														ft_export_test 				cmd_path_valid_test)
 TPATH_INTERFACES						=				interfaces_tests/
 TESTS_INTERFACES						=				$(addprefix $(TPATH_INTERFACES),			 				\
 														wait_input_test 			create_prompt_test)
@@ -82,10 +82,23 @@ clean:			title_clean
 fclean:			clean title_fclean
 	@			$(MAKE) -C $(DIR) $@--no-print-directory
 	@			$(RM) $(EXEC_OUTS)
-	@echo "$(YELLOW)$(CLEAN)  Arquivos objetos e $(NAME) removidos$(RESET)"
+	@			echo "$(YELLOW)$(CLEAN)  Arquivos objetos e $(NAME) removidos$(RESET)"
 
 n:
 	norminette ../srcs/
+
+# Compila os arquivos da minishelly
+build-objs: $(HEADERS)
+	@cd 		$(DIR) && $(MAKE) --no-print-directory
+
+# Usando para rodar tests unicos
+# formato de uso
+# make run-test TEST_NAME=<dir><file-test>
+# make run-test TEST_NAME=./environ_tests/ft_is_cmd_test
+run-test: build-objs
+	@			$(CC) -g $(OBJS_FILES) $(GNL) $(TEST_NAME).c -o $(addprefix $(DIR_OUTS), $(TEST_NAME))
+	@			echo "$(YELLOW)$(ROCKET)  Executando teste $(TEST_NAME)$(RESET)"
+	@			$(addprefix $(DIR_OUTS), $(TEST_NAME))
 
 re: fclean all
 
