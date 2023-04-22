@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:14:22 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:49:16 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/22 14:13:50 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	env_empty(char ***env, char *key, char *value)
 	if (!(*env))
 	{
 		(*env) = (char **) ft_calloc(sizeof(char *), 2);
-		(*env)[0] = join_key_value(key, value);
+		(*env)[0] = ft_strjoin(key, value);
 		return (1);
 	}
 	return (0);

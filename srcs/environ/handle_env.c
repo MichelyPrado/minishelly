@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:21:28 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:49:18 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/22 14:42:22 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_unset(t_sys_config *mini, char *key)
 		aux[i] = ft_strdup(mini->env[i + j]);
 		i++;
 	}
+	
 	clean_env(mini->env);
 	mini->env = aux;
 }
@@ -62,7 +63,8 @@ void	ft_export(char ***env, char *key, char *value)
 	}
 	clean_env((*env));
 	*env = aux;
-	(*env)[i] = join_key_value(key, value);
+	(*env)[i] = ft_strjoin(key, value);
+	
 }
 
 /* Realiza uma busca na env pela key paramentro
@@ -97,7 +99,7 @@ int	edit_envp(char ***env, char *key, char *new_value)
 	if (i < 0)
 		return (0);
 	free((*env)[i]);
-	(*env)[i] = join_key_value(key, new_value);
+	(*env)[i] = ft_strjoin(key, new_value);
 	return (1);
 }
 

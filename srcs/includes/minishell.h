@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/20 01:14:04 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:25:59 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@
 typedef enum e_err
 {
 	NO_ERR = 0,
+	ONLY_ENTER,
 	ERR_QUOTES = 256,
 	ERR_NOLINE
 }	t_err;
@@ -140,7 +141,9 @@ typedef struct s_sys_config
 typedef int	(*t_process_function)(t_sys_config *);
 
 // Sys Config
+char			*cat_user(char **env);
 t_sys_config	*start_sys(char **environ);
+void			update_unbound_vars(char *key, t_sys_config *mini);
 void			clean_sys(t_sys_config *mini);
 void			clean_strlist(char ***strs);
 
@@ -162,7 +165,7 @@ int				env_empty(char ***env, char *key, char *value);
 char			*join_key_value(char *key, char *value); // trocar por ft_strjoin
 
 // Handle  Path
-void			split_paths(char **env, t_sys_config *data);
+char			**split_paths(char **env);
 int				cmd_path_valid(char **token, char **path);
 
 // Parser

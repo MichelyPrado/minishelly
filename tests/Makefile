@@ -98,7 +98,7 @@ build-objs: $(HEADERS)
 run-test: build-objs
 	@			$(CC) -g $(OBJS_FILES) $(GNL) $(TEST_NAME).c -o $(addprefix $(DIR_OUTS), $(TEST_NAME))
 	@			echo "$(YELLOW)$(ROCKET)  Executando teste $(TEST_NAME)$(RESET)"
-	@			$(addprefix $(DIR_OUTS), $(TEST_NAME))
+	@			valgrind --leak-check=full $(addprefix $(DIR_OUTS), $(TEST_NAME))
 
 re: fclean all
 

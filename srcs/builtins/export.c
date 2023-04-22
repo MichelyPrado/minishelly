@@ -6,11 +6,13 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:32:25 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:53:10 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/22 14:50:03 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+
 
 int	b_export(t_sys_config *mini)
 {
@@ -51,6 +53,7 @@ int	b_export(t_sys_config *mini)
 			return (0);
 		}
 		ft_export(&mini->env, key, &mini->tokens->token[j][size]);
+		update_unbound_vars(key, mini);
 		if (key)
 			free(key);
 		j++;

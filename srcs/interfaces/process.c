@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/20 01:07:21 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/22 14:25:39 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	exec_commands(t_sys_config *mini)
 
 	pid = 0;
 	array_process = array_functions();
-	if (mini->tokens->type == OP_CMD)
+	if (mini->tokens->type == OP_CMD && !cmd_path_valid(mini->tokens->token, mini->path))
 		pid = fork();
 	if (pid == 0)
 		array_process[mini->tokens->type](mini);

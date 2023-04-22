@@ -28,11 +28,11 @@ MU_TEST(passing_amount_0_should_be_null) {
 
 MU_TEST(passing_amount_2_without_args_should_be_null) {
 	// CONFIG
-    char    *expected = NULL;
+    char    *expected = "";
     char    *result;
 
     // ACT
-    result = create_prompt(2);
+    result = create_prompt(2, NULL);
 
     //ASSERT
     mu_assert_string_eq(expected, result);
@@ -42,7 +42,7 @@ MU_TEST(passing_amount_2_without_args_should_be_null) {
 MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(passing_6_string_should_be_all_then_together);
     MU_RUN_TEST(passing_amount_0_should_be_null);
-    //MU_RUN_TEST(passing_amount_2_without_args_should_be_null); tratar depois
+    MU_RUN_TEST(passing_amount_2_without_args_should_be_null);
 }
 
 int main() {

@@ -6,17 +6,22 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:25:16 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/20 01:17:51 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/20 01:30:02 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	split_paths(char **env, t_sys_config *mini)
+char	**split_paths(char **env)
 {
-	while (ft_strcmp("PATH", *env))
-		env++;
-	mini->path = ft_split((*env + 5), ':');
+	int	i;
+	
+	if (!env || !*env)
+		return (NULL);
+	i = search_envp(env, "PATH");
+	if (i < 0)
+		return (NULL);
+	return (ft_split(&env[i][keylen(env[i])], ':'));
 }
 
 static int	path_is_valid(int err, char *tmp, char **token)

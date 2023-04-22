@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:39:43 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:48:51 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/22 19:33:32 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ char	*create_prompt(int amount, ...)
 	va_list	ap;
 
 	i = 0;
-	tmp = "";
+	tmp = NULL;
 	prompt = NULL;
 	va_start(ap, amount);
 	while (i < amount)
 	{
 		prompt = ft_strjoin(tmp, va_arg(ap, char *));
-		if (ft_strlen(tmp))
+		if (tmp)
 			free(tmp);
 		tmp = prompt;
 		i++;
@@ -41,6 +41,11 @@ t_err	wait_input(t_sys_config *mini, int *prop, char *line)
 	static char	*tmp;
 
 	err = 0;
+	if (!ft_strlen(line) && !tmp)
+	{
+		free(line);
+		return (ONLY_ENTER);
+	}
 	if (tmp)
 	{
 		mini->str = create_prompt(3, tmp, "\n", line);
