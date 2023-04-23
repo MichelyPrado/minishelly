@@ -7,10 +7,12 @@ jobs:
       image: Dockerfile
     working-directory: tests
     steps:
-      - user actions/checkout@v2
-      - name: Install dependencies
-        run: |
-        
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build Docker image
+        run: docker build -t minishell
+      - name: Run docker container
+        run: docker run minishell
       - name: Run tests
         run: |
           make
