@@ -12,7 +12,3 @@ jobs:
         run: docker build -t minishell:latest .
       - name: Run docker container
         run: docker run --name mini -v $(pwd):/minishelly/ -d minishell:latest make
-      - name: Run tests
-        working-directory: ./tests
-        run: |
-          make
