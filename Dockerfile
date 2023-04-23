@@ -11,6 +11,6 @@ RUN apt-get install python3-venv python3-pip -y
 RUN python3 -m pip install --upgrade pip setuptools
 RUN python3 -m pip install norminette
 ADD . /minishelly
-WORKDIR /minishelly
+WORKDIR /minishelly/tests
 
-CMD ["tail", "-f", "/dev/null"]
+CMD ["make"]
