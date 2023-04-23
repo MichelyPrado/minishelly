@@ -1,0 +1,14 @@
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: Dockerfile
+      working-directory: tests
+    steps:
+      - user actions/checkout@v2
+      - name: Install dependencies
+        run: |
+        
+      - name: Run tests
+        run: |
+          make
