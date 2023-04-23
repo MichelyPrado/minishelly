@@ -9,7 +9,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Build Docker image
-        run: docker build -t minishell
+        run: docker build -t minishell .
       - name: Run docker container
         run: docker run minishell
       - name: Run tests
