@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/22 19:25:59 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/23 17:39:13 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@
 
 //  libft
 # include "../libft/includes/libft.h"
-#include "../libft/includes/ft_printf.h"
+# include "../libft/includes/ft_printf.h"
 
 # define L_RED "\033[0;31m"
 # define L_REDB "\033[1;31m"
@@ -138,7 +138,7 @@ typedef struct s_sys_config
 	char	**path;
 }	t_sys_config;
 
-typedef int	(*t_process_function)(t_sys_config *);
+typedef int	(*t_process_func)(t_sys_config *);
 
 // Sys Config
 char			*cat_user(char **env);
@@ -162,14 +162,14 @@ char			**alloc_env(char **env, int slots);
 int				env_empty(char ***env, char *key, char *value);
 
 // Tools Box
-char			*join_key_value(char *key, char *value); // trocar por ft_strjoin
+char			*join_key_value(char *key, char *value);
 
 // Handle  Path
 char			**split_paths(char **env);
 int				cmd_path_valid(char **token, char **path);
 
 // Parser
-int				add_delimiters(char symbol, int *j, char *dst, char *actual_char);
+int				add_delimiters(char symbol, int *j, char *dst, char *c);
 t_err			check_readline(char *src, t_sys_config *mini);
 int				count_delimiter(char *str);
 

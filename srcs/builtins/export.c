@@ -6,58 +6,77 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:32:25 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/22 14:50:03 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/23 18:24:44 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
-
-int	b_export(t_sys_config *mini)
+static int	printf_export(char **token, char **env)
 {
 	int		i;
-	int		j;
 	int		size;
 	char	*key;
-	
-	if (!mini->tokens->token[1])
+
+	if (!token[1])
 	{
 		i = 0;
-		while (mini->env[i])
+		while (env[i])
 		{
-			size = keylen(mini->env[i]);
-			key = ft_substr(mini->env[i], 0, size);
-			if (mini->env[i][size] == '=')
-				ft_printf("declare -x %s=\"%s\"\n", key, &mini->env[i][size + 1]);
-			else 
+			size = keylen(env[i]);
+			key = ft_substr(env[i], 0, size);
+			if (env[i][size] == '=')
+				ft_printf("declare -x %s=\"%s\"\n", key, &env[i][size + 1]);
+			else
 				ft_printf("declare -x %s\n", key);
 			if (key)
 				free(key);
 			i++;
 		}
+		return (1);
+	}
+	return (0);
+}
+
+static int	check_existence(char **token, char **key, char **env, int i)
+{
+	int	loc;
+	int	size;
+
+	size = keylen(token[i]);
+	*key = ft_substr(token[i], 0, size);
+	loc = search_envp(env, *key);
+	if (loc >= 0 && !ft_strchr(token[i], '=') && \
+	ft_strchr(env[loc], '='))
+	{
+		if (*key)
+			free(*key);
 		return (0);
 	}
+	return (size);
+}
 
-	j = 1;
-	while (mini->tokens->token[j])
+int	b_export(t_sys_config *mini)
+{
+	int		i;
+	int		size;
+	char	*key;
+	char	**token;
+
+	token = mini->tokens->token;
+	if (token[0] && printf_export(token, mini->env))
+		return (0);
+	i = 1;
+	while (token[i])
 	{
-		size = keylen(mini->tokens->token[j]);
-		key = ft_substr(mini->tokens->token[j], 0, size);
-		int loc = search_envp(mini->env, key);
-		if (loc >= 0 && !ft_strchr(mini->tokens->token[j], '=') && \
-		ft_strchr(mini->env[loc], '='))
-		{
-			if (key)
-				free(key);	
+		size = check_existence(token, &key, mini->env, i);
+		if (!size)
 			return (0);
-		}
-		ft_export(&mini->env, key, &mini->tokens->token[j][size]);
+		ft_export(&mini->env, key, &token[i][size]);
 		update_unbound_vars(key, mini);
 		if (key)
 			free(key);
-		j++;
+		i++;
 	}
-
 	return (0);
 }

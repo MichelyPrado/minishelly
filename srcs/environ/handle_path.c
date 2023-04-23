@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:25:16 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/20 01:30:02 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/23 17:25:33 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	**split_paths(char **env)
 {
 	int	i;
-	
+
 	if (!env || !*env)
 		return (NULL);
 	i = search_envp(env, "PATH");
@@ -41,7 +41,7 @@ int	cmd_path_valid(char **token, char **path)
 	int		i;
 	int		err;
 	char	*tmp;
-	
+
 	tmp = NULL;
 	err = -1;
 	if (!token || !*token)

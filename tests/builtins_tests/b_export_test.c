@@ -23,7 +23,7 @@ typedef struct s_b_export_test
 }				t_tests;
 
 static void			unset_config(t_tests *vars);
-static int			show_export(t_tests *vars, t_process_function f);
+static int			show_export(t_tests *vars, t_process_func f);
 static t_tests		*config(char **cmds);
 static void			assert_env(t_tests *vars, char **expected);
 
@@ -250,7 +250,7 @@ static void	unset_config(t_tests *vars)
 	free(vars);
 }
 
-static int	show_export(t_tests *vars, t_process_function f)
+static int	show_export(t_tests *vars, t_process_func f)
 {
 	int	bkp;
 	int	err;
