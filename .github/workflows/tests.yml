@@ -14,5 +14,6 @@ jobs:
       - name: Run docker container
         run: docker run minishell
       - name: Run tests
+        working-directory: ./tests
         run: |
           make
