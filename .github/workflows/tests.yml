@@ -5,7 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: Dockerfile
-    working-directory: tests
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -14,5 +13,6 @@ jobs:
       - name: Run docker container
         run: docker run minishell
       - name: Run tests
+        working-directory: ./tests
         run: |
           make
