@@ -12,6 +12,10 @@ jobs:
         run: docker build -t minishell:latest .
       - name: Run docker container
         run: docker run --name mini -v $(pwd):/minishelly/ -d minishell:latest
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y gcc make
       - name: Run tests
         working-directory: ./tests
         run: |
