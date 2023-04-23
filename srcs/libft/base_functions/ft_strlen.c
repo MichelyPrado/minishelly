@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 19:30:58 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/22 14:12:20 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/23 14:45:34 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *s)
 	size_t	len;
 
 	len = 0;
-	if (!s)
+	if (!s || !*s)
 		return (0);
 	while (s[len])
 		len++;

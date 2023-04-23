@@ -1,12 +1,22 @@
 #include "../includes/tests_includes.h"
 
+char			*c_env[] = { "USER=dapaulin",
+							 "TERM=xterm-256color",
+							 "OLDPWD=/nfs/homes/dapaulin/Documents/project-42/minishelly",
+							 "PWD=/nfs/homes/dapaulin/Documents/project-42/minishelly/tests",
+							 "LANG=pt",
+							 NULL
+							};
+
+char		**environ = (char **)c_env;
+
 MU_TEST(alter_o_valor_da_variavel_USER_para_cruz) {
 	// CONFIG
 	char			*key = "USER=";
 	char			*value = "cruz";
 	char			*expected_str = "USER=cruz";
 	t_sys_config	mini;
-	extern char		**environ;
+	
 
 	// ACT
 	get_envp(environ, &mini);
@@ -24,7 +34,6 @@ MU_TEST(passar_uma_key_nula_e_um_valor_valido_env_deve_ser_a_mesma) {
 	char			*value = "cruz";
 	char			*expected_str = NULL;
 	t_sys_config	*mini = &((t_sys_config) {0});
-	extern char		**environ;
 
 	// ACT
 	get_envp(environ, mini);
@@ -46,7 +55,6 @@ MU_TEST(passar_variavel_USER_com_value_NULL_deve_ser_USER_eq) {
 	char			*value = NULL;
 	char			*expected_str = "USER=";
 	t_sys_config	*mini = &((t_sys_config) {0});
-	extern char		**environ;
 
 	// ACT
 	get_envp(environ, mini);
@@ -63,7 +71,6 @@ MU_TEST(passar_variavel_USER_com_value_dapaulin_e_env_NULL_deve_ser_env_NULL) {
 	char			*value = "dapaulin";
 	char			*expected_str = NULL;
 	t_sys_config	*mini = &((t_sys_config) {0});
-	extern char		**environ;
 
 	// ACT
 	edit_envp(&mini->env, key, value);
