@@ -9,9 +9,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Build Docker image
-        run: docker build -t minishell .
+        run: docker build -t minishell:latest .
       - name: Run docker container
-        run: docker run minishell
+        run: docker run --name mini -v $(pwd):/minishelly/ -d minishell:latest
       - name: Run tests
         working-directory: ./tests
         run: |
