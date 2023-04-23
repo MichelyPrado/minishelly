@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_islower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 13:44:11 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:46:43 by dapaulin         ###   ########.fr       */
+/*   Created: 2022/09/21 07:06:30 by dapaulin          #+#    #+#             */
+/*   Updated: 2023/04/19 11:53:52 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
+#include "../includes/libft.h"
 
-int main(int argc, char **argv)
+int	ft_islower(int c)
 {
-    extern char **environ;
-    
-    return minishelly(argc, argv, environ);
+	if (!(c >= 'a' && c <= 'z'))
+		return (0);
+	return (1 << 10);
 }

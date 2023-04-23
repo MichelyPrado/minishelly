@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 13:44:11 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:46:43 by dapaulin         ###   ########.fr       */
+/*   Created: 2023/04/17 18:12:28 by dapaulin          #+#    #+#             */
+/*   Updated: 2023/04/19 13:53:08 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
+#include "../includes/minishell.h"
 
-int main(int argc, char **argv)
+int	ft_exit(t_sys_config *mini)
 {
-    extern char **environ;
-    
-    return minishelly(argc, argv, environ);
+	printf("Você saiu do Minishelly!\n");
+	exit(EXIT_SUCCESS);
+	mini->env = 0;
 }

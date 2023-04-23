@@ -1,5 +1,5 @@
 *.o
 minishell
-/tests/outs/*
+tests/outs/*/*_test
 libft.a
 .vscode

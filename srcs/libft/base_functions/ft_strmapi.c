@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 13:44:11 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:46:43 by dapaulin         ###   ########.fr       */
+/*   Created: 2022/06/18 17:32:27 by msilva-p          #+#    #+#             */
+/*   Updated: 2023/04/19 11:38:11 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
+#include "../includes/libft.h"
 
-int main(int argc, char **argv)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-    extern char **environ;
-    
-    return minishelly(argc, argv, environ);
+	unsigned int	i;
+	char			*news;
+
+	i = 0;
+	news = (char *)malloc(sizeof(char) * (ft_strlen(s)) + 1);
+	if (news == NULL)
+		return (NULL);
+	while (s[i] != '\0')
+	{
+		news[i] = f(i, s[i]);
+		i++;
+	}
+	news[i] = '\0';
+	return (news);
 }

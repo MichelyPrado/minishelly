@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 13:44:11 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:46:43 by dapaulin         ###   ########.fr       */
+/*   Created: 2023/04/17 18:18:05 by dapaulin          #+#    #+#             */
+/*   Updated: 2023/04/19 13:53:12 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
+#include "../includes/minishell.h"
 
-int main(int argc, char **argv)
+int	ft_pwd(t_sys_config *mini)
 {
-    extern char **environ;
-    
-    return minishelly(argc, argv, environ);
+	char	*pwd;
+
+	pwd = getcwd(NULL, 0);
+	printf("%s\n", pwd);
+	if (pwd)
+		free(pwd);
+	return (0);
+	if (mini)
+		return (0);
 }

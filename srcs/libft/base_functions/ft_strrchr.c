@@ -1,20 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 13:44:11 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:46:43 by dapaulin         ###   ########.fr       */
+/*   Created: 2022/06/15 20:56:40 by msilva-p          #+#    #+#             */
+/*   Updated: 2023/04/19 11:42:01 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
+#include "../includes/libft.h"
 
-int main(int argc, char **argv)
+char	*ft_strrchr(const char *s, int c)
 {
-    extern char **environ;
-    
-    return minishelly(argc, argv, environ);
+	int	i;
+
+	i = 0;
+	if (c >= 127)
+		c = c % 256;
+	if (c == 0)
+		return ((char *)s + ft_strlen(s));
+	else
+	{
+		while (s[i])
+			i++;
+		while (i >= 0)
+		{
+			if (s[i] == c)
+				return ((char *)s + i);
+			i--;
+		}
+	}
+	return (NULL);
 }

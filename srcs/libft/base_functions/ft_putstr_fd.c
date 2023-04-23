@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 13:44:11 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:46:43 by dapaulin         ###   ########.fr       */
+/*   Created: 2022/09/25 20:57:06 by dapaulin          #+#    #+#             */
+/*   Updated: 2023/04/19 11:49:11 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
+#include "../includes/libft.h"
 
-int main(int argc, char **argv)
+int	ft_putstr_fd(char *s, int fd)
 {
-    extern char **environ;
-    
-    return minishelly(argc, argv, environ);
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		ft_putchar_fd(s[i++], fd);
+	return (i);
 }

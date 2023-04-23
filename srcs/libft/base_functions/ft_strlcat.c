@@ -1,20 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 13:44:11 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:46:43 by dapaulin         ###   ########.fr       */
+/*   Created: 2022/06/23 18:14:56 by msilva-p          #+#    #+#             */
+/*   Updated: 2023/04/19 11:37:59 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
+#include "../includes/libft.h"
 
-int main(int argc, char **argv)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-    extern char **environ;
-    
-    return minishelly(argc, argv, environ);
+	size_t	d;
+	size_t	s;
+	size_t	i;
+
+	d = ft_strlen(dst);
+	s = ft_strlen(src);
+	i = 0;
+	if (size <= d)
+		return (s + size);
+	else
+	{
+		while (src[i] && (size - 1) > (d + i))
+		{
+			dst[d + i] = src[i];
+			i++;
+		}
+		dst[d + i] = '\0';
+		return (d + s);
+	}
 }

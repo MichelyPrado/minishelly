@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 13:44:11 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:46:43 by dapaulin         ###   ########.fr       */
+/*   Created: 2023/04/17 21:35:26 by dapaulin          #+#    #+#             */
+/*   Updated: 2023/04/22 19:47:13 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
+#include "../includes/minishell.h"
 
-int main(int argc, char **argv)
+int	b_unset(t_sys_config *mini)
 {
-    extern char **environ;
-    
-    return minishelly(argc, argv, environ);
+	ft_unset(mini, mini->tokens->token[1]);
+	update_unbound_vars(mini->tokens->token[1], mini);
+	return (0);
 }

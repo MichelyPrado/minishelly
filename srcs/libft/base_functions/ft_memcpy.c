@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 13:44:11 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:46:43 by dapaulin         ###   ########.fr       */
+/*   Created: 2022/06/09 15:05:32 by msilva-p          #+#    #+#             */
+/*   Updated: 2023/04/19 11:36:55 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
+#include "../includes/libft.h"
 
-int main(int argc, char **argv)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-    extern char **environ;
-    
-    return minishelly(argc, argv, environ);
+	unsigned char	*u_dest;
+	unsigned char	*u_src;
+	size_t			i;
+
+	i = 0;
+	u_dest = (unsigned char *)dest;
+	u_src = (unsigned char *)src;
+	while (i < n)
+	{
+		u_dest[i] = u_src[i];
+		i++;
+	}
+	return (dest);
 }

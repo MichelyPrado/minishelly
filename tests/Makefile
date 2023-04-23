@@ -7,82 +7,115 @@ L_YELLOW		=			\033[0;33m
 L_YELLOWB		=			\033[1;33m
 L_GREEN			=			\033[0;32m
 L_GREENB		=			\033[1;32m
+GREEN = \033[0;32m
+YELLOW = \033[1;33m
+RED = \033[0;31m
+RESET = \033[0m
+ROCKET = 🚀
+CLEAN = 🧹
+FOLDER = 📂
+ERROR = ❌
 ################ CONFIG	TESTS	##################
-DIR				=			../srcs/
-DIR_OUTS		=			./outs/
-EXEC_OUTS		=			$(wildcard $(DIR_OUTS)*)
-LIBFT			=			../srcs/libft/
-YOUR_FILES		=			$(addprefix $(DIR), envp_utils.c handle_env.c handle_path.c parser.c parser_utils.c tools_box.c list_token.c handle_tokens.c wait_input.c sys_config.c) # Add your files with the function you can test
-TESTS			=			get_envp_test check_readline_test ft_unset_test ft_export_test search_envp_test edit_envp_test count_delimiter_test list_token_test tag_token_test ft_token_repair_test create_prompt_test ft_create_tokens_test # Add your test names without .c
-HEADERS_TEST 	= 			minunit.h
+DIR										=				../srcs/
+DIR_OUTS								=				./outs/
+EXEC_OUTS								=				$(wildcard $(DIR_OUTS)*)
+GNL										=				$(addprefix ./get_next_line/, get_next_line.c get_next_line_utils.c)
+FILES									=				../srcs
+DIR_BUILTINS							=				/builtins/
+DIR_ENVIRON								=				/environ/
+DIR_HANDLE								=				/handle_input/
+DIR_INTERFACES							=				/interfaces/
+DIR_LIBFT								=				/libft/
+YOUR_FILES								=				$(wildcard $(FILES)$(DIR_BUILTINS)*.c)						\
+														$(wildcard $(FILES)$(DIR_ENVIRON)*.c)						\
+														$(wildcard $(FILES)$(DIR_HANDLE)*.c)						\
+														$(addprefix $(FILES)$(DIR_INTERFACES),						\
+														process.c sys_config.c wait_input.c )
+OBJS_FILES								=				$(YOUR_FILES:%.c=%.o)											\
+														$(addprefix $(FILES)$(DIR_LIBFT), libft.a)					\
+														# Add your files with the function you can test
+TPATH_BUILTINS							=				builtins_tests/
+TESTS_BUILTINS							=				$(addprefix $(TPATH_BUILTINS), 								\
+														b_export_test)
+TPATH_ENVIRON							=				environ_tests/
+TESTS_ENVIRON							=				$(addprefix $(TPATH_ENVIRON), 								\
+														search_envp_test			edit_envp_test	 				\
+														get_envp_test 				ft_unset_test 					\
+														ft_export_test 				cmd_path_valid_test)
+TPATH_INTERFACES						=				interfaces_tests/
+TESTS_INTERFACES						=				$(addprefix $(TPATH_INTERFACES),			 				\
+														wait_input_test 			create_prompt_test)
+TPATH_HANDLE							=				handle_input_tests/
+#														handle_tokens_test
+TESTS_HANDLE							=				$(addprefix $(TPATH_HANDLE), 								\
+														check_readline_test 		 								\
+														tag_token_test 				ft_token_repair_test 			\
+														ft_create_tokens_test 		list_token_test					\
+														hash_func_test 				count_delimiter_test) 			\
+														# Add your test names without .c
+TESTS									=				$(TESTS_BUILTINS)											\
+														$(TESTS_ENVIRON)											\
+														$(TESTS_HANDLE)												\
+														$(TESTS_INTERFACES)
+EXEC_OUTS								=				$(addprefix $(DIR_OUTS), $(TESTS))										
 ################ CONFIG YOUR PROJECT #############
-FLAGS 			= 			-Wall -Werror -Wextra
+FLAGS 									=	 			-Wall -Werror -Wextra
 ################ RULES		##################
-all: 		$(LIBFT) $(TESTS) $(EXEC_OUTS)
+all: 		mini $(TESTS) $(EXEC_OUTS)
 
-
-$(LIBFT):
-	@cd 		$(LIBFT) && $(MAKE)
+mini:
+	@cd 		$(DIR) && $(MAKE) --no-print-directory
 
 $(TESTS): $(HEADERS)
-	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
+	@			$(CC)	-g $(OBJS_FILES) $(GNL) $@.c -o $(addprefix $(DIR_OUTS), $@)
+	@			echo "$(YELLOW)$(ROCKET)  Compilando $@$(RESET)"
 
 $(EXEC_OUTS):
-	@echo  "$(L_YELLOWB)$@:$(L_WHITE) " && valgrind --leak-check=full -q $@
+	@			echo "           "
+	@			echo  "$(L_YELLOWB)$@:$(L_WHITE) " && $@
 
-clean:
-	@rm			-f $(SRCS:.c=.o)
+clean:			title_clean
+	@			$(MAKE) -C $(DIR) $@ --no-print-directory
+	@			$(RM) $(OBJS_FILES)
+	@			echo "$(YELLOW)$(CLEAN)  Arquivos objetos removidos$(RESET)"
 
-fclean:			clean
-	@rm 		-f $(EXEC_OUTS)
-	@cd 		$(DIR) && $(MAKE) $@
+fclean:			clean title_fclean
+	@			$(MAKE) -C $(DIR) $@--no-print-directory
+	@			$(RM) $(EXEC_OUTS)
+	@			echo "$(YELLOW)$(CLEAN)  Arquivos objetos e $(NAME) removidos$(RESET)"
 
 n:
 	norminette ../srcs/
+
+# Compila os arquivos da minishelly
+build-objs: $(HEADERS)
+	@cd 		$(DIR) && $(MAKE) --no-print-directory
+
+# Usando para rodar tests unicos
+# formato de uso
+# make run-test TEST_NAME=<dir><file-test>
+# make run-test TEST_NAME=./environ_tests/ft_is_cmd_test
+run-test: build-objs
+	@			$(CC) -g $(OBJS_FILES) $(GNL) $(TEST_NAME).c -o $(addprefix $(DIR_OUTS), $(TEST_NAME))
+	@			echo "$(YELLOW)$(ROCKET)  Executando teste $(TEST_NAME)$(RESET)"
+	@			valgrind --leak-check=full $(addprefix $(DIR_OUTS), $(TEST_NAME))
 
 re: fclean all
 
 .PHONY: re fclean clean all $(TESTS) $(EXEC_OUTS) $(LIBFT)
 
-#tt: tag_token_test
-#
-#tag_token_test:
-#	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
-#	$(DIR_OUTS)$@
+title:
+	@echo "$(GREEN)$(FOLDER)  Compilando Minishelly...$(RESET)"
+	@echo "$(YELLOW)--------------------------------------$(RESET)"
 
-#ctt: ft_create_tokens_test
-#
-#ft_create_tokens_test:
-#	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
-#	valgrind --leak-check=full $(DIR_OUTS)$@
-#
-#
-#ra: ft_token_repair_test
-#
-#ft_token_repair_test:
-#	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
-#	valgrind --leak-check=full $(DIR_OUTS)$@
-#
-#crl: check_readline_test
-#
-#check_readline_test:
-#	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
-#	valgrind --leak-check=full $(DIR_OUTS)$@
-#
-#cp: create_prompt_test
-#
-#create_prompt_test:
-#	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
-#	valgrind --leak-check=full $(DIR_OUTS)$@
+title_clean:
+	@echo "$(RED)$(CLEAN)  Limpando arquivos objetos...$(RESET)"
+	@echo "$(YELLOW)--------------------------------------$(RESET)"
 
-rl: wait_input_test
+title_fclean:
+	@echo "$(RED)$(CLEAN)  Limpando arquivos objetos e $(NAME)...$(RESET)"
+	@echo "$(YELLOW)--------------------------------------$(RESET)"
 
-wait_input_test:
-	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
-	valgrind --leak-check=full $(DIR_OUTS)$@
-#
-#cd: count_delimiter_test
-#
-#count_delimiter_test:
-#	$(CC)	-g $(addsuffix .c, $@) $(YOUR_FILES) $(DIR)libft/libft.a -o $(addprefix $(DIR_OUTS), $@)
-#	valgrind --leak-check=full $(DIR_OUTS)$@
+complete:
+	@echo "$(GREEN)$(ROCKET)  libft compilada com sucesso!$(RESET)"
+	@echo "$(YELLOW)--------------------------------------$(RESET)"

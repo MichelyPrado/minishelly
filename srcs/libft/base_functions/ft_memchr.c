@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 13:44:11 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:46:43 by dapaulin         ###   ########.fr       */
+/*   Created: 2022/06/07 18:37:31 by msilva-p          #+#    #+#             */
+/*   Updated: 2023/04/19 11:36:51 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
+#include "../includes/libft.h"
 
-int main(int argc, char **argv)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-    extern char **environ;
-    
-    return minishelly(argc, argv, environ);
+	unsigned char	*ptr;
+	size_t			i;
+
+	if (!s)
+		return (NULL);
+	i = 0;
+	ptr = (unsigned char *)s;
+	while (i < n)
+	{
+		if (ptr[i] == (unsigned char)c)
+			return ((void *)&ptr[i]);
+		i++;
+	}
+	return (NULL);
 }

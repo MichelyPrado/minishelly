@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   hash.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 13:44:11 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:46:43 by dapaulin         ###   ########.fr       */
+/*   Created: 2023/04/15 17:04:31 by dapaulin          #+#    #+#             */
+/*   Updated: 2023/04/19 13:49:00 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
+#include "../includes/minishell.h"
 
-int main(int argc, char **argv)
+int	hash_func(char *cmd, t_keyword_map *keymap)
 {
-    extern char **environ;
-    
-    return minishelly(argc, argv, environ);
+	int	i;
+
+	if (!cmd || ft_isspace(cmd))
+		return (OP_DEFAULT);
+	i = 0;
+	while (i < 14)
+	{
+		if (ft_strcmp(cmd, keymap[i].keyword) == 0)
+			return (keymap[i].type);
+		i++;
+	}
+	return (OP_CMD);
 }
