@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
+#    By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/04/19 15:47:43 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/04/24 16:12:48 by msilva-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,12 +46,16 @@ PATH_INTERFACES					=						./interfaces/
 INTERFACES						=						$(addprefix $(PATH_INTERFACES), \
 														process.c sys_config.c wait_input.c \
 														minishelly.c)
+PATH_OPERATORS					=						./operators/
+OPERATORS						=						$(addprefix $(PATH_OPERATORS), \
+														ft_pipe.c)
 		
 SRC								=						minishell.c			\
 														$(ENVIRON)			\
 														$(HANDLE)			\
 														$(INTERFACES)		\
-														$(BUILTINS)			
+														$(BUILTINS)			\
+														$(OPERATORS)			
 OBJ								=						$(SRC:%.c=%.o)
 
 

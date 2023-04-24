@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/23 17:39:13 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:13:17 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,9 @@ int				hash_func(char *cmd, t_keyword_map *keymap);
 // Process
 void			exec_commands(t_sys_config *mini);
 int				minishelly(int argc, char **argv, char **environ);
+
+// Operators
+int				ft_pipe(t_sys_config *mini);
 
 //BUILTINS
 int				ft_env(t_sys_config *mini);

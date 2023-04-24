@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/23 17:34:45 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:12:18 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_process_func	*array_functions(void)
 	array_process[OP_DEFAULT] = turn_void;
 	array_process[OP_AND] = turn_void;
 	array_process[OP_OR] = turn_void;
-	array_process[OP_PIPE] = turn_void;
+	array_process[OP_PIPE] = ft_pipe;
 	array_process[OP_OUTPUT] = turn_void;
 	array_process[OP_INPUT] = turn_void;
 	array_process[OP_UNTIL] = turn_void;
