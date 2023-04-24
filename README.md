@@ -6,10 +6,11 @@
 
 ***
 
+
 [![TESTS CHECK](https://github.com/ThreeDP/minishelly/actions/workflows/tests.yml/badge.svg)](https://github.com/ThreeDP/minishelly/actions/workflows/tests.yml/badge.svg)
 [![NORM CHECK](https://github.com/ThreeDP/minishelly/actions/workflows/norm.yml/badge.svg)](https://github.com/ThreeDP/get_next_line/actions/workflows/norm.yml)
 
-# Sobre 
+# 🐚 Sobre 
 > O projeto Minishell da Escola 42 é uma tarefa que desafia os estudantes a criar um interpretador de linha de comando básico em linguagem C. O objetivo é implementar uma série de funções que permitam a execução de comandos internos (builtins) e externos, como em um shell real. Além disso, é necessário implementar recursos como redirecionamento de entrada e saída, pipes, expansão de variáveis e tratamento de sinais. O projeto tem como finalidade aprimorar habilidades em programação em linguagem C, gerenciamento de memória e trabalho com processos no sistema operacional Unix/Linux.
 
 # Funções
