@@ -6,7 +6,7 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/24 16:13:17 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/04/24 16:16:50 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ typedef struct s_token
 
 typedef struct s_sys_config
 {
+	int		fd[2];
 	char	*str;
 	char	**env;
 	int		nlen_parser;

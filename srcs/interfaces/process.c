@@ -6,7 +6,7 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/24 16:12:18 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/04/24 20:49:06 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,78 @@ t_process_func	*array_functions(void)
 
 void	exec_commands(t_sys_config *mini)
 {
-	int				pid;
+	int				pid1;
+	int				pid2;
+	int				bkp[2];
 	int				status;
-	t_token			*tokens;
 	t_process_func	*array_process;
 
-	pid = 0;
-	tokens = mini->tokens;
+	pid1 = 0;
+	pid2 = 0;
+	bkp[0] = dup(STDIN_FILENO);
+	bkp[1] = dup(STDOUT_FILENO);
 	array_process = array_functions();
-	if (tokens->type == OP_CMD && !cmd_path_valid(tokens->token, mini->path))
-		pid = fork();
-	if (pid == 0)
-		array_process[tokens->type](mini);
-	waitpid(pid, &status, 0);
+	if (mini->tokens->type == OP_CMD)
+	{
+		if (mini->tokens->next == NULL)
+			;
+		else if ((mini->tokens->next)->type == OP_PIPE)
+			array_process[mini->tokens->next->type](mini);
+		pid1 = fork();
+		cmd_path_valid(mini->tokens->token, mini->path);
+		if (pid1 == 0)
+		{
+			dup2(mini->fd[1], STDOUT_FILENO);
+			close(mini->fd[0]);
+			close(mini->fd[1]);
+			array_process[mini->tokens->type](mini);
+		}
+		mini->tokens = mini->tokens->next->next;
+		pid2 = fork();
+		cmd_path_valid(mini->tokens->token, mini->path);
+		if (pid2 == 0)
+		{
+			dup2(mini->fd[0], STDIN_FILENO);
+			close(mini->fd[1]);
+			close(mini->fd[0]);
+			array_process[mini->tokens->type](mini);
+		}
+		close(mini->fd[0]);
+		close(mini->fd[1]);
+		waitpid(-1, &status, 0);
+		waitpid(pid2, &status, 0);
+	}
 	return ;
 }
+
+
+		// if (tokens->type == OP_CMD && !cmd_path_valid(tokens->token, mini->path))
+		// {	
+		// 	pid = fork();
+		// 	if (pid == 0)
+		// 	{
+		// 		if (tokens->next && (tokens->next)->type == OP_PIPE)
+		// 			array_process[tokens->next->type](mini);
+		// 		else
+		// 		{
+		// 			dup2(bkp[0], STDIN_FILENO);
+		// 			dup2(bkp[1], STDOUT_FILENO);
+		// 		}
+		// 		if (f == 0)
+		// 		{
+		// 			dup2(mini->fd[0], STDIN_FILENO);
+		// 			dup2(mini->fd[1], STDOUT_FILENO);
+		// 		} 
+		// 		array_process[tokens->type](mini);
+		// 	}
+		// 	waitpid(pid, &status, 0);
+		// 	if (tokens->next)
+		// 		tokens = tokens->next;
+		// }
+		// else
+		// {
+		// 	dup2(bkp[0], STDIN_FILENO);
+		// 	dup2(bkp[1], STDOUT_FILENO);
+		// 	array_process[tokens->type](mini);
+		// } 
+		// tokens = tokens->next;

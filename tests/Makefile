@@ -25,13 +25,15 @@ DIR_BUILTINS							=				/builtins/
 DIR_ENVIRON								=				/environ/
 DIR_HANDLE								=				/handle_input/
 DIR_INTERFACES							=				/interfaces/
+DIR_OPERATORS							=				/operators/
 DIR_LIBFT								=				/libft/
 YOUR_FILES								=				$(wildcard $(FILES)$(DIR_BUILTINS)*.c)						\
 														$(wildcard $(FILES)$(DIR_ENVIRON)*.c)						\
 														$(wildcard $(FILES)$(DIR_HANDLE)*.c)						\
+														$(wildcard $(FILES)$(DIR_OPERATORS)*.c),					\
 														$(addprefix $(FILES)$(DIR_INTERFACES),						\
 														process.c sys_config.c wait_input.c )
-OBJS_FILES								=				$(YOUR_FILES:%.c=%.o)											\
+OBJS_FILES								=				$(YOUR_FILES:%.c=%.o)										\
 														$(addprefix $(FILES)$(DIR_LIBFT), libft.a)					\
 														# Add your files with the function you can test
 TPATH_BUILTINS							=				builtins_tests/
