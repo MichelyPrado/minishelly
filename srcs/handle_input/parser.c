@@ -6,26 +6,26 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:49:05 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/23 17:40:14 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	add_delimiters(char symbol, int *j, char *dst, char *actual_char)
+int	add_delimiters(char symbol, int *j, char *dst, char *c)
 {
-	if (*actual_char == symbol && check_next(symbol, actual_char))
+	if (*c == symbol && check_next(symbol, c))
 	{
 		*j += add_character(dst, *j, NO_PRINT);
-		*j += add_character(dst, *j, *actual_char);
-		*j += add_character(dst, *j, *actual_char);
+		*j += add_character(dst, *j, *c);
+		*j += add_character(dst, *j, *c);
 		*j += add_character(dst, *j, NO_PRINT);
 		return (2);
 	}
-	else if (*actual_char == symbol && *actual_char != '&')
+	else if (*c == symbol && *c != '&')
 	{
 		*j += add_character(dst, *j, NO_PRINT);
-		*j += add_character(dst, *j, *actual_char);
+		*j += add_character(dst, *j, *c);
 		*j += add_character(dst, *j, NO_PRINT);
 		return (1);
 	}

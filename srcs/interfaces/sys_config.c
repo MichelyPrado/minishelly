@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:44:07 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/22 14:58:41 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/23 17:41:52 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_sys_config	*start_sys(char **environ)
 	mini = (t_sys_config *) malloc(sizeof(t_sys_config));
 	get_envp(environ, mini);
 	mini->prompt = malloc(sizeof(char **) * 3);
-	
 	mini->prompt[0] = create_prompt(6, L_GREEN, SHELLNAME, \
 									L_BLUE, cat_user(mini->env), L_WHITE, PROP);
 	mini->prompt[1] = create_prompt(4, L_GREEN, PROPQUOTE, L_WHITE, PROP);
@@ -46,11 +45,12 @@ void	update_unbound_vars(char *key, t_sys_config *mini)
 {
 	if (!ft_strcmp(key, "USER"))
 	{
-		if(mini->prompt[0])
+		if (mini->prompt[0])
 			free(mini->prompt[0]);
 		mini->prompt[0] = create_prompt(6, L_GREEN, SHELLNAME, L_BLUE, \
-							cat_user(mini->env), L_WHITE, PROP);	
-	} else if (!ft_strcmp(key, "PATH"))
+		cat_user(mini->env), L_WHITE, PROP);	
+	}
+	else if (!ft_strcmp(key, "PATH"))
 	{
 		clean_strlist(&mini->path);
 		mini->path = split_paths(mini->env);
@@ -72,7 +72,7 @@ void	clean_strlist(char ***strs)
 	i = 0;
 	if (!(*strs))
 		return ;
-	while((*strs)[i])
+	while ((*strs)[i])
 		free((*strs)[i++]);
 	if (*strs)
 		free(*strs);

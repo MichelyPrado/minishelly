@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 19:22:59 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/19 11:57:29 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/23 17:47:12 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ char	*ft_strrchr(const char *s, int c);
 void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strdup(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
-int 	ft_putchar_fd(char c, int fd);
+int		ft_putchar_fd(char c, int fd);
 char	*ft_strndup(const char *s, size_t size);
-int 	ft_putstr_fd(char *s, int fd);
-int 	ft_putendl_fd(char *s, int fd);
-int 	ft_putnbr_fd(int n, int fd);
+int		ft_putstr_fd(char *s, int fd);
+int		ft_putendl_fd(char *s, int fd);
+int		ft_putnbr_fd(int n, int fd);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s1, char const *set);
@@ -59,7 +59,7 @@ int		ft_print_hexa(unsigned int hexa, char c);
 int		ft_print_unsigned(unsigned int un);
 int		ft_print_pointer(unsigned long pointer, char c);
 int		ft_print_char(int b);
-int     ft_islower(int c);
+int		ft_islower(int c);
 char	*ft_itoa_base(unsigned long n, int base);
 char	*ft_uitoa(unsigned int n);
 

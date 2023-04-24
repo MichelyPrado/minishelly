@@ -32,7 +32,7 @@ MU_TEST(passing_amount_2_without_args_should_be_null) {
     char    *result;
 
     // ACT
-    result = create_prompt(2, NULL);
+    result = create_prompt(2, NULL, NULL);
 
     //ASSERT
     mu_assert_string_eq(expected, result);

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/22 14:25:39 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/23 17:34:45 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	exec_program(t_sys_config *mini)
 	return (0);
 }
 
-t_process_function	*array_functions(void)
+t_process_func	*array_functions(void)
 {
-	t_process_function	*array_process;
+	t_process_func	*array_process;
 
-	array_process = (t_process_function *)malloc(sizeof(t_process_function) * 16);
+	array_process = (t_process_func *)malloc(sizeof(t_process_func) * 16);
 	array_process[OP_DEFAULT] = turn_void;
 	array_process[OP_AND] = turn_void;
 	array_process[OP_OR] = turn_void;
@@ -50,16 +50,18 @@ t_process_function	*array_functions(void)
 
 void	exec_commands(t_sys_config *mini)
 {
-	t_process_function	*array_process;
-	int	status;
-	int pid;
+	int				pid;
+	int				status;
+	t_token			*tokens;
+	t_process_func	*array_process;
 
 	pid = 0;
+	tokens = mini->tokens;
 	array_process = array_functions();
-	if (mini->tokens->type == OP_CMD && !cmd_path_valid(mini->tokens->token, mini->path))
+	if (tokens->type == OP_CMD && !cmd_path_valid(tokens->token, mini->path))
 		pid = fork();
 	if (pid == 0)
-		array_process[mini->tokens->type](mini);
+		array_process[tokens->type](mini);
 	waitpid(pid, &status, 0);
 	return ;
 }

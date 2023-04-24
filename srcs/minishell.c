@@ -6,15 +6,15 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 13:44:11 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:46:43 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/23 17:23:19 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/minishell.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    extern char **environ;
-    
-    return minishelly(argc, argv, environ);
+	extern char	**environ;
+
+	return (minishelly(argc, argv, environ));
 }

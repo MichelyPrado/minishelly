@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:39:43 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/22 19:33:32 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/23 15:15:05 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*create_prompt(int amount, ...)
 {
 	int		i;
+	char	*str;
 	char	*prompt;
 	char	*tmp;
 	va_list	ap;
@@ -25,7 +26,10 @@ char	*create_prompt(int amount, ...)
 	va_start(ap, amount);
 	while (i < amount)
 	{
-		prompt = ft_strjoin(tmp, va_arg(ap, char *));
+		str = va_arg(ap, char *);
+		if (!str)
+			str = "";
+		prompt = ft_strjoin(tmp, str);
 		if (tmp)
 			free(tmp);
 		tmp = prompt;

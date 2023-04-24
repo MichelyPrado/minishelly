@@ -72,7 +72,7 @@ $(TESTS): $(HEADERS)
 
 $(EXEC_OUTS):
 	@			echo "           "
-	@			echo  "$(L_YELLOWB)$@:$(L_WHITE) " && $@
+	@			echo  "$(L_YELLOWB)$@:$(L_WHITE) " && valgrind --leak-check=full -q $@
 
 clean:			title_clean
 	@			$(MAKE) -C $(DIR) $@ --no-print-directory
