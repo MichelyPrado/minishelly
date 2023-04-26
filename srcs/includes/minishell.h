@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/25 21:07:46 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/26 14:32:19 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@
 
 # define SQUOTE 39
 # define DQUOTE 34
-# define NO_PRINT '*'
+# define NO_PRINT -1
 # define CHAR_NULL 1
 # define MORE_ONE_SPACE 2
 

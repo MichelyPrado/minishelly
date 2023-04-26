@@ -20,6 +20,19 @@ typedef struct s_tests
     t_sys_config    *mini;
 }               t_tests;
 
+void    alter_no_print(char *line, char s)
+{
+    int i;
+
+    i = 0;
+    while (line[i])
+    {
+        if (line[i] == s)
+            line[i] = -1;
+        i++;
+    }
+}
+
 static int	run_function(t_tests *vars)
 {
 	int	bkp;
@@ -48,14 +61,15 @@ static void	assert_result(t_tests *vars, char *expected)
 	remove(vars->file_name);
 }
 
-t_tests *config(char *new_parser)
+t_tests *config(char *line)
 {
     t_tests         *vars = malloc(sizeof(t_tests));
     vars->file_name = ft_strdup("files/test.txt");
     vars->fd = 0;
     vars->bkp = dup(1);
     vars->mini = start_sys(c_environ);
-    vars->mini->new_parser = ft_strdup(new_parser);
+    check_readline(line, vars->mini);
+    alter_no_print(vars->mini->new_parser, 7);
     vars->mini->tokens = ft_create_tokens(vars->mini);
     t_token         *cleaner = vars->mini->tokens;
     return (vars);
@@ -71,9 +85,11 @@ void    free_all_test(t_tests *vars, t_token *cleaner)
         free(vars);
 }
 
+
+
 MU_TEST(test) {
     // CONFIG
-    t_tests         *vars = config("cat ./testes_files/banana.txt*|*grep banana");
+    t_tests         *vars = config("cat ./testes_files/banana.txt | grep banana");
     t_token         *cleaner = vars->mini->tokens;
     char            *expected   = "banana batida\n";
 
@@ -87,7 +103,7 @@ MU_TEST(test) {
 
 MU_TEST(test1) {
     // CONFIG
-    t_tests         *vars = config("cat ./testes_files/banana.txt*|*grep banana*|*wc -l");
+    t_tests         *vars = config("cat ./testes_files/banana.txt|grep banana | wc -l");
     t_token         *cleaner = vars->mini->tokens;
     char            *expected   = "1\n";
 
