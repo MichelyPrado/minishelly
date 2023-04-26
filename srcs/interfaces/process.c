@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/25 21:53:51 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/26 13:53:27 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,13 @@ void	recycle_pipe(t_sys_config *mini, int i)
 	pipe(mini->fd[fd]);
 }
 
+void	clean_functions(t_process_func *funcs)
+{
+
+	if (funcs)
+		free(funcs);
+}
+
 void	exec_commands(t_sys_config *mini)
 {
 	int				pid1;
@@ -116,5 +123,6 @@ void	exec_commands(t_sys_config *mini)
 	close(mini->fd[1][0]);
 	close(mini->fd[1][1]);
 	waitpid(pid1, &status, 0);
+	clean_functions(array_process);
 	return ;
 }
