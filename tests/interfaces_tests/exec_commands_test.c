@@ -85,8 +85,6 @@ void    free_all_test(t_tests *vars, t_token *cleaner)
         free(vars);
 }
 
-
-
 MU_TEST(test) {
     // CONFIG
     t_tests         *vars = config("cat ./testes_files/banana.txt | grep banana");
