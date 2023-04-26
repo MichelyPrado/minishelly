@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sys_config.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:44:07 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/24 16:30:49 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:12:15 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ t_sys_config	*start_sys(char **environ)
 
 	mini = (t_sys_config *) malloc(sizeof(t_sys_config));
 	get_envp(environ, mini);
-	mini->fd[0] = 0;
-	mini->fd[1] = 1;
+	mini->fd[0][0] = 0;
+	mini->fd[0][1] = 0;
+	mini->fd[1][0] = 0;
+	mini->fd[1][1] = 0;
 	mini->prompt = malloc(sizeof(char **) * 3);
 	mini->prompt[0] = create_prompt(6, L_GREEN, SHELLNAME, \
 									L_BLUE, cat_user(mini->env), L_WHITE, PROP);

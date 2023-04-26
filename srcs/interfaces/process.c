@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/25 14:24:25 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:53:51 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,99 +48,73 @@ t_process_func	*array_functions(void)
 	return (array_process);
 }
 
+void	x(t_sys_config *mini, t_process_func * array_process, int pid, int i, int j)
+{
+	if (pid == 0)
+	{
+		if (i % 2 == 0)
+		{	
+			if (!j)
+				dup2(mini->fd[0][1], STDOUT_FILENO);
+			dup2(mini->fd[1][0], STDIN_FILENO);
+		}
+		else 
+		{
+			if (!j)
+				dup2(mini->fd[1][1], STDOUT_FILENO);
+			dup2(mini->fd[0][0], STDIN_FILENO);
+		}
+		close(mini->fd[0][0]);
+		close(mini->fd[0][1]);
+		close(mini->fd[1][0]);
+		close(mini->fd[1][1]);
+		array_process[mini->tokens->type](mini);
+		exit(127);
+	}
+}
+
+void	recycle_pipe(t_sys_config *mini, int i)
+{
+	int	fd;
+
+	if (i % 2 == 0)
+		fd = 1;
+	else
+		fd = 0;
+	close(mini->fd[fd][0]);
+	close(mini->fd[fd][1]);
+	pipe(mini->fd[fd]);
+}
+
 void	exec_commands(t_sys_config *mini)
 {
 	int				pid1;
-	int				pid2;
 	int				i = 0;
-	//int				bkp[2];
 	int				status;
 	t_process_func	*array_process;
 
 	pid1 = 0;
-	pid2 = 0;
-	//bkp[0] = dup(STDIN_FILENO);
-	//bkp[1] = dup(STDOUT_FILENO);
 	array_process = array_functions();
-	if (mini->tokens->type == OP_CMD)
+	array_process[mini->tokens->next->type](mini);
+	while (mini->tokens->next)
 	{
-		if (mini->tokens->next == NULL)
-			;
-		else if ((mini->tokens->next)->type == OP_PIPE)
-			array_process[mini->tokens->next->type](mini);
-		while (mini->tokens->next)
+		if (mini->tokens->type == OP_CMD)
 		{
 			pid1 = fork();
 			cmd_path_valid(mini->tokens->token, mini->path);
-			if (pid1 == 0 && i == 0)
-			{
-				dup2(mini->fd[1], STDOUT_FILENO);
-				close(mini->fd[0]);
-				close(mini->fd[1]);
-				array_process[mini->tokens->type](mini);
-			}
-			else if (pid1 == 0 && i == 1)
-			{
-				dup2(mini->fd[0], STDIN_FILENO);
-				dup2(mini->fd[1], STDOUT_FILENO);
-				close(mini->fd[1]);
-				close(mini->fd[0]);
-				array_process[mini->tokens->type](mini);
-			}
-			if (pid1 != 0)
-				i = 1;
-			mini->tokens = mini->tokens->next->next;
+			x(mini, array_process, pid1, i, 0);
 		}
-		pid1 = fork();
-		cmd_path_valid(mini->tokens->token, mini->path);
-		if (pid1 == 0)
-		{
-			if (i == 1)
-			{
-				dup2(mini->fd[0], STDIN_FILENO);
-				close(mini->fd[0]);
-				close(mini->fd[1]);
-			}
-			array_process[mini->tokens->type](mini);
-		}
-		if (pid1 != 0 && i == 1)
-		{
-			close(mini->fd[0]);
-			close(mini->fd[1]);
-		}
-		waitpid(pid1, &status, 0);
+		recycle_pipe(mini, i);
+		mini->tokens = mini->tokens->next->next;
+		i++;
 	}
+	pid1 = fork();
+	cmd_path_valid(mini->tokens->token, mini->path);
+	x(mini, array_process, pid1, i, 1);
+	close(mini->fd[0][0]);
+	close(mini->fd[0][1]);
+	close(mini->fd[1][0]);
+	close(mini->fd[1][1]);
+	waitpid(pid1, &status, 0);
 	return ;
 }
-
-
-		// if (tokens->type == OP_CMD && !cmd_path_valid(tokens->token, mini->path))
-		// {	
-		// 	pid = fork();
-		// 	if (pid == 0)
-		// 	{
-		// 		if (tokens->next && (tokens->next)->type == OP_PIPE)
-		// 			array_process[tokens->next->type](mini);
-		// 		else
-		// 		{
-		// 			dup2(bkp[0], STDIN_FILENO);
-		// 			dup2(bkp[1], STDOUT_FILENO);
-		// 		}
-		// 		if (f == 0)
-		// 		{
-		// 			dup2(mini->fd[0], STDIN_FILENO);
-		// 			dup2(mini->fd[1], STDOUT_FILENO);
-		// 		} 
-		// 		array_process[tokens->type](mini);
-		// 	}
-		// 	waitpid(pid, &status, 0);
-		// 	if (tokens->next)
-		// 		tokens = tokens->next;
-		// }
-		// else
-		// {
-		// 	dup2(bkp[0], STDIN_FILENO);
-		// 	dup2(bkp[1], STDOUT_FILENO);
-		// 	array_process[tokens->type](mini);
-		// } 
-		// tokens = tokens->next;
