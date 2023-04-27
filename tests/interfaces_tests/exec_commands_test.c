@@ -78,6 +78,7 @@ t_tests *config(char *line)
 void    free_all_test(t_tests *vars, t_token *cleaner)
 {
     vars->mini->tokens = cleaner;
+    remove(vars->file_name);
     if (vars->file_name)
         free(vars->file_name);
     clean_sys(vars->mini);

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/26 14:32:19 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/27 20:20:21 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,15 +127,31 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef enum e_first_or_end
+{
+	BFALSE,
+	BTRUE
+}			t_first_or_end;
+
+typedef struct s_exec
+{
+	int				i;
+	int				pid;
+	int				fd[2][2];
+	int				status;
+	t_first_or_end	flag;
+	void			*func;
+}				t_exec;
+
 typedef struct s_sys_config
 {
-	int		fd[2][2];
 	char	*str;
 	char	**env;
 	int		nlen_parser;
 	char	*new_parser;
 	t_token	*tokens;
 	char	**prompt;
+	t_exec	*exec;
 	char	**path;
 }	t_sys_config;
 
@@ -206,6 +222,9 @@ int				minishelly(int argc, char **argv, char **environ);
 
 // Operators
 int				ft_pipe(t_sys_config *mini);
+
+// FDS
+void			close_fds(t_sys_config *mini);
 
 //BUILTINS
 int				ft_env(t_sys_config *mini);
