@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/05 14:38:41 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:54:47 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ typedef enum e_first_or_end
 typedef struct s_exec
 {
 	int				i;
+	int				pipes;
 	int				pid;
 	int				**fd;
 	int				status;

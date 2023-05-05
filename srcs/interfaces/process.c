@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/05 14:52:19 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:55:48 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,20 @@ t_process_func	*array_functions(void)
 
 t_exec		*init_exec()
 {
+	int		i;
 	t_exec	*exec;
 
+	i = 0;
 	exec = malloc(sizeof(t_exec));
 	exec->i = 0;
 	exec->pid = 0;
-	exec->fd = (int **) malloc(2 * sizeof(int *));
-	exec->fd[0] = malloc(2 * sizeof(int));
-	exec->fd[1] = malloc(2 * sizeof(int));
-	pipe(exec->fd[0]);
-	pipe(exec->fd[1]);
+	exec->pipes = 3;
+	exec->fd = (int **) malloc(exec->pipes * sizeof(int *));
+	while (i < exec->pipes)
+	{
+		exec->fd[i] = malloc(2 * sizeof(int));
+		pipe(exec->fd[i++]);
+	}
 	exec->status = 0;
 	exec->flag = BFALSE;
 	exec->func = array_functions();
