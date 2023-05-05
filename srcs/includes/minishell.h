@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/27 20:20:21 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:38:41 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ typedef struct s_exec
 {
 	int				i;
 	int				pid;
-	int				fd[2][2];
+	int				**fd;
 	int				status;
 	t_first_or_end	flag;
 	void			*func;

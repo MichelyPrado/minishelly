@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/05 11:04:54 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/05 14:52:19 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ t_exec		*init_exec()
 	exec = malloc(sizeof(t_exec));
 	exec->i = 0;
 	exec->pid = 0;
+	exec->fd = (int **) malloc(2 * sizeof(int *));
+	exec->fd[0] = malloc(2 * sizeof(int));
+	exec->fd[1] = malloc(2 * sizeof(int));
 	pipe(exec->fd[0]);
 	pipe(exec->fd[1]);
 	exec->status = 0;
@@ -92,6 +95,9 @@ void	exec_commands(t_sys_config *mini)
 		mini->tokens = mini->tokens->next;
 	}
 	close_fds(mini);
+	free(mini->exec->fd[0]);
+	free(mini->exec->fd[1]);
+	free(mini->exec->fd);
 	if (mini->exec->pid)
 		waitpid(mini->exec->pid, &mini->exec->status, 0);
 	if (mini->exec->func)
