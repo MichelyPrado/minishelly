@@ -86,7 +86,21 @@ void    free_all_test(t_tests *vars, t_token *cleaner)
         free(vars);
 }
 
-MU_TEST(test) {
+MU_TEST(test_passing_only_one_cmd_should_be_no_pipe) {
+    // CONFIG
+    t_tests         *vars = config("cat ./testes_files/galo.txt");
+    t_token         *cleaner = vars->mini->tokens;
+    char            *expected   = "Galooo!";
+
+    // ACT
+    run_function(vars);
+
+    // ASSERT
+    assert_result(vars, expected);
+    free_all_test(vars, cleaner);
+}
+
+MU_TEST(test1) {
     // CONFIG
     t_tests         *vars = config("cat ./testes_files/banana.txt | grep banana");
     t_token         *cleaner = vars->mini->tokens;
@@ -100,7 +114,7 @@ MU_TEST(test) {
     free_all_test(vars, cleaner);
 }
 
-MU_TEST(test1) {
+MU_TEST(test2) {
     // CONFIG
     t_tests         *vars = config("cat ./testes_files/banana.txt|grep banana | wc -l");
     t_token         *cleaner = vars->mini->tokens;
@@ -114,13 +128,14 @@ MU_TEST(test1) {
     free_all_test(vars, cleaner);
 }
 
-MU_TEST_SUITE(test_suite) {
-	MU_RUN_TEST(test);
-    MU_RUN_TEST(test1);
+MU_TEST_SUITE(test_pipe_and_cmds_suite) {
+    MU_RUN_TEST(test_passing_only_one_cmd_should_be_no_pipe);
+	MU_RUN_TEST(test1);
+    MU_RUN_TEST(test2);
 }
 
 int main() {
-	MU_RUN_SUITE(test_suite);
+	MU_RUN_SUITE(test_pipe_and_cmds_suite);
 	MU_REPORT();
 	return MU_EXIT_CODE;
 }

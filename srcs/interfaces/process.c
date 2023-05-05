@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/27 20:21:37 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:04:54 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	exec_commands(t_sys_config *mini)
 			if (mini->exec->flag == BTRUE)
 				break;
 			mini->tokens = mini->tokens->next;
-			mini->exec->i++;
 		}
 		mini->tokens = mini->tokens->next;
 	}

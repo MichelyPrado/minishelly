@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:31:23 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/27 20:20:40 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:01:52 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ void	recycle_pipe(t_sys_config *mini)
 	pipe(mini->exec->fd[fd]);
 }
 
+void	make_dup2(t_sys_config *mini, int infd, int outfd)
+{
+	if (!mini->exec->flag)
+		dup2(mini->exec->fd[outfd][1], STDOUT_FILENO);
+	dup2(mini->exec->fd[infd][0], STDIN_FILENO);
+}
+
 int ft_pipe(t_sys_config *mini)
 {
 	t_process_func	*func;
@@ -34,21 +41,14 @@ int ft_pipe(t_sys_config *mini)
 	if (mini->exec->pid == 0)
 	{
 		if (mini->exec->i % 2 == 0)
-		{	
-			if (!mini->exec->flag)
-				dup2(mini->exec->fd[0][1], STDOUT_FILENO);
-			dup2(mini->exec->fd[1][0], STDIN_FILENO);
-		}
+			make_dup2(mini, 1, 0);
 		else 
-		{
-			if (!mini->exec->flag)
-				dup2(mini->exec->fd[1][1], STDOUT_FILENO);
-			dup2(mini->exec->fd[0][0], STDIN_FILENO);
-		}
+			make_dup2(mini, 0, 1);
         close_fds(mini);
 		func[mini->tokens->type](mini);
 		exit(127);
 	}
     recycle_pipe(mini);
+	mini->exec->i++;
     return (0);
 }
