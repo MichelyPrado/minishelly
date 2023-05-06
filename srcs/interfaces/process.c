@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/05 14:55:48 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/06 15:59:03 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	close_fds(t_sys_config *mini)
 
 void	exec_commands(t_sys_config *mini)
 {
+	int				i;
 	t_process_func	*func;
 
 	mini->exec = init_exec();
@@ -99,8 +100,9 @@ void	exec_commands(t_sys_config *mini)
 		mini->tokens = mini->tokens->next;
 	}
 	close_fds(mini);
-	free(mini->exec->fd[0]);
-	free(mini->exec->fd[1]);
+	i = 0;
+	while (i < mini->exec->pipes)
+		free(mini->exec->fd[i++]);
 	free(mini->exec->fd);
 	if (mini->exec->pid)
 		waitpid(mini->exec->pid, &mini->exec->status, 0);

@@ -49,14 +49,11 @@ static int	run_function(t_tests *vars)
 
 static void	assert_result(t_tests *vars, char *expected)
 {
-	char	*tmp;
+	char	tmp[10000] = {0};
 
 	vars->fd = open(vars->file_name, O_RDONLY, S_IRWXU);
-    tmp = get_next_line(vars->fd);
+    read(vars->fd, tmp, 10000);
     mu_assert_string_eq(expected, tmp);
-    if (tmp)
-        free(tmp);
-        get_next_line(vars->fd);
 	close(vars->fd);
 	remove(vars->file_name);
 }
