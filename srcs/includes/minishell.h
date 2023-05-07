@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/05 14:54:47 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/06 16:55:00 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,9 @@ int				ft_pipe(t_sys_config *mini);
 
 // FDS
 void			close_fds(t_sys_config *mini);
+
+// EXPAND
+void			expand_symbol(char **line, char c, char **env);
 
 //BUILTINS
 int				ft_env(t_sys_config *mini);

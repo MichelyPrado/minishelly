@@ -54,7 +54,8 @@ TESTS_HANDLE							=				$(addprefix $(TPATH_HANDLE), 								\
 														check_readline_test 		 								\
 														tag_token_test 				ft_token_repair_test 			\
 														ft_create_tokens_test 		list_token_test					\
-														hash_func_test 				count_delimiter_test) 			\
+														hash_func_test 				count_delimiter_test			\
+														expand_test.c) 			\
 														# Add your test names without .c
 TESTS									=				$(TESTS_BUILTINS)											\
 														$(TESTS_ENVIRON)											\

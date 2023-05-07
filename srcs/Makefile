@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/04/24 16:12:48 by msilva-p         ###   ########.fr        #
+#    Updated: 2023/05/06 16:22:26 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ ENVIRON							=						$(addprefix $(PATH_ENVIRON), \
 PATH_HANDLE						=						./handle_input/
 HANDLE							=						$(addprefix $(PATH_HANDLE), \
 														ft_tokens.c handle_tokens.c hash.c \
-														parser_utils.c parser.c)
+														parser_utils.c parser.c expand.c)
 PATH_INTERFACES					=						./interfaces/
 INTERFACES						=						$(addprefix $(PATH_INTERFACES), \
 														process.c sys_config.c wait_input.c \
