@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/09 13:10:30 by msilva-p         ###   ########.fr        #
+#    Updated: 2023/05/09 15:05:21 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,9 @@ RM								=						rm -rf
 
 LIBFT_PATH						=						./libft/
 LIBFT							=						$(LIBFT_PATH)/libft.a
+PATH_SIGNALS					=						./signals/
+SIGNALS							=						$(addprefix $(PATH_SIGNALS), \
+														signals.c)
 PATH_BUILTINS					=						./builtins/
 BUILTINS						=						$(addprefix $(PATH_BUILTINS), \
 														cd.c echo.c env.c exit.c export.c \
@@ -41,20 +44,21 @@ ENVIRON							=						$(addprefix $(PATH_ENVIRON), \
 PATH_HANDLE						=						./handle_input/
 HANDLE							=						$(addprefix $(PATH_HANDLE), \
 														ft_tokens.c handle_tokens.c hash.c \
-														parser_utils.c parser.c)
+														parser_utils.c parser.c expand.c)
 PATH_INTERFACES					=						./interfaces/
 INTERFACES						=						$(addprefix $(PATH_INTERFACES), \
 														process.c sys_config.c wait_input.c \
 														minishelly.c)
-PATH_SIGNALS					=						./signals/
-SIGNALS							=						$(addprefix $(PATH_SIGNALS), \
-														signals.c)
+PATH_OPERATORS					=						./operators/
+OPERATORS						=						$(addprefix $(PATH_OPERATORS), \
+														ft_pipe.c)
 SRC								=						minishell.c			\
+														$(BUILTINS)			\
 														$(ENVIRON)			\
 														$(HANDLE)			\
 														$(INTERFACES)		\
-														$(BUILTINS)			\
-														$(SIGNALS)																
+														$(OPERATORS)		\
+														$(SIGNALS)						
 OBJ								=						$(SRC:%.c=%.o)
 
 

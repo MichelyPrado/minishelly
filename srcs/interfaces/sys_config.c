@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:44:07 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/23 17:41:52 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/04/27 19:27:25 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_sys_config	*start_sys(char **environ)
 
 	mini = (t_sys_config *) malloc(sizeof(t_sys_config));
 	get_envp(environ, mini);
+	mini->exec = &((t_exec){0});
 	mini->prompt = malloc(sizeof(char **) * 3);
 	mini->prompt[0] = create_prompt(6, L_GREEN, SHELLNAME, \
 									L_BLUE, cat_user(mini->env), L_WHITE, PROP);
@@ -39,6 +40,22 @@ t_sys_config	*start_sys(char **environ)
 	mini->path = split_paths(mini->env);
 	mini->str = NULL;
 	return (mini);
+}
+
+void	clean_sys(t_sys_config *mini)
+{
+	if (mini->new_parser)
+		free(mini->new_parser);
+	if (mini->str)
+		free(mini->str);
+	if (mini->exec)
+		free(mini->exec);
+	clean_strlist(&(mini->env));
+	clean_strlist(&(mini->prompt));
+	ft_token_free(&(mini->tokens));
+	clean_strlist(&(mini->path));
+	if (mini)
+		free(mini);
 }
 
 void	update_unbound_vars(char *key, t_sys_config *mini)
@@ -55,14 +72,6 @@ void	update_unbound_vars(char *key, t_sys_config *mini)
 		clean_strlist(&mini->path);
 		mini->path = split_paths(mini->env);
 	}
-}
-
-void	clean_sys(t_sys_config *mini)
-{
-	clean_strlist(&(mini->env));
-	clean_strlist(&(mini->prompt));
-	if (mini)
-		free(mini);
 }
 
 void	clean_strlist(char ***strs)

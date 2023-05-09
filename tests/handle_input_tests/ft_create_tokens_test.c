@@ -1,5 +1,18 @@
 #include "../includes/tests_includes.h"
 
+void    alter_no_print(char *line, char s)
+{
+    int i;
+
+    i = 0;
+    while (line[i])
+    {
+        if (line[i] == s)
+            line[i] = -1;
+        i++;
+    }
+}
+
 t_token *create_token_test(char *token[], t_types type)
 {
     t_token *node;
@@ -53,7 +66,8 @@ MU_TEST(test1) {
 	// CONFIG
     t_token *tokens;
     t_sys_config mini = (t_sys_config) {0};
-    mini.new_parser = "echo batatinha frita *|* wc";
+    mini.new_parser = ft_strdup("echo batatinha frita *|* wc");
+    alter_no_print(mini.new_parser, '*');
     char    *n1[] = {"echo", "batatinha", "frita", NULL};
     char    *n2[] = {"|", NULL};
     char    *n3[] = {"wc", NULL};
@@ -70,6 +84,8 @@ MU_TEST(test1) {
     mu_run_test(node1, tokens, 1);
     mu_run_test(node2, tokens->next, 1);
     mu_run_test(node3, tokens->next->next, 0);
+    if (mini.new_parser)
+        free(mini.new_parser);
     clean_test(&node1);
     ft_token_free(&tokens);
 }
@@ -78,7 +94,8 @@ MU_TEST(test2) {
 	// CONFIG
     t_token *tokens;
     t_sys_config mini = (t_sys_config) {0};
-    mini.new_parser = "echo batatinha frita *|*    \t    *|* wc";
+    mini.new_parser = ft_strdup("echo batatinha frita *|*    \t    *|* wc");
+    alter_no_print(mini.new_parser, '*');
     char    *n1[] = {"echo", "batatinha", "frita", NULL};
     char    *n2[] = {"|", NULL};
     char    *n3[] = {"|", NULL};
@@ -99,6 +116,8 @@ MU_TEST(test2) {
     mu_run_test(node2, tokens->next, 1);
     mu_run_test(node3, tokens->next->next, 1);
     mu_run_test(node4, tokens->next->next->next, 0);
+    if (mini.new_parser)
+        free(mini.new_parser);
     clean_test(&node1);
     ft_token_free(&tokens);
 }
@@ -107,7 +126,8 @@ MU_TEST(test3) {
 	// CONFIG
     t_token *tokens;
     t_sys_config mini = (t_sys_config) {0};
-    mini.new_parser = "echo \"batatinha frita\" *|* wc";
+    mini.new_parser = ft_strdup("echo \"batatinha frita\" *|* wc");
+    alter_no_print(mini.new_parser, '*');
     char    *n1[] = {"echo", "batatinha frita", NULL};
     char    *n2[] = {"|", NULL};
     char    *n3[] = {"wc", NULL};
@@ -124,6 +144,8 @@ MU_TEST(test3) {
     mu_run_test(node1, tokens, 1);
     mu_run_test(node2, tokens->next, 1);
     mu_run_test(node3, tokens->next->next, 0);
+    if (mini.new_parser)
+        free(mini.new_parser);
     clean_test(&node1);
     ft_token_free(&tokens);
 }

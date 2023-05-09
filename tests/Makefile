@@ -25,13 +25,15 @@ DIR_BUILTINS							=				/builtins/
 DIR_ENVIRON								=				/environ/
 DIR_HANDLE								=				/handle_input/
 DIR_INTERFACES							=				/interfaces/
+DIR_OPERATORS							=				/operators/
 DIR_LIBFT								=				/libft/
 YOUR_FILES								=				$(wildcard $(FILES)$(DIR_BUILTINS)*.c)						\
 														$(wildcard $(FILES)$(DIR_ENVIRON)*.c)						\
 														$(wildcard $(FILES)$(DIR_HANDLE)*.c)						\
+														$(wildcard $(FILES)$(DIR_OPERATORS)*.c)						\
 														$(addprefix $(FILES)$(DIR_INTERFACES),						\
 														process.c sys_config.c wait_input.c )
-OBJS_FILES								=				$(YOUR_FILES:%.c=%.o)											\
+OBJS_FILES								=				$(YOUR_FILES:%.c=%.o)										\
 														$(addprefix $(FILES)$(DIR_LIBFT), libft.a)					\
 														# Add your files with the function you can test
 TPATH_BUILTINS							=				builtins_tests/
@@ -44,14 +46,16 @@ TESTS_ENVIRON							=				$(addprefix $(TPATH_ENVIRON), 								\
 														ft_export_test 				cmd_path_valid_test)
 TPATH_INTERFACES						=				interfaces_tests/
 TESTS_INTERFACES						=				$(addprefix $(TPATH_INTERFACES),			 				\
-														wait_input_test 			create_prompt_test)
+														wait_input_test 			create_prompt_test				\
+														exec_commands_test)
 TPATH_HANDLE							=				handle_input_tests/
 #														handle_tokens_test
 TESTS_HANDLE							=				$(addprefix $(TPATH_HANDLE), 								\
 														check_readline_test 		 								\
 														tag_token_test 				ft_token_repair_test 			\
 														ft_create_tokens_test 		list_token_test					\
-														hash_func_test 				count_delimiter_test) 			\
+														hash_func_test 				count_delimiter_test			\
+														expand_test) 			\
 														# Add your test names without .c
 TESTS									=				$(TESTS_BUILTINS)											\
 														$(TESTS_ENVIRON)											\
@@ -98,7 +102,7 @@ build-objs: $(HEADERS)
 run-test: build-objs
 	@			$(CC) -g $(OBJS_FILES) $(GNL) $(TEST_NAME).c -o $(addprefix $(DIR_OUTS), $(TEST_NAME))
 	@			echo "$(YELLOW)$(ROCKET)  Executando teste $(TEST_NAME)$(RESET)"
-	@			valgrind --leak-check=full $(addprefix $(DIR_OUTS), $(TEST_NAME))
+	@			valgrind --leak-check=full --show-leak-kinds=all $(addprefix $(DIR_OUTS), $(TEST_NAME))
 
 re: fclean all
 

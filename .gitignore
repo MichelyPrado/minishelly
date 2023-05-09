@@ -3,3 +3,4 @@ minishell
 tests/outs/*/*_test
 libft.a
 .vscode
+main.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/09 13:04:33 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/09 15:07:44 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@
 
 # define SQUOTE 39
 # define DQUOTE 34
-# define NO_PRINT '*'
+# define NO_PRINT -1
 # define CHAR_NULL 1
 # define MORE_ONE_SPACE 2
 
@@ -127,6 +127,23 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef enum e_first_or_end
+{
+	BFALSE,
+	BTRUE
+}			t_first_or_end;
+
+typedef struct s_exec
+{
+	int				i;
+	int				pipes;
+	int				pid;
+	int				**fd;
+	int				status;
+	t_first_or_end	flag;
+	void			*func;
+}				t_exec;
+
 typedef struct s_sys_config
 {
 	char	*str;
@@ -135,10 +152,12 @@ typedef struct s_sys_config
 	char	*new_parser;
 	t_token	*tokens;
 	char	**prompt;
+	t_exec	*exec;
 	char	**path;
 }	t_sys_config;
 
 typedef int	(*t_process_func)(t_sys_config *);
+typedef struct sigaction t_sa;
 
 typedef struct sigaction	t_sa;
 
@@ -206,6 +225,20 @@ int				hash_func(char *cmd, t_keyword_map *keymap);
 void			exec_commands(t_sys_config *mini);
 int				minishelly(int argc, char **argv, char **environ);
 
+// Operators
+int				ft_pipe(t_sys_config *mini);
+
+// FDS
+void			close_fds(t_sys_config *mini);
+
+// EXPAND
+void			expand_symbol(char **line, char c, char **env);
+
+// Signals
+void			sig_a(int sig);
+void			sig_handler( int sig, siginfo_t *info, void *context);
+void			wait_signal(t_sa *sa);
+
 //BUILTINS
 int				ft_env(t_sys_config *mini);
 int				ft_pwd(t_sys_config *mini);
@@ -214,6 +247,5 @@ int				ft_cd(t_sys_config *mini);
 int				ft_exit(t_sys_config *mini);
 int				b_export(t_sys_config *mini);
 int				b_unset(t_sys_config *mini);
-//SIGNALS
-void			sig_a(int sig);
+
 #endif
