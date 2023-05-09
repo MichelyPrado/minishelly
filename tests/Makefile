@@ -26,8 +26,10 @@ DIR_ENVIRON								=				/environ/
 DIR_HANDLE								=				/handle_input/
 DIR_INTERFACES							=				/interfaces/
 DIR_OPERATORS							=				/operators/
+DIR_SIGNALS								=				/signals/
 DIR_LIBFT								=				/libft/
 YOUR_FILES								=				$(wildcard $(FILES)$(DIR_BUILTINS)*.c)						\
+														$(wildcard $(FILES)$(DIR_SIGNALS)*.c)						\
 														$(wildcard $(FILES)$(DIR_ENVIRON)*.c)						\
 														$(wildcard $(FILES)$(DIR_HANDLE)*.c)						\
 														$(wildcard $(FILES)$(DIR_OPERATORS)*.c)						\
@@ -71,7 +73,7 @@ mini:
 	@cd 		$(DIR) && $(MAKE) --no-print-directory
 
 $(TESTS): $(HEADERS)
-	@			$(CC)	-g $(OBJS_FILES) $(GNL) $@.c -o $(addprefix $(DIR_OUTS), $@)
+	@			$(CC)	-g $(OBJS_FILES) -l readline $(GNL) $@.c -o $(addprefix $(DIR_OUTS), $@)
 	@			echo "$(YELLOW)$(ROCKET)  Compilando $@$(RESET)"
 
 $(EXEC_OUTS):
