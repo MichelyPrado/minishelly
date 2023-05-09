@@ -58,10 +58,10 @@ static void	assert_result(t_tests *vars, char *expected)
 	remove(vars->file_name);
 }
 
-t_tests *config(char *line)
+t_tests *config(char *line, char *filename)
 {
     t_tests         *vars = malloc(sizeof(t_tests));
-    vars->file_name = ft_strdup("files/test.txt");
+    vars->file_name = ft_strdup(filename);
     vars->fd = 0;
     vars->bkp = dup(1);
     vars->mini = start_sys(c_environ);
@@ -85,7 +85,7 @@ void    free_all_test(t_tests *vars, t_token *cleaner)
 
 MU_TEST(test_passing_only_one_cmd_should_be_no_pipe) {
     // CONFIG
-    t_tests         *vars = config("cat ./testes_files/galo.txt");
+    t_tests         *vars = config("cat ./testes_files/galo.txt", "files/test.txt");
     t_token         *cleaner = vars->mini->tokens;
     char            *expected   = "Galooo!";
 
@@ -99,7 +99,7 @@ MU_TEST(test_passing_only_one_cmd_should_be_no_pipe) {
 
 MU_TEST(test1) {
     // CONFIG
-    t_tests         *vars = config("cat ./testes_files/banana.txt | grep banana");
+    t_tests         *vars = config("cat ./testes_files/banana.txt | grep banana", "files/test.txt");
     t_token         *cleaner = vars->mini->tokens;
     char            *expected   = "banana batida\n";
 
@@ -113,9 +113,26 @@ MU_TEST(test1) {
 
 MU_TEST(test2) {
     // CONFIG
-    t_tests         *vars = config("cat ./testes_files/banana.txt|grep banana | wc -l");
+    t_tests         *vars = config("cat ./testes_files/banana.txt|grep banana | wc -l", "files/test.txt");
     t_token         *cleaner = vars->mini->tokens;
     char            *expected   = "1\n";
+
+    // ACT
+    run_function(vars);
+
+    // ASSERT
+    assert_result(vars, expected);
+    free_all_test(vars, cleaner);
+}
+
+
+// BULTINS
+MU_TEST(test_builtdin_cd_2_dot_pipe_ls_should_be_de_same_director) {
+    // CONFIG
+    chdir("files/");
+    t_tests         *vars = config("cd ../ | ls -a", "test.txt");
+    t_token         *cleaner = vars->mini->tokens;
+    char            *expected   = ".\n..\n.gitkeep\ntest.txt\n";
 
     // ACT
     run_function(vars);
@@ -131,8 +148,14 @@ MU_TEST_SUITE(test_pipe_and_cmds_suite) {
     MU_RUN_TEST(test2);
 }
 
+MU_TEST_SUITE(test_builtins_suite) {
+    MU_RUN_TEST(test_builtdin_cd_2_dot_pipe_ls_should_be_de_same_director);
+}
+
+
 int main() {
 	MU_RUN_SUITE(test_pipe_and_cmds_suite);
+    MU_RUN_SUITE(test_builtins_suite);
 	MU_REPORT();
 	return MU_EXIT_CODE;
 }

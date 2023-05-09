@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:31:23 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/05 14:48:44 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/08 18:38:16 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int ft_pipe(t_sys_config *mini)
 	t_process_func	*func;
 
 	func = (t_process_func *)mini->exec->func;
-    cmd_path_valid(mini->tokens->token, mini->path);
 	if (mini->exec->pid == 0)
 	{
 		if (mini->exec->i % 2 == 0)

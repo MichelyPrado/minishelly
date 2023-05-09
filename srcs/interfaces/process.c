@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/06 15:59:03 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/08 19:35:03 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ int	turn_void(t_sys_config *mini)
 
 int	exec_program(t_sys_config *mini)
 {
-	execve(*mini->tokens->token, mini->tokens->token, mini->env);
+	if (mini->exec->pid == 0)
+	{
+		cmd_path_valid(mini->tokens->token, mini->path);
+		execve(*mini->tokens->token, mini->tokens->token, mini->env);
+	}
 	return (0);
 }
 
@@ -83,19 +87,29 @@ void	exec_commands(t_sys_config *mini)
 	int				i;
 	t_process_func	*func;
 
+	i = 0;
 	mini->exec = init_exec();
 	func = (t_process_func *) mini->exec->func;
+	mini->exec->flag = BFALSE;
 	while (mini->tokens)
 	{
-		if (!mini->tokens->next)
-			mini->exec->flag = BTRUE;
-		if (mini->tokens->type == OP_CMD)
+		if (!mini->tokens->next && mini->exec->flag == BFALSE)
+		{
+			if (mini->tokens->type == OP_CMD)
+				mini->exec->pid = fork();
+			func[mini->tokens->type](mini);
+		}
+		else if (mini->tokens || (mini->tokens->next->type >= OP_AND
+		&& mini->tokens->next->type <= OP_APPEND))
 		{
 			mini->exec->pid = fork();
 			func[OP_PIPE](mini);
 			if (mini->exec->flag == BTRUE)
 				break;
+			i++;
 			mini->tokens = mini->tokens->next;
+			if (!mini->tokens->next->next)
+				mini->exec->flag = BTRUE;
 		}
 		mini->tokens = mini->tokens->next;
 	}
@@ -104,8 +118,11 @@ void	exec_commands(t_sys_config *mini)
 	while (i < mini->exec->pipes)
 		free(mini->exec->fd[i++]);
 	free(mini->exec->fd);
-	if (mini->exec->pid)
-		waitpid(mini->exec->pid, &mini->exec->status, 0);
+	while (i)
+	{
+		waitpid(-1, &mini->exec->status, 0);
+		i--;
+	}
 	if (mini->exec->func)
 		free(mini->exec->func);
 	return ;

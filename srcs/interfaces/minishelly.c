@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/19 19:38:23 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/08 18:10:03 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	minishelly(int argc, char **argv, char **environ)
 	{
 		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
 			continue ;
+		expand_symbol(&mini->new_parser, '$', mini->env);
 		mini->tokens = ft_create_tokens(mini);
 		exec_commands(mini);
 		add_history(mini->str);

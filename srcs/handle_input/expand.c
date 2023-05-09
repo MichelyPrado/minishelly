@@ -6,18 +6,17 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:05:08 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/06 21:02:31 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/08 14:03:06 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
-ssize_t    find_key(char *line, char **env, int *i)
+ssize_t	find_key(char *line, char **env, int *i)
 {
 	int		pos;
 	char	*tmp;
-	
+
 	tmp = NULL;
 	while (line[*i] && line[*i] != 32 && line[*i] != 9)
 		*i += 1;
@@ -42,14 +41,14 @@ ssize_t    find_key(char *line, char **env, int *i)
 // 	*line = create_prompt(3, start, middle, end);
 // }
 
-void    expand_symbol(char **line, char c, char **env)
+void	expand_symbol(char **line, char c, char **env)
 {
-	int     j;
-	int     i;
-	ssize_t pos;
+	int		j;
+	int		i;
+	ssize_t	pos;
 	char	*end;
-	char    *start;
-	char    *middle;
+	char	*start;
+	char	*middle;
 
 	i = 0;
 	j = 0;
@@ -57,6 +56,8 @@ void    expand_symbol(char **line, char c, char **env)
 	start = NULL;
 	middle = NULL;
 	end = NULL;
+	if (!*line)
+		return ;
 	while ((*line)[i])
 	{
 		if ((*line)[i] == c)

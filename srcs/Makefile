@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/06 16:22:26 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/08 13:47:36 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,10 +51,10 @@ OPERATORS						=						$(addprefix $(PATH_OPERATORS), \
 														ft_pipe.c)
 		
 SRC								=						minishell.c			\
+														$(BUILTINS)			\
 														$(ENVIRON)			\
 														$(HANDLE)			\
 														$(INTERFACES)		\
-														$(BUILTINS)			\
 														$(OPERATORS)			
 OBJ								=						$(SRC:%.c=%.o)
 
