@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 11:39:43 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/09 14:34:35 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/09 17:15:16 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,23 @@ t_err	wait_input(t_sys_config *mini, int *prop, char *line)
 	err = 0;
 	if (!line)
 	{
-		ft_exit(mini);
-		free(line);
+		ft_ctrl_d(mini);
+		if (line)
+			free(line);
 	}
 	if (!ft_strlen(line) && !tmp)
 	{
-		free(line);
+		if (line)
+			free(line);
 		return (ONLY_ENTER);
 	}
 	if (tmp)
 	{
 		mini->str = create_prompt(3, tmp, "\n", line);
-		free(line);
-		free(tmp);
+		if (line)
+			free(line);
+		if (line)
+			free(tmp);
 	}
 	else
 		mini->str = line;

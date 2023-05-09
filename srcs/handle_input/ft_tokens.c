@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 00:06:05 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:48:56 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/09 16:12:03 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ft_token_free(t_token **node)
 	{
 		temp = head->next;
 		if (head->token)
-			free_cmds(head->token);
+			clean_strlist(&head->token);
 		free(head);
 		head = temp;
 	}
