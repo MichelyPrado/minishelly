@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/09 14:27:32 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/09 15:05:21 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,6 @@ INTERFACES						=						$(addprefix $(PATH_INTERFACES), \
 PATH_OPERATORS					=						./operators/
 OPERATORS						=						$(addprefix $(PATH_OPERATORS), \
 														ft_pipe.c)
-		
 SRC								=						minishell.c			\
 														$(BUILTINS)			\
 														$(ENVIRON)			\
