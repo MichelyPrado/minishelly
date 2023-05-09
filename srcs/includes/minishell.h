@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/08 18:26:16 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/09 14:28:29 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,7 @@ typedef struct s_sys_config
 }	t_sys_config;
 
 typedef int	(*t_process_func)(t_sys_config *);
+typedef struct sigaction t_sa;
 
 // Sys Config
 char			*cat_user(char **env);
@@ -229,6 +230,11 @@ void			close_fds(t_sys_config *mini);
 
 // EXPAND
 void			expand_symbol(char **line, char c, char **env);
+
+// Signals
+void			sig_a(int sig);
+void			sig_handler( int sig, siginfo_t *info, void *context);
+void			wait_signal(t_sa *sa);
 
 //BUILTINS
 int				ft_env(t_sys_config *mini);

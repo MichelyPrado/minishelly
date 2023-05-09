@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/08 13:47:36 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/09 14:27:32 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,9 @@ RM								=						rm -rf
 
 LIBFT_PATH						=						./libft/
 LIBFT							=						$(LIBFT_PATH)/libft.a
+PATH_SIGNALS					=						./signals/
+SIGNALS							=						$(addprefix $(PATH_SIGNALS), \
+														signals.c)
 PATH_BUILTINS					=						./builtins/
 BUILTINS						=						$(addprefix $(PATH_BUILTINS), \
 														cd.c echo.c env.c exit.c export.c \
@@ -55,7 +58,8 @@ SRC								=						minishell.c			\
 														$(ENVIRON)			\
 														$(HANDLE)			\
 														$(INTERFACES)		\
-														$(OPERATORS)			
+														$(OPERATORS)		\
+														$(SIGNALS)						
 OBJ								=						$(SRC:%.c=%.o)
 
 

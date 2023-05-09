@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/08 18:10:03 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/09 14:22:10 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,11 @@ void	print_tokens_test(t_token *tokens)
 int	minishelly(int argc, char **argv, char **environ)
 {
 	int				prop;
+	t_sa			sa;
 	t_sys_config	*mini;
 
+	sa = (t_sa){0};
+	wait_signal(&sa);
 	args_check(argc);
 	if (!*argv)
 		return (0);
