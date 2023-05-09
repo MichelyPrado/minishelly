@@ -45,6 +45,11 @@ t_err	wait_input(t_sys_config *mini, int *prop, char *line)
 	static char	*tmp;
 
 	err = 0;
+	if (!line)
+	{
+		ft_exit(mini);
+		free(line);
+	}
 	if (!ft_strlen(line) && !tmp)
 	{
 		free(line);

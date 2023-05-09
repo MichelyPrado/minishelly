@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/04/23 17:39:13 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/09 13:04:33 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,9 @@ typedef struct s_sys_config
 
 typedef int	(*t_process_func)(t_sys_config *);
 
+typedef struct sigaction	t_sa;
+
+
 // Sys Config
 char			*cat_user(char **env);
 t_sys_config	*start_sys(char **environ);
@@ -211,4 +214,6 @@ int				ft_cd(t_sys_config *mini);
 int				ft_exit(t_sys_config *mini);
 int				b_export(t_sys_config *mini);
 int				b_unset(t_sys_config *mini);
+//SIGNALS
+void			sig_a(int sig);
 #endif
