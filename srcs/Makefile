@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/09 15:05:21 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/09 17:16:37 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ LIBFT_PATH						=						./libft/
 LIBFT							=						$(LIBFT_PATH)/libft.a
 PATH_SIGNALS					=						./signals/
 SIGNALS							=						$(addprefix $(PATH_SIGNALS), \
-														signals.c)
+														signals.c ft_ctrl_d.c)
 PATH_BUILTINS					=						./builtins/
 BUILTINS						=						$(addprefix $(PATH_BUILTINS), \
 														cd.c echo.c env.c exit.c export.c \
@@ -62,10 +62,14 @@ SRC								=						minishell.c			\
 OBJ								=						$(SRC:%.c=%.o)
 
 
+
 all:							title $(LIBFT) $(NAME) complete
 
+v: all
+	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --quiet ./minishell
+
 $(OBJ): %.o: %.c $(HEADERS)
-	@$(CC)	 $(CCFLAGS) -c $< -o $@
+	@$(CC)	 -g3 $(CCFLAGS) -c $< -o $@
 	@echo "$(YELLOW)$(ROCKET)  Compilando $<$(RESET)"
 
 $(LIBFT):

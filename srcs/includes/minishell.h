@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/09 15:07:44 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/09 16:45:49 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ typedef struct s_sys_config
 	char	**path;
 }	t_sys_config;
 
+# define NUM_FUNCS 16
 typedef int	(*t_process_func)(t_sys_config *);
 typedef struct sigaction t_sa;
 
@@ -238,6 +239,7 @@ void			expand_symbol(char **line, char c, char **env);
 void			sig_a(int sig);
 void			sig_handler( int sig, siginfo_t *info, void *context);
 void			wait_signal(t_sa *sa);
+int				ft_ctrl_d(t_sys_config *mini);
 
 //BUILTINS
 int				ft_env(t_sys_config *mini);
