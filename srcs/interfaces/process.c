@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/09 20:57:12 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/10 11:59:18 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,12 @@ int	turn_void(t_sys_config *mini)
 
 int	exec_program(t_sys_config *mini)
 {
-	cmd_path_valid(mini->tokens->token, mini->path);
 	if (mini->exec->pid == 0)
 	{
+		cmd_path_valid(mini->tokens->token, mini->path);
 		printf("vai executar: %s\n", *mini->tokens->token);
-		if(execve(*mini->tokens->token, &mini->tokens->token[1], mini->env) == -1)
-		{
-			perror(strerror(errno));
-			clean_data(mini);
-		}
+		if(execve(*mini->tokens->token, mini->tokens->token, mini->env) == -1)
+			sys_exit(clean_data, EACCES, mini);
 	}
 	return (0);
 }
@@ -126,6 +123,7 @@ void	exec_commands(t_sys_config *mini)
 	while (i)
 	{
 		waitpid(-1, &mini->exec->status, 0);
+		
 		i--;
 	}
 	if (mini->exec->func)

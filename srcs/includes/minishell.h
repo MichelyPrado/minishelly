@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/09 20:34:55 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/10 12:32:19 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,13 +154,13 @@ typedef struct s_sys_config
 	char	**prompt;
 	t_exec	*exec;
 	char	**path;
+	int		exit_status;
 }	t_sys_config;
 
 # define NUM_FUNCS 16
 typedef int	(*t_process_func)(t_sys_config *);
-typedef struct sigaction t_sa;
-
 typedef struct sigaction	t_sa;
+
 
 
 // Sys Config
@@ -253,5 +253,10 @@ int				ft_cd(t_sys_config *mini);
 int				ft_exit(t_sys_config *mini);
 int				b_export(t_sys_config *mini);
 int				b_unset(t_sys_config *mini);
+
+// EXIT FUNCTIONS
+void    normal_exit(void (*f)(void *), int exit_code, void *item);
+void    sys_exit(void (*f)(t_sys_config *), int exit_code, t_sys_config *mini);
+
 
 #endif

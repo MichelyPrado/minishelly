@@ -86,3 +86,11 @@ make
 ```bash
 make run-test TEST_NAME=<test_obj_dir>/<test_name>
 ```
+
+### Exit Codes
+
+- EACCES (13)
+> Erro de permissão de acesso execve
+
+- ENOMEM (12)
+> Erro de alocação de momeria.

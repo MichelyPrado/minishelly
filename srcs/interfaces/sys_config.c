@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:44:07 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/09 17:06:23 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/10 12:30:42 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ t_sys_config	*start_sys(char **environ)
 	t_sys_config	*mini;
 
 	mini = (t_sys_config *) malloc(sizeof(t_sys_config));
+	if (!mini)
+		normal_exit(free, ENOMEM, mini);
 	get_envp(environ, mini);
+	mini->exit_status = 0;
 	mini->exec = &((t_exec){0});
 	mini->prompt = malloc(sizeof(char **) * 3);
 	mini->prompt[0] = create_prompt(6, L_GREEN, SHELLNAME, \
