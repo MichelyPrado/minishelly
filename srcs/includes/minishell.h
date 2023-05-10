@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/09 16:45:49 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/09 20:34:55 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,6 +240,10 @@ void			sig_a(int sig);
 void			sig_handler( int sig, siginfo_t *info, void *context);
 void			wait_signal(t_sa *sa);
 int				ft_ctrl_d(t_sys_config *mini);
+
+// Frees
+void			clean_exec(t_exec **exec);
+void			clean_data(t_sys_config *mini);
 
 //BUILTINS
 int				ft_env(t_sys_config *mini);

@@ -86,7 +86,7 @@ clean:			title_clean
 	@			echo "$(YELLOW)$(CLEAN)  Arquivos objetos removidos$(RESET)"
 
 fclean:			clean title_fclean
-	@			$(MAKE) -C $(DIR) $@--no-print-directory
+	@			$(MAKE) -C $(DIR) $@ --no-print-directory
 	@			$(RM) $(EXEC_OUTS)
 	@			echo "$(YELLOW)$(CLEAN)  Arquivos objetos e $(NAME) removidos$(RESET)"
 

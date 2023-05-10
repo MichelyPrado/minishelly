@@ -6,19 +6,19 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 19:20:35 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/09 13:23:47 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/09 20:19:45 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void update_pwd(char ***pwd, ssize_t pwd_pos, char *key, char **value)
+static void update_pwd(char ***pwd, ssize_t pwd_index, char *key, char **value)
 {
-	if ((*pwd)[pwd_pos])
-		free((*pwd)[pwd_pos]);
-	(*pwd)[pwd_pos] = NULL;
-	if (pwd_pos)
-		(*pwd)[pwd_pos] = ft_strjoin(key, *value);
+	if ((*pwd)[pwd_index])
+		free((*pwd)[pwd_index]);
+	(*pwd)[pwd_index] = NULL;
+	if (pwd_index)
+		(*pwd)[pwd_index] = ft_strjoin(key, *value);
 	if (*value)
 		free(*value);
 	*value = NULL;
@@ -59,8 +59,8 @@ int	special_cases(char ***token, char **env)
 
 int	ft_cd(t_sys_config *mini)
 {
-	ssize_t		old_pwd;
-	ssize_t		pwd;
+	ssize_t		old_pwd_index;
+	ssize_t		pwd_index;
 	char		*pwd_value;
 	int			err;
 
@@ -68,16 +68,16 @@ int	ft_cd(t_sys_config *mini)
 	if (too_much_args(mini->tokens->token))
 		return (1);
 	pwd_value = getcwd(NULL, 0);
-	pwd = search_envp(mini->env, "PWD");
-	old_pwd = search_envp(mini->env, "OLDPWD");
+	pwd_index = search_envp(mini->env, "PWD");
+	old_pwd_index = search_envp(mini->env, "OLDPWD");
 	err = special_cases(&mini->tokens->token, mini->env);
 	if (err)
 		return (err);
 	if (chdir(mini->tokens->token[1]) != -1)
 	{
-		update_pwd(&(mini->env), old_pwd, "OLDPWD=", &pwd_value);
+		update_pwd(&(mini->env), old_pwd_index, "OLDPWD=", &pwd_value);
 		pwd_value = getcwd(NULL, 0);
-		update_pwd(&(mini->env), pwd, "PWD=", &pwd_value);
+		update_pwd(&(mini->env), pwd_index, "PWD=", &pwd_value);
 		return (0);
 	}
 	if (pwd_value)

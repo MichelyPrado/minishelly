@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/09 17:16:37 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/09 20:36:26 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ BUILTINS						=						$(addprefix $(PATH_BUILTINS), \
 PATH_ENVIRON					=						./environ/
 ENVIRON							=						$(addprefix $(PATH_ENVIRON), \
 														envp_utils.c handle_env.c tool_box.c \
-														handle_path.c)
+														handle_path.c frees.c)
 PATH_HANDLE						=						./handle_input/
 HANDLE							=						$(addprefix $(PATH_HANDLE), \
 														ft_tokens.c handle_tokens.c hash.c \
@@ -68,11 +68,11 @@ all:							title $(LIBFT) $(NAME) complete
 v: all
 	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --quiet ./minishell
 
-$(OBJ): %.o: %.c $(HEADERS)
+$(OBJ): %.o: %.c $(HEADERS) 
 	@$(CC)	 -g3 $(CCFLAGS) -c $< -o $@
 	@echo "$(YELLOW)$(ROCKET)  Compilando $<$(RESET)"
 
-$(LIBFT):
+$(LIBFT): 
 								@$(MAKE) -C $(LIBFT_PATH) --no-print-directory
 
 $(NAME):						$(OBJ)
@@ -117,5 +117,5 @@ title_fclean:
 	@echo "$(YELLOW)--------------------------------------$(RESET)"
 
 complete:
-	@echo "$(GREEN)$(ROCKET)  libft compilada com sucesso!$(RESET)"
+	@echo "$(GREEN)$(ROCKET)  Minishelly compilada com sucesso!$(RESET)"
 	@echo "$(YELLOW)--------------------------------------$(RESET)"
