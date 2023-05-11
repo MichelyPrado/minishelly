@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/11 12:31:15 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:15:27 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,8 @@ typedef enum e_first_or_end
 typedef struct s_exec
 {
 	int				i;
-	int				pipes;
 	int				pid;
 	int				**fd;
-	int				status;
 	t_first_or_end	flag;
 	void			*func;
 }				t_exec;
@@ -226,7 +224,6 @@ int				hash_func(char *cmd, t_keyword_map *keymap);
 
 // Process
 void			exec(t_sys_config *mini);
-void			exec_commands(t_sys_config *mini);
 int				minishelly(int argc, char **argv, char **environ);
 
 // Operators
@@ -244,7 +241,7 @@ void			sig_handler( int sig, siginfo_t *info, void *context);
 void			wait_signal(t_sa *sa);
 int				ft_ctrl_d(t_sys_config *mini);
 
-// Frees
+// CLEAN FUNCTIONS
 void			clean_exec(t_exec **exec);
 void			clean_data(t_sys_config *mini);
 
@@ -258,8 +255,8 @@ int				b_export(t_sys_config *mini);
 int				b_unset(t_sys_config *mini);
 
 // EXIT FUNCTIONS
-void    normal_exit(void (*f)(void *), int exit_code, void *item);
-void    sys_exit(void (*f)(t_sys_config *), int exit_code, t_sys_config *mini);
+void    		normal_exit(void (*f)(void *), int exit_code, void *item);
+void    		sys_exit(void (*f)(t_sys_config *), int exit_code, t_sys_config *mini);
 
 
 #endif

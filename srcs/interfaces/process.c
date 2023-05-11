@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/11 13:02:45 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:41:15 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,26 @@ int	turn_void(t_sys_config *mini)
 	return (0);
 }
 
-int	exec_program(t_sys_config *mini)
+int	exec_program(t_sys_config *mini);
+t_process_func	*array_functions(void);
+
+t_exec		*init_exec()
 {
-	if (mini->exec->flag == BFALSE)
-		mini->exec->pid = fork();
-	if (mini->exec->pid == 0)
-	{
-		if(execve(*mini->tokens->token, mini->tokens->token, mini->env) == -1)
-			printf("ERROR\n");
-	}
-	return (0);
+	int		i;
+	t_exec	*exec;
+
+	i = 0;
+	exec = malloc(sizeof(t_exec));
+	exec->i = 0;
+	exec->pid = 0;
+	exec->fd = (int **) malloc(2 * sizeof(int *));
+	exec->fd[0] = malloc(2 * sizeof(int));
+	exec->fd[1] = malloc(2 * sizeof(int));
+	pipe(exec->fd[0]);
+	pipe(exec->fd[1]);
+	exec->flag = BFALSE;
+	exec->func = array_functions();
+	return (exec);
 }
 
 t_process_func	*array_functions(void)
@@ -54,28 +64,6 @@ t_process_func	*array_functions(void)
 	return (array_process);
 }
 
-t_exec		*init_exec()
-{
-	int		i;
-	t_exec	*exec;
-
-	i = 0;
-	exec = malloc(sizeof(t_exec));
-	exec->i = 0;
-	exec->pid = 0;
-	exec->pipes = 2;
-	exec->fd = (int **) malloc(exec->pipes * sizeof(int *));
-	while (i < exec->pipes)
-	{
-		exec->fd[i] = malloc(2 * sizeof(int));
-		pipe(exec->fd[i++]);
-	}
-	exec->status = 0;
-	exec->flag = BFALSE;
-	exec->func = array_functions();
-	return (exec);
-}
-
 void	close_fds(t_sys_config *mini)
 {
 	close(mini->exec->fd[0][0]);
@@ -84,20 +72,18 @@ void	close_fds(t_sys_config *mini)
 	close(mini->exec->fd[1][1]);
 }
 
-void	exec_commands(t_sys_config *mini)
+int	exec_program(t_sys_config *mini)
 {
-	int				i;
-	t_process_func	*func;
-
-	i = 0;
-	mini->exec = init_exec();
-	func = (t_process_func *) mini->exec->func;
-	mini->exec->flag = BFALSE;
-	while (mini->tokens)
+	if (mini->exec->flag == BFALSE)
+		mini->exec->pid = fork();
+	if (mini->exec->pid == 0)
 	{
-		func[mini->tokens->type](mini);
-		mini->tokens = mini->tokens->next;
+		if(execve(*mini->tokens->token, mini->tokens->token, mini->env) == -1)
+			sys_exit(clean_data, EACCES, mini);
+		exit (0);
 	}
+	mini->exec->i++;
+	return (0);
 }
 
 void	exec(t_sys_config *mini)
@@ -110,10 +96,12 @@ void	exec(t_sys_config *mini)
 	while (mini->tokens)
 	{
 		func[mini->tokens->type](mini);
-		if (!mini->tokens)
-			break ;
 		mini->tokens = mini->tokens->next;
 	}
 	close_fds(mini);
-	waitpid(mini->exec->pid, &status, 0);
+	while (mini->exec->i)
+	{
+		waitpid(-1, &status, 0);
+		mini->exec->i--;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:31:23 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/11 13:05:57 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:35:27 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,15 @@ void	recycle_pipe(t_sys_config *mini)
 	pipe(mini->exec->fd[fd]);
 }
 
-void	make_dup2(t_sys_config *mini, int infd, int outfd)
+void	make_dup2(t_sys_config *ms, int in, int out)
 {
-	if (mini->exec->i != mini->exec->pipes)
-		dup2(mini->exec->fd[outfd][1], STDOUT_FILENO);
-	dup2(mini->exec->fd[infd][0], STDIN_FILENO);
+	if (ms->tokens->next)
+	{
+		if (dup2(ms->exec->fd[in][1], STDOUT_FILENO) == -1)
+			sys_exit(clean_data, EBADF, ms);
+	}
+	if (dup2(ms->exec->fd[out][0], STDIN_FILENO))
+		sys_exit(clean_data, EBADF, ms);
 }
 
 int ft_pipe(t_sys_config *mini)
@@ -38,17 +42,17 @@ int ft_pipe(t_sys_config *mini)
 
 	func = (t_process_func *) mini->exec->func;
 	mini->exec->pid = fork();
-	mini->tokens = mini->tokens->next;
+	if (mini->tokens->next)
+		mini->tokens = mini->tokens->next;
 	if (mini->exec->pid == 0)
 	{
 		mini->exec->flag = BTRUE;
 		if (mini->exec->i % 2 == 0)
-			dup2(mini->exec->fd[0][1], STDOUT_FILENO);
-		else 
-			dup2(mini->exec->fd[0][0], STDIN_FILENO);
+			make_dup2(mini, 0, 1);
+		else
+			make_dup2(mini, 1, 0);
         close_fds(mini);
 		func[mini->tokens->type](mini);
-		exit(0);
 	}
 	recycle_pipe(mini);
 	mini->exec->i++;

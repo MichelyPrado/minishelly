@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:29:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/09 20:32:24 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:22:20 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,10 @@ void    clean_exec(t_exec **exec)
 {
     if ((*exec))
 	{
-		int i = 0;
-		while (i < (*exec)->pipes)
-		{
-			if ((*exec)->fd[i])
-				free((*exec)->fd[i]);
-			i++;
-		}
+		if ((*exec)->fd[0])
+			free((*exec)->fd[0]);
+		if ((*exec)->fd[1])
+			free((*exec)->fd[1]);
 		if ((*exec)->fd)
 			free((*exec)->fd);
 		free((*exec)->func);
