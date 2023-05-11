@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/10 12:32:19 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/11 12:31:15 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ typedef int	(*t_process_func)(t_sys_config *);
 typedef struct sigaction	t_sa;
 
 
-
+void	recycle_pipe(t_sys_config *mini);
 // Sys Config
 char			*cat_user(char **env);
 t_sys_config	*start_sys(char **environ);
@@ -214,6 +214,8 @@ t_token			*ft_create_tokens(t_sys_config *mini);
 t_types			tag_token(char *cmd);
 int				ft_isspace(char *str);
 char			*ft_token_repair(char *token);
+void	ft_tokens_swap(t_token *token, t_token *insert);
+void	ft_find_pipe(t_token **token);
 
 // Wait input
 t_err			wait_input(t_sys_config *mini, int *prop, char *line);
@@ -223,6 +225,7 @@ char			*create_prompt(int amount, ...);
 int				hash_func(char *cmd, t_keyword_map *keymap);
 
 // Process
+void			exec(t_sys_config *mini);
 void			exec_commands(t_sys_config *mini);
 int				minishelly(int argc, char **argv, char **environ);
 

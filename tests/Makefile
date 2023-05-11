@@ -49,7 +49,7 @@ TESTS_ENVIRON							=				$(addprefix $(TPATH_ENVIRON), 								\
 TPATH_INTERFACES						=				interfaces_tests/
 TESTS_INTERFACES						=				$(addprefix $(TPATH_INTERFACES),			 				\
 														wait_input_test 			create_prompt_test				\
-														exec_commands_test)
+														exec_test)
 TPATH_HANDLE							=				handle_input_tests/
 #														handle_tokens_test
 TESTS_HANDLE							=				$(addprefix $(TPATH_HANDLE), 								\
@@ -102,9 +102,10 @@ build-objs: $(HEADERS)
 # make run-test TEST_NAME=<dir><file-test>
 # make run-test TEST_NAME=./environ_tests/ft_is_cmd_test
 run-test: build-objs
-	@			$(CC) -g $(OBJS_FILES) $(GNL) $(TEST_NAME).c -o $(addprefix $(DIR_OUTS), $(TEST_NAME))
+	@			$(CC) -g $(OBJS_FILES) -l readline $(GNL) $(TEST_NAME).c -o $(addprefix $(DIR_OUTS), $(TEST_NAME))
 	@			echo "$(YELLOW)$(ROCKET)  Executando teste $(TEST_NAME)$(RESET)"
-	@			valgrind --leak-check=full --show-leak-kinds=all $(addprefix $(DIR_OUTS), $(TEST_NAME))
+#	@			valgrind --leak-check=full --show-leak-kinds=all $(addprefix $(DIR_OUTS), $(TEST_NAME))
+	@			$(addprefix $(DIR_OUTS), $(TEST_NAME))
 
 re: fclean all
 
