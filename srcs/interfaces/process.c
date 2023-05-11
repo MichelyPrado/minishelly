@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/11 16:41:15 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/11 17:18:27 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	exec_program(t_sys_config *mini)
 		mini->exec->pid = fork();
 	if (mini->exec->pid == 0)
 	{
+		cmd_path_valid(mini->tokens->token, mini->path);
 		if(execve(*mini->tokens->token, mini->tokens->token, mini->env) == -1)
 			sys_exit(clean_data, EACCES, mini);
 		exit (0);

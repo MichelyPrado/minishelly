@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/11 16:18:18 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/11 20:15:31 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_token	*ft_create_tokens(t_sys_config *mini)
 
 	i = 0;
 	pieces = ft_split(mini->new_parser, NO_PRINT);
-	tokens = (t_token *){0};
+	tokens = NULL;
 	while (pieces[i])
 	{
 		pieces[i] = ft_token_repair(pieces[i]);
@@ -81,10 +81,10 @@ t_token	*ft_create_tokens(t_sys_config *mini)
 		if (op)
 			ft_token_add_end(&tokens, ft_token_new(token, op));
 		else
-			clean_strlist(&token);
+			free_cmds(token);
 		i++;
 	}
-	clean_strlist(&pieces);
+	free_cmds(pieces);
 	return (tokens);
 }
 
