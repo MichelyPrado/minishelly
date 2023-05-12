@@ -6,7 +6,7 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/09 19:16:23 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/10 12:35:45 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,16 @@ void	print_tokens_test(t_token *tokens)
 int	minishelly(int argc, char **argv, char **environ)
 {
 	int				prop;
-	//t_sa			sa;
 	t_sys_config	*mini;
 
-	//sa = (t_sa){0};
-	//wait_signal(&sa);
+	signal_handler();
 	args_check(argc);
 	if (!*argv)
 		return (0);
 	mini = start_sys(environ);
 	prop = 0;
-	//signal(SIGINT, sig_handler);
-	signal(SIGINT, (void (*)(int))sig_handler);
 	while (1)
 	{
-		signal(SIGQUIT, SIG_IGN);
 		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
 			continue ;
 		expand_symbol(&mini->new_parser, '$', mini->env);
@@ -71,6 +66,7 @@ int	minishelly(int argc, char **argv, char **environ)
 		mini->nlen_parser = 0;
 		free(mini->str);
 		mini->str = NULL;
+		rl_clear_history();
 	}
 	return (0);
 }
