@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/11 20:15:31 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:09:09 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ t_token	*ft_create_tokens(t_sys_config *mini)
 		if (op)
 			ft_token_add_end(&tokens, ft_token_new(token, op));
 		else
-			free_cmds(token);
+			clean_strlist(&token);
 		i++;
 	}
-	free_cmds(pieces);
+	clean_strlist(&pieces);
 	return (tokens);
 }
 

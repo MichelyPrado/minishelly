@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:31:23 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/11 16:35:27 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/12 13:34:42 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	make_dup2(t_sys_config *ms, int in, int out)
 		sys_exit(clean_data, EBADF, ms);
 }
 
-int ft_pipe(t_sys_config *mini)
+int	ft_pipe(t_sys_config *mini)
 {
 	t_process_func	*func;
 
@@ -51,10 +51,10 @@ int ft_pipe(t_sys_config *mini)
 			make_dup2(mini, 0, 1);
 		else
 			make_dup2(mini, 1, 0);
-        close_fds(mini);
+		close_fds(mini);
 		func[mini->tokens->type](mini);
 	}
 	recycle_pipe(mini);
 	mini->exec->i++;
-    return (0);
+	return (0);
 }

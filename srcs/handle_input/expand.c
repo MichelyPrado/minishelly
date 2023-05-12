@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:05:08 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/08 14:03:06 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:50:39 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,57 +27,58 @@ ssize_t	find_key(char *line, char **env, int *i)
 	return (pos);
 }
 
-// void	test(ssize_t pos, char *line, int i, char **env)
-// {
-// 	char	*start;
-// 	char	*middle;
-// 	char	*end;
+void	free_mult_strs(char **strs)
+{
+	int	i;
 
-// 	start = ft_strndup(*line, i);
-// 	middle = ft_strdup("");
-// 	if (pos >= 0)
-// 		middle = ft_strdup(&env[pos][keylen(env[pos]) + 1]);
-// 	end = line[i];
-// 	*line = create_prompt(3, start, middle, end);
-// }
+	i = 0;
+	if (strs)
+	{
+		while (strs[i])
+		{
+			free(strs[i]);
+			strs[i] = NULL;
+			i++;
+		}
+	}
+}
 
-void	expand_symbol(char **line, char c, char **env)
+void	expand_symbol(int i, char **line, char **env, char **pieces)
+{
+	int		j;
+	ssize_t	pos;
+
+	j = 0;
+	pos = find_key(&(*line)[i], env, &j);
+	pieces[0] = ft_strndup(*line, i);
+	if (pos >= 0)
+		pieces[1] = ft_strdup(&env[pos][keylen(env[pos]) + 1]);
+	else
+		pieces[1] = ft_strdup("");
+	pieces[2] = (*line);
+	*line = create_prompt(3, pieces[0], pieces[1], &pieces[2][i + j]);
+	free_mult_strs(pieces);
+}
+
+void	search_for_symbol(char **line, char c, char **env)
 {
 	int		j;
 	int		i;
 	ssize_t	pos;
-	char	*end;
-	char	*start;
-	char	*middle;
+	char	**pieces;
 
 	i = 0;
 	j = 0;
 	pos = -1;
-	start = NULL;
-	middle = NULL;
-	end = NULL;
 	if (!*line)
 		return ;
+	pieces = ft_calloc(4, sizeof(char *));
 	while ((*line)[i])
 	{
 		if ((*line)[i] == c)
-		{
-			j = 0;
-			pos = find_key(&(*line)[i], env, &j);
-			start = ft_strndup(*line, i);
-			if (pos >= 0)
-				middle = ft_strdup(&env[pos][keylen(env[pos]) + 1]);
-			else
-				middle = ft_strdup("");
-			end = create_prompt(3, start, middle, &(*line)[i + j]);
-			if (*line)
-				free(*line);
-			if (start)
-				free(start);
-			if (middle)
-				free(middle);
-			*line = end;
-		}
+			expand_symbol(i, line, env, pieces);
 		i++;
 	}
+	if (pieces)
+		free(pieces);
 }

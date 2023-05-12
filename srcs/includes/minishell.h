@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/11 20:15:36 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/12 13:28:27 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,17 +156,12 @@ typedef struct s_sys_config
 }	t_sys_config;
 
 # define NUM_FUNCS 16
-typedef int	(*t_process_func)(t_sys_config *);
+
+typedef int					(*t_process_func)(t_sys_config *);
+
 typedef struct sigaction	t_sa;
 
-
-void	recycle_pipe(t_sys_config *mini);
-// Sys Config
-char			*cat_user(char **env);
-t_sys_config	*start_sys(char **environ);
-void			update_unbound_vars(char *key, t_sys_config *mini);
-void			clean_sys(t_sys_config *mini);
-void			clean_strlist(char ***strs);
+void			recycle_pipe(t_sys_config *mini);
 
 // Handle Env
 void			ft_unset(t_sys_config *mini, char *key);
@@ -204,7 +199,6 @@ int				jump_quotes(char *src, t_sys_config *mini, char quote, int *j);
 t_token			*ft_token_new(char **cmds, int type);
 t_token			*ft_token_last(t_token *node);
 void			ft_token_add_end(t_token **node, t_token *new);
-void			free_cmds(char **cmds);
 void			ft_token_free(t_token **node);
 
 // handle tokens
@@ -212,8 +206,6 @@ t_token			*ft_create_tokens(t_sys_config *mini);
 t_types			tag_token(char *cmd);
 int				ft_isspace(char *str);
 char			*ft_token_repair(char *token);
-void	ft_tokens_swap(t_token *token, t_token *insert);
-void	ft_find_pipe(t_token **token);
 
 // Wait input
 t_err			wait_input(t_sys_config *mini, int *prop, char *line);
@@ -222,18 +214,39 @@ char			*create_prompt(int amount, ...);
 // HASH
 int				hash_func(char *cmd, t_keyword_map *keymap);
 
-// Process
-void			exec(t_sys_config *mini);
+//################ INTERFACES ################//
+
+// MS
 int				minishelly(int argc, char **argv, char **environ);
 
-// Operators
+// SYS CONFIG
+char			*cat_user(char **env);
+t_sys_config	*start_sys(char **environ);
+void			update_unbound_vars(char *key, t_sys_config *mini);
+void			clean_sys(t_sys_config *mini);
+void			clean_strlist(char ***strs);
+
+// PROCESS
+void			close_fds(t_sys_config *mini);
+void			exec(t_sys_config *mini);
+int				exec_program(t_sys_config *mini);
+
+// PROCESS INIT
+int				turn_void(t_sys_config *mini);
+t_exec			*init_exec(void);
+t_process_func	*array_functions(void);
+
+//################ OPERATORS ################//
+// PIPE
 int				ft_pipe(t_sys_config *mini);
+
+// OUTPUT
 
 // FDS
 void			close_fds(t_sys_config *mini);
 
 // EXPAND
-void			expand_symbol(char **line, char c, char **env);
+void			search_for_symbol(char **line, char c, char **env);
 
 // Signals
 void			sig_a(int sig);
@@ -255,8 +268,9 @@ int				b_export(t_sys_config *mini);
 int				b_unset(t_sys_config *mini);
 
 // EXIT FUNCTIONS
-void    		normal_exit(void (*f)(void *), int exit_code, void *item);
-void    		sys_exit(void (*f)(t_sys_config *), int exit_code, t_sys_config *mini);
-
+void			normal_exit(void (*f)(void *), int exit_code, \
+				void *item);
+void			sys_exit(void (*f)(t_sys_config *), int exit_code, \
+				t_sys_config *mini);
 
 #endif

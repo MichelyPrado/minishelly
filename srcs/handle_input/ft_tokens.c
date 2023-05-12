@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 00:06:05 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/11 17:15:03 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:11:23 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,32 +50,6 @@ void	ft_token_add_end(t_token **node, t_token *new)
 		tail->next = new;
 }
 
-void	free_cmds(char **cmds)
-{
-	int	i;
-
-	i = 0;
-	if (!cmds)
-		return ;
-	if (!cmds[i])
-	{
-		free(cmds);
-		cmds = NULL;
-		return ;
-	}
-	while (cmds[i])
-	{
-		if (cmds[i])
-			free(cmds[i]);
-		i++;
-	}
-	if (cmds)
-	{
-		free(cmds);
-		cmds = NULL;
-	}
-}
-
 void	ft_token_free(t_token **node)
 {
 	t_token	*head;
@@ -92,37 +66,4 @@ void	ft_token_free(t_token **node)
 		head = temp;
 	}
 	*node = NULL;
-}
-
-void	ft_tokens_swap(t_token *token, t_token *insert)
-{
-	insert->next = token->next;
-	token->next = insert;
-}
-
-void	ft_find_pipe(t_token **init)
-{
-	t_token *token;
-	t_token	*back;
-	t_token	*t;
-	
-	t = NULL;
-	back = NULL;
-	token = (*init);
-	while (token)
-	{
-		if (!back && token->next && token->next->type == OP_PIPE)
-		{
-			t = ft_token_new(ft_split("|", 32), OP_PIPE);
-			t->next = (*init);
-			(*init) = t;
-		}
-		else if (token->next && token->next->type == OP_PIPE)
-		{
-			t = ft_token_new(ft_split("|", 32), OP_PIPE);
-			ft_tokens_swap(back, token);
-		}
-		back = token;
-		token = token->next;
-	}
 }

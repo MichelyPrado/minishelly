@@ -6,63 +6,11 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/11 17:18:27 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/12 13:29:03 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	turn_void(t_sys_config *mini)
-{
-	printf("%i\n", mini->tokens->type);
-	return (0);
-}
-
-int	exec_program(t_sys_config *mini);
-t_process_func	*array_functions(void);
-
-t_exec		*init_exec()
-{
-	int		i;
-	t_exec	*exec;
-
-	i = 0;
-	exec = malloc(sizeof(t_exec));
-	exec->i = 0;
-	exec->pid = 0;
-	exec->fd = (int **) malloc(2 * sizeof(int *));
-	exec->fd[0] = malloc(2 * sizeof(int));
-	exec->fd[1] = malloc(2 * sizeof(int));
-	pipe(exec->fd[0]);
-	pipe(exec->fd[1]);
-	exec->flag = BFALSE;
-	exec->func = array_functions();
-	return (exec);
-}
-
-t_process_func	*array_functions(void)
-{
-	t_process_func	*array_process;
-
-	array_process = (t_process_func *)malloc(sizeof(t_process_func) * 16);
-	array_process[OP_DEFAULT] = turn_void;
-	array_process[OP_AND] = turn_void;
-	array_process[OP_OR] = turn_void;
-	array_process[OP_PIPE] = ft_pipe;
-	array_process[OP_OUTPUT] = turn_void;
-	array_process[OP_INPUT] = turn_void;
-	array_process[OP_UNTIL] = turn_void;
-	array_process[OP_APPEND] = turn_void;
-	array_process[OP_CMD] = exec_program;
-	array_process[OP_EXIT] = ft_exit;
-	array_process[OP_CD] = ft_cd;
-	array_process[OP_ENV] = ft_env;
-	array_process[OP_UNSET] = b_unset;
-	array_process[OP_EXPORT] = b_export;
-	array_process[OP_PWD] = ft_pwd;
-	array_process[OP_ECHO] = ft_echo;
-	return (array_process);
-}
 
 void	close_fds(t_sys_config *mini)
 {
@@ -79,7 +27,7 @@ int	exec_program(t_sys_config *mini)
 	if (mini->exec->pid == 0)
 	{
 		cmd_path_valid(mini->tokens->token, mini->path);
-		if(execve(*mini->tokens->token, mini->tokens->token, mini->env) == -1)
+		if (execve(*mini->tokens->token, mini->tokens->token, mini->env) == -1)
 			sys_exit(clean_data, EACCES, mini);
 		exit (0);
 	}

@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/11 22:00:25 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/12 13:27:17 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ HANDLE							=						$(addprefix $(PATH_HANDLE), \
 PATH_INTERFACES					=						./interfaces/
 INTERFACES						=						$(addprefix $(PATH_INTERFACES), \
 														process.c sys_config.c wait_input.c \
-														minishelly.c)
+														minishelly.c process_init.c)
 PATH_OPERATORS					=						./operators/
 OPERATORS						=						$(addprefix $(PATH_OPERATORS), \
 														ft_pipe.c)

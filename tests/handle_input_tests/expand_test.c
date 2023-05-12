@@ -15,7 +15,7 @@ MU_TEST(test_passing_a_dolar_with_the_var_USER_should_be_dapaulin) {
     char    *line = ft_strdup("$USER");
     char    *expected = "dapaulin";
 
-    expand_symbol(&line, DOLAR, c_env);
+    search_for_symbol(&line, DOLAR, c_env);
 
     mu_assert_string_eq(expected, line);
     if (line)
@@ -26,7 +26,7 @@ MU_TEST(test_passing_4_spaces_with_the_var_USER_should_be_4_spaces_dapaulin) {
     char    *line = ft_strdup("    $USER");
     char    *expected = "    dapaulin";
 
-    expand_symbol(&line, DOLAR, c_env);
+    search_for_symbol(&line, DOLAR, c_env);
 
     mu_assert_string_eq(expected, line);
     if (line)
@@ -37,7 +37,7 @@ MU_TEST(test_passing_4_spaces_USER_4_spaces_should_be_4_spaces_dapaulin_4_spaces
     char    *line = ft_strdup("    $USER    ");
     char    *expected = "    dapaulin    ";
 
-    expand_symbol(&line, DOLAR, c_env);
+    search_for_symbol(&line, DOLAR, c_env);
 
     mu_assert_string_eq(expected, line);
     if (line)
@@ -48,7 +48,7 @@ MU_TEST(test_passing_a_var_with_another_var_inside_should_expand_both) {
     char    *line = ft_strdup("    $URSO    ");
     char    *expected = "    jobincerveja    ";
 
-    expand_symbol(&line, DOLAR, c_env);
+    search_for_symbol(&line, DOLAR, c_env);
 
     mu_assert_string_eq(expected, line);
     if (line)
@@ -59,7 +59,7 @@ MU_TEST(test_passing_a_nonexistent_variable_should_be_nothing) {
     char    *line = ft_strdup("    $CRUZ    ");
     char    *expected = "        ";
 
-    expand_symbol(&line, DOLAR, c_env);
+    search_for_symbol(&line, DOLAR, c_env);
 
     mu_assert_string_eq(expected, line);
     if (line)
@@ -71,7 +71,7 @@ MU_TEST(test_passing_a_null_line_should_be_null)
     char    *line = NULL;
     char    *expected = NULL;
 
-    expand_symbol(&line, DOLAR, c_env);
+    search_for_symbol(&line, DOLAR, c_env);
 
     mu_assert_string_eq(expected, line);
 }

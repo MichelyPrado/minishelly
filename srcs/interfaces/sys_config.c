@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:44:07 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/11 20:45:08 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/12 13:17:42 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	update_unbound_vars(char *key, t_sys_config *mini)
 		if (mini->prompt[0])
 			free(mini->prompt[0]);
 		mini->prompt[0] = create_prompt(6, L_GREEN, SHELLNAME, L_BLUE, \
-		cat_user(mini->env), L_WHITE, PROP);	
+		cat_user(mini->env), L_WHITE, PROP);
 	}
 	else if (!ft_strcmp(key, "PATH"))
 	{

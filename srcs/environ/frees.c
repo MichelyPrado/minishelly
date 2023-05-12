@@ -6,15 +6,15 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:29:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/11 20:52:05 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/12 13:32:11 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void    clean_exec(t_exec **exec)
+void	clean_exec(t_exec **exec)
 {
-    if ((*exec))
+	if ((*exec))
 	{
 		if ((*exec)->fd[0])
 			free((*exec)->fd[0]);
@@ -28,7 +28,7 @@ void    clean_exec(t_exec **exec)
 	}
 }
 
-void    clean_data(t_sys_config *mini)
+void	clean_data(t_sys_config *mini)
 {
 	if (mini)
 	{

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:26:30 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/09 15:04:39 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/12 13:37:59 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,34 @@
 //função sigaction / na função de init inicializar ela
 //sigaction = passar o sinal e a função correspondente
 
-//int sigaction(int signum, const struct sigaction *restrict act, struct sigaction *restrict oldact);
+//int sigaction(int signum, const struct sigaction *restrict act,
+// struct sigaction *restrict oldact);
 
-void sig_handler( int sig, siginfo_t *info, void *context)
+void	sig_handler( int sig, siginfo_t *info, void *context)
 {
 	(void)context;
-	
-    if (sig == SIGINT && info->si_pid)
+	if (sig == SIGINT && info->si_pid)
 	{
 		rl_on_new_line ();
 		rl_replace_line ("", 0);
 		rl_redisplay ();
-		
 	}
 }
 
-void    wait_signal(t_sa *sa)
+void	wait_signal(t_sa *sa)
 {
 	sa->sa_sigaction = sig_handler;
-	sigaction(SIGINT, sa, NULL); 
-	signal(SIGQUIT, SIG_IGN);     
+	sigaction(SIGINT, sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
 }
 
-void sig_a(int sig) 
+void	sig_a(int sig)
 {
-    const char *signal_mini;
+	const char	*signal_mini;
 
-    if (sig == SIGINT) {
-        signal_mini = "SIGINT";
-    } else if (sig == SIGQUIT) {
-        signal_mini = "SIGQUIT";
-    } 
+	signal_mini = 0;
+	if (sig == SIGINT)
+		signal_mini = "SIGINT";
+	else if (sig == SIGQUIT)
+		signal_mini = "SIGQUIT";
 }

@@ -6,13 +6,13 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 19:20:35 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/09 20:19:45 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/12 12:52:22 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void update_pwd(char ***pwd, ssize_t pwd_index, char *key, char **value)
+static void	update_pwd(char ***pwd, ssize_t pwd_index, char *key, char **value)
 {
 	if ((*pwd)[pwd_index])
 		free((*pwd)[pwd_index]);
@@ -52,7 +52,7 @@ int	special_cases(char ***token, char **env)
 		*token = ft_calloc(3, sizeof(char *));
 		(*token)[0] = ft_strdup("cd");
 		(*token)[1] = ft_strdup("$HOME");
-		expand_symbol(&(*token)[1], '$', env);
+		search_for_symbol(&(*token)[1], '$', env);
 	}
 	return (0);
 }
@@ -64,7 +64,6 @@ int	ft_cd(t_sys_config *mini)
 	char		*pwd_value;
 	int			err;
 
-	
 	if (too_much_args(mini->tokens->token))
 		return (1);
 	pwd_value = getcwd(NULL, 0);
