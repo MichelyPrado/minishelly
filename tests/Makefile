@@ -73,7 +73,7 @@ mini:
 	@cd 		$(DIR) && $(MAKE) --no-print-directory
 
 $(TESTS): $(HEADERS)
-	@			$(CC)	-fPIE -g $(OBJS_FILES) -l readline $(GNL) $@.c -o $(addprefix $(DIR_OUTS), $@)
+	@			$(CC)	-g $(OBJS_FILES) -l readline $(GNL) $@.c -o $(addprefix $(DIR_OUTS), $@)
 	@			echo "$(YELLOW)$(ROCKET)  Compilando $@$(RESET)"
 
 $(EXEC_OUTS):
