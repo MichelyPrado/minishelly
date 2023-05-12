@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:29:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/11 16:22:20 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/11 20:52:05 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,16 @@ void    clean_exec(t_exec **exec)
 
 void    clean_data(t_sys_config *mini)
 {
-    clean_strlist(&mini->prompt);
-	clean_strlist(&mini->env);
-	clean_strlist(&mini->path);
-	if (mini->new_parser)
-		free(mini->new_parser);
-	if (mini->str)
-		free(mini->str);
-	ft_token_free(&mini->tokens);
-    clean_exec(&mini->exec);
 	if (mini)
-		free(mini);
+	{
+		clean_strlist(&mini->prompt);
+		clean_strlist(&mini->env);
+		clean_strlist(&mini->path);
+		if (mini->new_parser)
+			free(mini->new_parser);
+		if (mini->str)
+			free(mini->str);
+		ft_token_free(&mini->tokens);
+		clean_exec(&mini->exec);
+	}
 }

@@ -73,7 +73,7 @@ mini:
 	@cd 		$(DIR) && $(MAKE) --no-print-directory
 
 $(TESTS): $(HEADERS)
-	@			$(CC)	-g $(OBJS_FILES) -l readline $(GNL) $@.c -o $(addprefix $(DIR_OUTS), $@)
+	@			$(CC)	-fPIE -g $(OBJS_FILES) -l readline $(GNL) $@.c -o $(addprefix $(DIR_OUTS), $@)
 	@			echo "$(YELLOW)$(ROCKET)  Compilando $@$(RESET)"
 
 $(EXEC_OUTS):
@@ -104,8 +104,8 @@ build-objs: $(HEADERS)
 run-test: build-objs
 	@			$(CC) -g $(OBJS_FILES) -l readline $(GNL) $(TEST_NAME).c -o $(addprefix $(DIR_OUTS), $(TEST_NAME))
 	@			echo "$(YELLOW)$(ROCKET)  Executando teste $(TEST_NAME)$(RESET)"
-#	@			valgrind --leak-check=full --show-leak-kinds=all $(addprefix $(DIR_OUTS), $(TEST_NAME))
-	@			$(addprefix $(DIR_OUTS), $(TEST_NAME))
+	@			valgrind --leak-check=full --show-leak-kinds=all -q $(addprefix $(DIR_OUTS), $(TEST_NAME))
+#	@			$(addprefix $(DIR_OUTS), $(TEST_NAME))
 
 re: fclean all
 

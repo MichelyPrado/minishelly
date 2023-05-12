@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/09 22:33:44 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/11 22:00:25 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,7 @@ v: all
 	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --quiet ./minishell
 
 $(OBJ): %.o: %.c $(HEADERS) 
-	@$(CC)	 -g3 $(CCFLAGS) -c $< -o $@
+	@$(CC)	 -g3 -fPIE $(CCFLAGS) -c $< -o $@
 	@echo "$(YELLOW)$(ROCKET)  Compilando $<$(RESET)"
 
 $(LIBFT): 
