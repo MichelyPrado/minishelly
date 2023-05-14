@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/12 13:28:27 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/12 14:00:49 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,6 +239,9 @@ t_process_func	*array_functions(void);
 //################ OPERATORS ################//
 // PIPE
 int				ft_pipe(t_sys_config *mini);
+
+// OUTPUT
+int				ft_output(t_sys_config *ms);
 
 // OUTPUT
 

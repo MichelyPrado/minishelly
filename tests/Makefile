@@ -41,7 +41,11 @@ OBJS_FILES								=				$(YOUR_FILES:%.c=%.o)										\
 														# Add your files with the function you can test
 TPATH_BUILTINS							=				builtins_tests/
 TESTS_BUILTINS							=				$(addprefix $(TPATH_BUILTINS), 								\
-														b_export_test)
+														b_export_test ft_cd_test ) \
+														# ft_pwd_test
+TPATH_OPERATORS							=				operators_tests/
+TESTS_OPERATORS							=				$(addprefix $(TPATH_OPERATORS),			 				\
+														ft_output_test)
 TPATH_ENVIRON							=				environ_tests/
 TESTS_ENVIRON							=				$(addprefix $(TPATH_ENVIRON), 								\
 														search_envp_test			edit_envp_test	 				\
@@ -58,12 +62,14 @@ TESTS_HANDLE							=				$(addprefix $(TPATH_HANDLE), 								\
 														tag_token_test 				ft_token_repair_test 			\
 														ft_create_tokens_test 		list_token_test					\
 														hash_func_test 				count_delimiter_test			\
-														expand_test) 			\
+														expand_test) 												\
+														# ft_tokens_swap_test \
 														# Add your test names without .c
 TESTS									=				$(TESTS_BUILTINS)											\
 														$(TESTS_ENVIRON)											\
 														$(TESTS_HANDLE)												\
-														$(TESTS_INTERFACES)
+														$(TESTS_INTERFACES)											\
+														$(TESTS_OPERATORS)
 EXEC_OUTS								=				$(addprefix $(DIR_OUTS), $(TESTS))										
 ################ CONFIG YOUR PROJECT #############
 FLAGS 									=	 			-Wall -Werror -Wextra
@@ -107,6 +113,7 @@ run-test: build-objs
 	@			echo "$(YELLOW)$(ROCKET)  Executando teste $(TEST_NAME)$(RESET)"
 	@			valgrind --leak-check=full --show-leak-kinds=all -q $(addprefix $(DIR_OUTS), $(TEST_NAME))
 #	@			$(addprefix $(DIR_OUTS), $(TEST_NAME))
+#	@			gdb --tui $(addprefix $(DIR_OUTS), $(TEST_NAME))
 
 re: fclean all
 

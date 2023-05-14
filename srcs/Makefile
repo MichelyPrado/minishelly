@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/12 13:27:17 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/12 16:04:48 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ INTERFACES						=						$(addprefix $(PATH_INTERFACES), \
 														minishelly.c process_init.c)
 PATH_OPERATORS					=						./operators/
 OPERATORS						=						$(addprefix $(PATH_OPERATORS), \
-														ft_pipe.c)
+														ft_pipe.c ft_output.c)
 SRC								=						minishell.c			\
 														$(BUILTINS)			\
 														$(ENVIRON)			\

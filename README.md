@@ -26,7 +26,7 @@
   - [x] exit
 - [ ] Exec commands
   - [x] run command
-  - [ ] pipe
+  - [x] pipe
   - [ ] operator &&
   - [ ] operator ||
   - [ ] operator >
@@ -39,7 +39,7 @@
   - [ ] ctrl-D
   - [ ] ctrl-\
 - [ ] String parser
-  - [ ] expand environ var
+  - [x] expand environ var
   - [ ] expand $? exit code
   - [x] single quote
   - [x] double quote
@@ -94,3 +94,8 @@ make run-test TEST_NAME=<test_obj_dir>/<test_name>
 
 - ENOMEM (12)
 > Erro de alocação de momeria.
+
+### Alterações no parser
+
+PIPE
+> 
