@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/12 13:29:03 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/14 13:51:34 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	exec_program(t_sys_config *mini)
 			sys_exit(clean_data, EACCES, mini);
 		exit (0);
 	}
-	mini->exec->i++;
+	mini->exec->i++; 
 	return (0);
 }
 

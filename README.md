@@ -29,9 +29,9 @@
   - [x] pipe
   - [ ] operator &&
   - [ ] operator ||
-  - [ ] operator >
-  - [ ] operator <
-  - [ ] operator >>
+  - [X] operator >
+  - [X] operator <
+  - [X] operator >>
   - [ ] operator <<
   - [ ] operator *
 - [ ] Signals

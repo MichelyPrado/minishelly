@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/12 14:00:49 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/14 16:01:56 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ typedef struct s_sys_config
 	char	**prompt;
 	t_exec	*exec;
 	char	**path;
+	int		n_pip;
 	int		exit_status;
 }	t_sys_config;
 
@@ -238,12 +239,17 @@ t_process_func	*array_functions(void);
 
 //################ OPERATORS ################//
 // PIPE
+void			choice_dup2(t_sys_config *ms);
 int				ft_pipe(t_sys_config *mini);
 
 // OUTPUT
 int				ft_output(t_sys_config *ms);
 
-// OUTPUT
+// INPUT
+int				ft_input(t_sys_config *ms);
+
+// APPEND
+int				ft_append(t_sys_config *ms);
 
 // FDS
 void			close_fds(t_sys_config *mini);

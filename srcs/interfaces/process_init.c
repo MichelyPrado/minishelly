@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:19:42 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/12 13:59:57 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/14 15:59:53 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ t_process_func	*array_functions(void)
 	array_process[OP_OR] = turn_void;
 	array_process[OP_PIPE] = ft_pipe;
 	array_process[OP_OUTPUT] = ft_output;
-	array_process[OP_INPUT] = turn_void;
+	array_process[OP_INPUT] = ft_input;
 	array_process[OP_UNTIL] = turn_void;
-	array_process[OP_APPEND] = turn_void;
+	array_process[OP_APPEND] = ft_append;
 	array_process[OP_CMD] = exec_program;
 	array_process[OP_EXIT] = ft_exit;
 	array_process[OP_CD] = ft_cd;

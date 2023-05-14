@@ -42,7 +42,9 @@ char            *name[] = { "./test1.txt",
                             "./test_1_export.txt",
                             "./test_1_unset.txt",
                             "./testes_files/google.tx",
-                            "./ola.txt"   };
+                            "./ola.txt",
+                            "./testes_files/input.txt",
+                            "./testes_files/append.txt"   };
 int             i = 0;
 
 void	run_function(t_sys_config *mini)
@@ -84,7 +86,7 @@ MU_TEST(test_passing_1_cat_cmd_should_be_the_text_inside)
     t_token *token = CAT_T;
     set_list(1, token);
     // Comando testado: /usr/bin/cat .testes-files/vinculo.txt
-    t_sys_config mini = (t_sys_config) {.env = environ, .tokens = token};
+    t_sys_config mini = (t_sys_config) {.n_pip = 0, .env = environ, .tokens = token};
 
     run_function(&mini);
 
@@ -98,7 +100,7 @@ MU_TEST(test_passing_cat_pipe_grep_should_be_return_the_lines_with_the_word_in_g
     t_token *token = PIPE_T;
     set_list(4, token, CAT_T, PIPE_T, GREP_T);
     // Comando testado: /usr/bin/cat .testes-files/vinculo.txt | grep galo
-    t_sys_config mini = (t_sys_config) {.env = environ, .tokens = token};
+    t_sys_config mini = (t_sys_config) {.n_pip = 1, .env = environ, .tokens = token};
 
     run_function(&mini);
     
@@ -112,7 +114,7 @@ MU_TEST(test_passing_a_cat_pipe_grep_pipe_wc_should_be_number_of_words)
     t_token *token = PIPE_T;
     set_list(6, token, CAT_T, PIPE_T, GREP_T, PIPE_T, WC_T);
     // Comando testado: /usr/bin/cat .testes-files/vinculo.txt | grep galo | wc -c
-    t_sys_config mini = (t_sys_config) {.env = environ, .tokens = token};
+    t_sys_config mini = (t_sys_config) {.n_pip = 2, .env = environ, .tokens = token};
 
     run_function(&mini);
 
@@ -126,7 +128,7 @@ MU_TEST(test_passing_cat_pipe_grep_pipe_wc_pipe_tr_should_alter_the_number)
     t_token *token = PIPE_T;
     set_list(8, token, CAT_T, PIPE_T, GREP_T, PIPE_T, WC_T, PIPE_T, TR_T);
     // Comando testado: /usr/bin/cat .testes-files/vinculo.txt | grep galo | wc -c | tr 5 2
-    t_sys_config mini = (t_sys_config) {.env = environ, .tokens = token};
+    t_sys_config mini = (t_sys_config) {.n_pip = 3, .env = environ, .tokens = token};
 
     run_function(&mini);
 
@@ -141,7 +143,7 @@ MU_TEST(test_passing_a_echo_cmd_should_be_the_menssage)
     t_token *token = ECHO_T;
     set_list(1, token);
     // Comando testado: echo "taca lhe pau no carrinho marcos!"
-    t_sys_config mini = (t_sys_config) {.env = environ, .tokens = token};
+    t_sys_config mini = (t_sys_config) {.n_pip = 0, .env = environ, .tokens = token};
 
     run_function(&mini);
 
@@ -155,7 +157,7 @@ MU_TEST(test_passing_a_pwd_cmd_should_be_actual_dir)
     t_token *token = PWD_T;
     set_list(1, token);
     // Comando testado: pwd
-    t_sys_config mini = (t_sys_config) {.env = environ, .tokens = token};
+    t_sys_config mini = (t_sys_config) {.n_pip = 0, .env = environ, .tokens = token};
 
     run_function(&mini);
 
@@ -169,7 +171,7 @@ MU_TEST(test_passing_a_env_cmd_should_be_environ)
     t_token *token = ENV_T;
     set_list(1, token);
     // Comando testado: env
-    t_sys_config mini = (t_sys_config) {.env = c_env, .tokens = token};
+    t_sys_config mini = (t_sys_config) {.n_pip = 0, .env = c_env, .tokens = token};
 
     run_function(&mini);
 
@@ -184,7 +186,7 @@ MU_TEST(test_passing_a_cd_cmd_should_be_home_dir)
     ft_token_add_end(&token, ft_token_new(ft_split("cd", 32), OP_CD));
     set_list(1, token);
     // Comando testado: cd 
-    t_sys_config mini = (t_sys_config) {.env = NULL, .tokens = token,
+    t_sys_config mini = (t_sys_config) {.n_pip = 0, .env = NULL, .tokens = token,
     .exec = NULL, .prompt = NULL, .new_parser = NULL, .path = NULL};
     get_envp(environ, &mini);
 
@@ -204,7 +206,7 @@ MU_TEST(test_passing_a_cd_cmd_should_be_home_dir)
 MU_TEST(test_passing_a_export_cmd_should_be_environ_more_one)
 {
     // Comando testado: export PL=vida
-    t_sys_config mini = (t_sys_config) {.env = NULL, .tokens = EXPORT_T,
+    t_sys_config mini = (t_sys_config) {.n_pip = 0, .env = NULL, .tokens = EXPORT_T,
     .exec = NULL, .prompt = NULL, .new_parser = NULL, .path = NULL};
     get_envp(c_env, &mini);
 
@@ -222,7 +224,7 @@ MU_TEST(test_passing_a_export_cmd_should_be_environ_more_one)
 MU_TEST(test_passing_a_unset_cmd_should_be_environ_minus_one)
 {
     // Comando testado: unset PWD
-    t_sys_config mini = (t_sys_config) {.env = NULL, .tokens = UNSET_T,
+    t_sys_config mini = (t_sys_config) {.n_pip = 0, .env = NULL, .tokens = UNSET_T,
     .exec = NULL, .prompt = NULL, .new_parser = NULL, .path = NULL};
     get_envp(c_env, &mini);
 
@@ -242,7 +244,7 @@ MU_TEST(test_passing_a_echo_cmd_for_a_file_should_insert_the_text_in_file) {
     t_token *token = OUT_M;
     set_list(2, token, ECHO_M);
     // Comando testado: echo taca lhe pau no carrinho marcos! > ./testes_files/google.tx
-    t_sys_config mini = (t_sys_config) {.env = NULL, .tokens = token,
+    t_sys_config mini = (t_sys_config) {.n_pip = 0, .env = NULL, .tokens = token,
     .exec = NULL, .prompt = NULL, .new_parser = NULL, .path = NULL};
 
     run_function(&mini);
@@ -260,12 +262,47 @@ MU_TEST(test) {
             CMD_M(">\aoie", '\a', OP_OUTPUT),
             CMD_M(">\aola.txt", '\a', OP_OUTPUT),
             CMD_M("echo\at3\at2\at4", '\a', OP_ECHO));
-    t_sys_config mini = (t_sys_config) {.env = NULL, .tokens = token,
+    t_sys_config mini = (t_sys_config) {.n_pip = 3, .env = NULL, .tokens = token,
     .exec = NULL, .prompt = NULL, .new_parser = NULL, .path = NULL};
 
     run_function(&mini);
 
     assert_result_fd("t3 t2 t4\n", "oi", "oie");
+    i++;
+    clean_exec(&mini.exec);
+    ft_token_free(&token);
+}
+
+//###################### INPUT #######################//
+MU_TEST(test_input) {
+    t_token *token = CMD_M("<\a./testes_files/banana.txt", '\a', OP_INPUT);
+    set_list(2, token, CMD_M("/usr/bin/grep\abanana", '\a', OP_CMD));
+    // Comando testado: < ./testes_files/banana.tx grep banana
+    t_sys_config mini = (t_sys_config) {.n_pip = 0, .env = NULL, .tokens = token,
+    .exec = NULL, .prompt = NULL, .new_parser = NULL, .path = NULL};
+
+    run_function(&mini);
+
+    assert_result("banana batida\n");
+    i++;
+    clean_exec(&mini.exec);
+    ft_token_free(&token);
+}
+
+//###################### APPEND #######################//
+MU_TEST(test_append) {
+    t_token *token = CMD_M(">>\a./testes_files/append.txt", '\a', OP_APPEND);
+    set_list(4, token,
+                CMD_M("echo\avida cara", '\a', OP_ECHO),
+                CMD_M(">>\a./testes_files/append.txt", '\a', OP_APPEND),
+                CMD_M("echo\amainstreet", '\a', OP_ECHO));
+    // Comando testado: >> ./testes_files/append.txt echo vida cara >> ./testes_files/append.txt echo mainstreet
+    t_sys_config mini = (t_sys_config) {.n_pip = 0, .env = NULL, .tokens = token,
+    .exec = NULL, .prompt = NULL, .new_parser = NULL, .path = NULL};
+
+    run_function(&mini);
+
+    assert_result("vida cara\nmainstreet\n");
     i++;
     clean_exec(&mini.exec);
     ft_token_free(&token);
@@ -293,10 +330,20 @@ MU_TEST_SUITE(test_suite_output) {
     MU_RUN_TEST(test);
 }
 
+MU_TEST_SUITE(test_suite_input) {
+    MU_RUN_TEST(test_input);
+}
+
+MU_TEST_SUITE(test_suite_append) {
+    MU_RUN_TEST(test_append);
+}
+
 int main() {
 	MU_RUN_SUITE(test_suite_pipes);
     MU_RUN_SUITE(test_suite_builtins);
     MU_RUN_SUITE(test_suite_output);
+    MU_RUN_SUITE(test_suite_input);
+    MU_RUN_SUITE(test_suite_append);
 	MU_REPORT();
 	return MU_EXIT_CODE;
 }
