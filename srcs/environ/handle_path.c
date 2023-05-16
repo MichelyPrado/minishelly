@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:25:16 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/23 17:25:33 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/15 23:15:17 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@ int	cmd_path_valid(char **token, char **path)
 	err = -1;
 	if (!token || !*token)
 		return (err);
-	err = access(*token, X_OK);
-	if (err == 0)
-		return (0);
 	i = 0;
 	if (!path)
 		return (err);
@@ -62,5 +59,8 @@ int	cmd_path_valid(char **token, char **path)
 			free(tmp);
 		i++;
 	}
-	return (err);
+	err = access(*token, X_OK);
+	if (err == 0)
+		return (0);
+	return (-1);
 }

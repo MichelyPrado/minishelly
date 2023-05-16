@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/14 16:01:56 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/15 20:43:19 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,11 +196,7 @@ int				check_next(char symbol, char *str);
 int				check_quotes(char *src, char quote, int jump);
 int				jump_quotes(char *src, t_sys_config *mini, char quote, int *j);
 
-// List Token
-t_token			*ft_token_new(char **cmds, int type);
-t_token			*ft_token_last(t_token *node);
-void			ft_token_add_end(t_token **node, t_token *new);
-void			ft_token_free(t_token **node);
+//################ HANDLE INPUT ################//
 
 // handle tokens
 t_token			*ft_create_tokens(t_sys_config *mini);
@@ -208,12 +204,17 @@ t_types			tag_token(char *cmd);
 int				ft_isspace(char *str);
 char			*ft_token_repair(char *token);
 
-// Wait input
-t_err			wait_input(t_sys_config *mini, int *prop, char *line);
-char			*create_prompt(int amount, ...);
+// TOKENS
+t_token			*ft_token_new(char **cmds, int type);
+t_token			*ft_token_last(t_token *node);
+void			ft_token_add_end(t_token **node, t_token *new);
 
-// HASH
-int				hash_func(char *cmd, t_keyword_map *keymap);
+
+// TOKENS UTILS
+t_token			*swap_tokens(t_token *bk, t_token **md, t_token *end);
+t_token			*copy_token(t_token *bk, t_token **md, t_token *end);
+char			**ft_realloc(char **array);
+void			correct_puts(t_token *md, t_token *end);
 
 //################ INTERFACES ################//
 
@@ -231,6 +232,13 @@ void			clean_strlist(char ***strs);
 void			close_fds(t_sys_config *mini);
 void			exec(t_sys_config *mini);
 int				exec_program(t_sys_config *mini);
+
+// HASH
+int				hash_func(char *cmd, t_keyword_map *keymap);
+
+// Wait input
+t_err			wait_input(t_sys_config *mini, int *prop, char *line);
+char			*create_prompt(int amount, ...);
 
 // PROCESS INIT
 int				turn_void(t_sys_config *mini);
@@ -267,6 +275,10 @@ int				ft_ctrl_d(t_sys_config *mini);
 void			clean_exec(t_exec **exec);
 void			clean_data(t_sys_config *mini);
 
+// FREE
+void			ft_token_free(t_token **node);
+void			ft_node_free(t_token **node);
+
 //BUILTINS
 int				ft_env(t_sys_config *mini);
 int				ft_pwd(t_sys_config *mini);
@@ -281,5 +293,7 @@ void			normal_exit(void (*f)(void *), int exit_code, \
 				void *item);
 void			sys_exit(void (*f)(t_sys_config *), int exit_code, \
 				t_sys_config *mini);
+void			sys_exit_err(void (*f)(t_sys_config *), int exit_code, \
+				t_sys_config *mini, char *msg);
 
 #endif

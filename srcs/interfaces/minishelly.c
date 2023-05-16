@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/14 20:57:35 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/15 19:22:54 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,86 +21,106 @@ static void	args_check(int argc)
 	}
 }
 
-void	swap_tokens(t_token *bk, t_token **md, t_token *end)
-{
-	t_token	*tmp;
-
-	tmp = *md;
-	if (bk)
-		bk->next = end;
-	tmp->next = end->next;
-	end->next = tmp;
-	//*md = end;
-}
-
-void	copy_token(t_token *bk, t_token **md, t_token *end)
-{
-	t_token	*cpy;
-
-	cpy = ft_token_new(end->token, end->type);
-	if (bk)
-		bk->next = cpy;
-	cpy->next = *md;
-	//*md = cpy;
-}
-
-char **ft_realloc(char **array)
-{
-	int		i;
-	char	**tmp;
-
-	i = 0;
-	while (array[i])
-		i++;
-	tmp = ft_calloc(sizeof(char *), i);
-	i = 1;
-	while (array[i])
-	{
-		tmp[i - 1] = array[i];
-		i++;
-	}
-	if (array)
-		free(array);
-	return (tmp);
-}
-
-void	correct_puts(t_token *md, t_token *end)
-{
-	char	**tmp;
-	
-	tmp = NULL;
-	if (md->type >= 4 && md->type <= 7)
-	{
-		tmp = ft_calloc(sizeof(char *), 3);
-		tmp[0] = md->token[0];
-		tmp[1] = end->token[0];
-		if (md->token)
-			free(md->token);
-		md->token = tmp;
-		end->token = ft_realloc(end->token);
-	}
-}
 
 //função que faz a identificação dos tipos dos tokens
-void	print_tokens_test(t_token *tokens)
+void	print_tokens_test(t_sys_config *ms)
 {
 	int		i;
+	int		j = 0;;
 	t_token	*back;
+	t_token *tokens;
 
+	tokens = ms->tokens;
 	back = NULL;
-	correct_puts(tokens, tokens->next);
 	while (tokens)
 	{
 		i = 0;
-		ft_printf("Operador: %i\n[", tokens->type);
+		ft_printf("Operador: %i\tnum pipes: %i\n[", tokens->type, ms->n_pip);
 		while (tokens->token[i])
 		{
 			ft_printf("'%s', ", tokens->token[i]);
+			if (i == 15)
+				break;
 			i++;
 		}
 		printf("]\n");
 		tokens = tokens->next;
+		j++;
+		if (j == 15)
+			exit (123);
 	}
+}
+
+static void	alters(t_token **bkp, t_token **back, t_token **tokens)
+{
+	if (!*back)
+	{
+		*bkp = swap_tokens((*back), tokens, (*tokens)->next);
+		*back = *bkp;
+	}
+	else 
+		*back = swap_tokens((*back), tokens, (*tokens)->next);
+}
+
+t_token	*reorder_tokens(t_token *tokens)
+{
+	int		i = 0;
+	t_token	*bkp;
+	t_token	*back;
+
+	bkp = tokens;
+	back = NULL;
+	// AJUSTE dos fds
+	while (tokens)
+	{
+		correct_puts(tokens, tokens->next);
+		tokens = tokens->next;
+	}
+	// organizar pipes e outputs
+	tokens = bkp;
+	while (tokens)
+	{	
+		if (tokens->next && tokens->next->type == OP_PIPE
+			&& (!back || back->type != OP_PIPE))
+		{
+			if (!back)
+				bkp = copy_token(back, &tokens, tokens->next);
+			else 
+				copy_token(back, &tokens, tokens->next);
+			back = tokens->next;
+			tokens = back;
+		}
+		else if (tokens->next && tokens->next->type == OP_OUTPUT
+			&& (tokens->type >= OP_CMD && tokens->type <= OP_ECHO))
+			alters(&bkp, &back, &tokens);
+		else if (tokens->next && tokens->next->type == OP_APPEND
+			&& (tokens->type >= OP_CMD && tokens->type <= OP_ECHO))
+			alters(&bkp, &back, &tokens);
+		else
+		{
+			back = tokens;
+			tokens = tokens->next;
+		}
+		i++;
+		if (i == 15)
+			break ;
+		
+	}
+	return (bkp);
+}
+
+int	count_pip(t_token *t)
+{
+	int	i;
+
+	i = 0;
+	while (t)
+	{
+		if (t->type == OP_PIPE)
+			i++;
+		t = t->next;
+	}
+	return (i);
 }
 
 int	minishelly(int argc, char **argv, char **environ)
@@ -122,7 +142,9 @@ int	minishelly(int argc, char **argv, char **environ)
 			continue ;
 		search_for_symbol(&mini->new_parser, '$', mini->env);
 		mini->tokens = ft_create_tokens(mini);
-		print_tokens_test(mini->tokens);
+		mini->n_pip = count_pip(mini->tokens);
+		mini->tokens = reorder_tokens(mini->tokens);
+		//print_tokens_test(mini);
 		exec(mini);
 		add_history(mini->str);
 		ft_token_free(&mini->tokens);

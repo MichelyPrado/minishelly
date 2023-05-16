@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:29:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/12 13:32:11 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/15 12:31:00 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,31 @@ void	clean_data(t_sys_config *mini)
 		ft_token_free(&mini->tokens);
 		clean_exec(&mini->exec);
 	}
+}
+
+void	ft_node_free(t_token **node)
+{
+	if (*node)
+	{
+		if ((*node)->token)
+			clean_strlist(&(*node)->token);
+		free((*node));
+		*node = NULL;
+	}
+}
+
+void	ft_token_free(t_token **node)
+{
+	t_token	*head;
+	t_token	*temp;
+
+	head = *node;
+	temp = *node;
+	while (temp)
+	{
+		temp = head->next;
+		ft_node_free(&head);
+		head = temp;
+	}
+	*node = NULL;
 }

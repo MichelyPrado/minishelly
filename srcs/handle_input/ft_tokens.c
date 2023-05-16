@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 00:06:05 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/12 12:11:23 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/15 12:25:34 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,4 @@ void	ft_token_add_end(t_token **node, t_token *new)
 		tail->next = new;
 }
 
-void	ft_token_free(t_token **node)
-{
-	t_token	*head;
-	t_token	*temp;
 
-	head = *node;
-	temp = *node;
-	while (temp)
-	{
-		temp = head->next;
-		if (head->token)
-			clean_strlist(&head->token);
-		free(head);
-		head = temp;
-	}
-	*node = NULL;
-}
