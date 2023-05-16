@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:32:25 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 00:27:19 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 04:21:28 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	b_export(t_sys_config *mini)
 	i = 1;
 	while (token[i])
 	{
+		if (!check_is_a_valid_var(token[i]))
+			return (ft_print_err(1, " not a valid identifier"), 1);
 		size = check_existence(token, &key, mini->env, i);
 		if (!size)
 			return (0);

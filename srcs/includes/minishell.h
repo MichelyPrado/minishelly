@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/16 02:51:21 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 04:13:23 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,5 +315,7 @@ int				is_valid_char_for_var(char c);
 int				ft_isspace(char c);
 int				ft_is_allspace(char *str);
 int				check_next_eq(char symbol, char *str);
-
+int				check_is_a_valid_var(char *var);
+// PRINT MESSAGES FUNCTIONS									(ft_print_msg)
+void			ft_print_err(int status_code, char *msg);
 #endif

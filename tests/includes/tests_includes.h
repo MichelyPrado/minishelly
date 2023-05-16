@@ -17,6 +17,7 @@
 # define EXPORT_T   &((t_token){.token = (char *[]){"export", "PL=vida", NULL}, .type = OP_EXPORT, .next = NULL})
 # define UNSET_T    &((t_token){.token = (char *[]){"unset", "PWD", NULL}, .type = OP_UNSET, .next = NULL})
 # define OUT_T      &((t_token){.token = (char *[]){">", "./testes_files/google.tx", NULL}, .type = OP_OUTPUT, .next = NULL})
+# define CMD_T(CMD, OP)      &((t_token){.token = (char *[])CMD, .type = OP, .next = NULL})
 
 # define OUT_M      ft_token_new(ft_split("> ./testes_files/google.tx", 32), OP_OUTPUT)
 # define ECHO_M     ft_token_new(ft_split("echo\ataca lhe pau no carrinho marcos!", '\a'), OP_ECHO)

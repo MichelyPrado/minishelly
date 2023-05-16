@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 01:10:37 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 01:46:44 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 05:57:33 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,25 @@ int	check_next_eq(char symbol, char *str)
 {
 	if (*(str + 1) == symbol)
 		return (1);
+	return (0);
+}
+
+int	check_is_a_valid_var(char *var)
+{
+	int	i;
+
+	i = 0;
+	if (is_valid_char_for_var(var[i]))
+	{
+		i++;
+		while (var[i] && var[i] != '=')
+		{
+			if (!is_valid_char_for_var(var[i]) &&
+			!ft_isdigit(var[i]))
+				return (0);
+			i++;
+		}
+		return (1);
+	}
 	return (0);
 }

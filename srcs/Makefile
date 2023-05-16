@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/16 02:29:45 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/16 03:53:16 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ GET_SET							=						$(addprefix $(PATH_GET_SET), \
 PATH_TOOLS 						=						./tools/
 TOOLS							=						$(addprefix $(PATH_TOOLS), \
 														ft_lenfunctions.c ft_free_functions.c \
-														ft_check_functions.c)
+														ft_check_functions.c ft_print_msg.c)
 PATH_SIGNALS					=						./signals/
 SIGNALS							=						$(addprefix $(PATH_SIGNALS), \
 														signals.c ft_ctrl_d.c)

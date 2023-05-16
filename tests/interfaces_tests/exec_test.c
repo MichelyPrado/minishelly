@@ -137,6 +137,25 @@ MU_TEST(test_passing_cat_pipe_grep_pipe_wc_pipe_tr_should_alter_the_number)
     clean_exec(&mini.exec);
 }
 
+MU_TEST(test_pipe)
+{
+    t_token *token = CMD_M("|", '\a', OP_PIPE);
+    set_list(8, token,
+                CMD_M("env", '\a', OP_ENV),
+                CMD_M("|", '\a', OP_PIPE),
+                CMD_M("sort", '\a', OP_CMD),
+                CMD_M("|", '\a', OP_PIPE),
+                CMD_M("grep\a-v\aSHLVL", '\a', OP_CMD));
+    // Comando testado: /usr/bin/cat .testes-files/vinculo.txt | grep galo | wc -c | tr 5 2
+    t_sys_config mini = (t_sys_config) {.n_pip = 3, .env = environ, .tokens = token};
+
+    run_function(&mini);
+
+    assert_result("");
+    i++;
+    clean_exec(&mini.exec);
+}
+
 //###################### BUILTINS #######################//
 MU_TEST(test_passing_a_echo_cmd_should_be_the_menssage)
 {
@@ -313,6 +332,7 @@ MU_TEST_SUITE(test_suite_pipes) {
     MU_RUN_TEST(test_passing_cat_pipe_grep_should_be_return_the_lines_with_the_word_in_grep);
     MU_RUN_TEST(test_passing_a_cat_pipe_grep_pipe_wc_should_be_number_of_words);
     MU_RUN_TEST(test_passing_cat_pipe_grep_pipe_wc_pipe_tr_should_alter_the_number);
+    MU_RUN_TEST(test_pipe);
 }
 
 MU_TEST_SUITE(test_suite_builtins) {
