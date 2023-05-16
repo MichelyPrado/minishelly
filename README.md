@@ -38,9 +38,9 @@
   - [ ] ctrl-C
   - [ ] ctrl-D
   - [ ] ctrl-\
-- [ ] String parser
+- [x] String parser
   - [x] expand environ var
-  - [ ] expand $? exit code
+  - [x] expand $? exit code
   - [x] single quote
   - [x] double quote
   - [x] token creation

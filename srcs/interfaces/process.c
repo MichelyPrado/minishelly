@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 07:31:00 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 18:59:16 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,15 @@
 
 void	close_fds(t_sys_config *mini)
 {
-	close(mini->exec->fd[0][0]);
-	close(mini->exec->fd[0][1]);
-	close(mini->exec->fd[1][0]);
-	close(mini->exec->fd[1][1]);
+	int	i;
+
+	i = 0;
+	while (mini->exec->fd && i < *get_num_pipes())
+	{
+		close(mini->exec->fd[i][0]);
+		close(mini->exec->fd[i][1]);
+		i++;
+	}
 }
 
 int	exec_program(t_sys_config *mini)
@@ -38,6 +43,7 @@ int	exec_program(t_sys_config *mini)
 
 void	exec(t_sys_config *mini)
 {
+	int				i;
 	static int		status;
 	t_process_func	*func;
 
@@ -48,12 +54,13 @@ void	exec(t_sys_config *mini)
 		func[mini->tokens->type](mini);
 		mini->tokens = mini->tokens->next;
 	}
+	i = 0;
 	close_fds(mini);
-	while (mini->exec->i)
+	while (i < mini->exec->i)
 	{
 		waitpid(-1, &status, 0);
 		if (WIFEXITED(status))
 			set_status_code(WEXITSTATUS(status));
-		mini->exec->i--;
+		i++;
 	}
 }

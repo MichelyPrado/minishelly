@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:25:16 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 07:36:19 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:58:31 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,9 @@ int	cmd_path_valid(char **token, char **path)
 	while (path[i])
 	{
 		tmp = create_prompt(3, path[i], "/", *token);
-		err = access(tmp, F_OK);
+		err = access(tmp, F_OK | X_OK);
 		if (path_is_valid(err, tmp, token))
-		{
-			err = access(tmp, X_OK);
-			if (path_is_valid(err, tmp, token))
-				return (0);
-		}
+			return (0);
 		if (tmp)
 			free(tmp);
 		i++;

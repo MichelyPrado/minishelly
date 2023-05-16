@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/16 07:00:23 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 18:55:08 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	print_tokens_test(t_sys_config *ms)
 	while (tokens)
 	{
 		i = 0;
-		ft_printf("Operador: %i\tnum pipes: %i\n[", tokens->type, ms->n_pip);
+		ft_printf("Operador: %i\tnum pipes: %i\n[", tokens->type, *get_num_pipes);
 		while (tokens->token[i])
 		{
 			ft_printf("'%s', ", tokens->token[i]);
@@ -142,7 +142,7 @@ int	minishelly(int argc, char **argv, char **environ)
 			continue ;
 		search_for_symbol(&mini->new_parser, '$', mini->env);
 		mini->tokens = ft_create_tokens(mini);
-		mini->n_pip = count_pip(mini->tokens);
+		*get_num_pipes() = count_pip(mini->tokens);
 		mini->tokens = reorder_tokens(mini->tokens);
 		//print_tokens_test(mini);
 		exec(mini);

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:19:42 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/15 22:35:06 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 09:34:25 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,17 @@ t_exec	*init_exec(void)
 	int		i;
 	t_exec	*exec;
 
-	i = 0;
 	exec = malloc(sizeof(t_exec));
 	exec->i = 0;
 	exec->pid = getpid();
-	exec->fd = (int **) malloc(2 * sizeof(int *));
-	exec->fd[0] = malloc(2 * sizeof(int));
-	exec->fd[1] = malloc(2 * sizeof(int));
-	pipe(exec->fd[0]);
-	pipe(exec->fd[1]);
+	exec->fd = (int **) ft_calloc(*get_num_pipes(), sizeof(int *));
+	i = 0;
+	while (i < *get_num_pipes())
+	{
+		exec->fd[i] = malloc(2 * sizeof(int));
+		pipe(exec->fd[i]);
+		i++;
+	}
 	exec->flag = BFALSE;
 	exec->func = array_functions();
 	return (exec);

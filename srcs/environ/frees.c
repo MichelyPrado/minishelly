@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:29:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 00:41:09 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 18:46:39 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,17 @@ void	clean_sys(t_sys_config *mini)
 
 void	clean_exec(t_exec **exec)
 {
+	int	i;
+
+	i = 0;
 	if ((*exec))
 	{
-		if ((*exec)->fd[0])
-			free((*exec)->fd[0]);
-		if ((*exec)->fd[1])
-			free((*exec)->fd[1]);
 		if ((*exec)->fd)
+		{
+			while (i < *get_num_pipes())
+				free((*exec)->fd[i++]);
 			free((*exec)->fd);
+		}
 		free((*exec)->func);
 		free((*exec));
 		(*exec) = NULL;

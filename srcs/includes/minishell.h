@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/16 04:13:23 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 09:20:57 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,11 +154,7 @@ typedef struct s_sys_config
 	char	**prompt;
 	t_exec	*exec;
 	char	**path;
-	int		n_pip;
-	int		exit_status;
 }	t_sys_config;
-
-
 
 typedef int					(*t_process_func)(t_sys_config *);
 
@@ -215,6 +211,9 @@ int				cmd_path_valid(char **token, char **path);
 // STATUS CODE GET AND SET									(status_code)
 int				*get_status_code();
 void			set_status_code(int status_code);
+// QUANTIDADES DE PIPES										(num_pipes)
+int				*get_num_pipes();
+void			set_num_pipes(int num);
 //######################################################################//
 //######################### HANDLE INPUT ###############################//
 // EXPAND DOLAR SIGN [$]									(expand)
