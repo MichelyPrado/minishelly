@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:31:23 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/16 18:59:03 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 19:14:07 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	choice_dup2(t_sys_config *ms)
 {
-	int x;
-
-	x = 0;
 	if (ms->exec->i == 0)
 	{
 		if (dup2(ms->exec->fd[ms->exec->i][1], 1) == -1)
@@ -25,9 +22,7 @@ void	choice_dup2(t_sys_config *ms)
 	}
 	else if (ms->exec->i == *get_num_pipes())
 	{
-		if (*get_num_pipes() == 1)
-			x = -1;
-		if (dup2(ms->exec->fd[ms->exec->i + x][0], 0) == -1)
+		if (dup2(ms->exec->fd[ms->exec->i -1][0], 0) == -1)
 			sys_exit(clean_data, EBADF, ms);
 		return ;	
 	}
