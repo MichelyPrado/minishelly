@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/15 23:18:11 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 02:57:49 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	exec_program(t_sys_config *mini)
 
 void	exec(t_sys_config *mini)
 {
-	int				status;
+	static int		status;
 	t_process_func	*func;
 
 	mini->exec = init_exec();
@@ -51,6 +51,8 @@ void	exec(t_sys_config *mini)
 	while (mini->exec->i)
 	{
 		waitpid(-1, &status, 0);
+		if (WIFEXITED(status))
+			set_status_code(WEXITSTATUS(status));
 		mini->exec->i--;
 	}
 }

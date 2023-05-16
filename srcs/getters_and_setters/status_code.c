@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   status_code.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 18:12:28 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 03:36:24 by dapaulin         ###   ########.fr       */
+/*   Created: 2023/05/16 02:23:39 by dapaulin          #+#    #+#             */
+/*   Updated: 2023/05/16 02:31:01 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_exit(t_sys_config *mini)
+int *get_status_code()
 {
-	int	err;
+    static int  status_code;
 
-	err = 0;
-	
-	if (mini->tokens->token[1])
-		err = ft_atoi(mini->tokens->token[1]);
-	clean_data(mini);
-	exit(err);
+    return (&status_code);
+}
+
+void set_status_code(int status_code)
+{
+    int *sc;
+
+    sc = get_status_code();
+    *sc = status_code;
 }

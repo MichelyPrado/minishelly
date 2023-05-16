@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/15 12:18:06 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/16 02:29:45 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,14 @@ RM								=						rm -rf
 
 LIBFT_PATH						=						./libft/
 LIBFT							=						$(LIBFT_PATH)/libft.a
+
+PATH_GET_SET 					=						./getters_and_setters/
+GET_SET							=						$(addprefix $(PATH_GET_SET), \
+														status_code.c )
+PATH_TOOLS 						=						./tools/
+TOOLS							=						$(addprefix $(PATH_TOOLS), \
+														ft_lenfunctions.c ft_free_functions.c \
+														ft_check_functions.c)
 PATH_SIGNALS					=						./signals/
 SIGNALS							=						$(addprefix $(PATH_SIGNALS), \
 														signals.c ft_ctrl_d.c)
@@ -39,11 +47,11 @@ BUILTINS						=						$(addprefix $(PATH_BUILTINS), \
 														pwd.c unset.c)
 PATH_ENVIRON					=						./environ/
 ENVIRON							=						$(addprefix $(PATH_ENVIRON), \
-														envp_utils.c handle_env.c tool_box.c \
+														envp_utils.c handle_env.c \
 														handle_path.c frees.c exit_functions.c)
 PATH_HANDLE						=						./handle_input/
 HANDLE							=						$(addprefix $(PATH_HANDLE), \
-														ft_tokens.c handle_tokens.c hash.c \
+														ft_tokens.c handle_tokens.c \
 														parser_utils.c parser.c expand.c	\
 														ft_tokens_utils.c)
 PATH_INTERFACES					=						./interfaces/
@@ -60,7 +68,9 @@ SRC								=						minishell.c			\
 														$(HANDLE)			\
 														$(INTERFACES)		\
 														$(OPERATORS)		\
-														$(SIGNALS)						
+														$(SIGNALS)			\
+														$(TOOLS)			\
+														$(GET_SET)					
 OBJ								=						$(SRC:%.c=%.o)
 
 

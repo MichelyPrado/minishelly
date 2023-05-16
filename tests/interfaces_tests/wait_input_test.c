@@ -21,7 +21,7 @@ void	clean_sys_config(t_sys_config *mini)
 	int	i;
 
 	i = 0;
-	clean_env(mini->env);
+	clean_strlist(&mini->env);
 	if (mini->str)
 		free(mini->str);
 	i = 0;

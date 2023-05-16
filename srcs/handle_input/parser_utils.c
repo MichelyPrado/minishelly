@@ -6,23 +6,16 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 09:47:02 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:49:02 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 01:49:37 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	add_character(char *dst, int j, char c)
+int	insert_char_in_string(char *dst, int j, char c)
 {
 	dst[j] = c;
 	return (1);
-}
-
-int	check_next(char symbol, char *str)
-{
-	if (*(str + 1) == symbol)
-		return (1);
-	return (0);
 }
 
 int	jump_quotes(char *src, t_sys_config *mini, char quote, int *j)

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:21:28 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/12 13:31:31 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 00:45:53 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_unset(t_sys_config *mini, char *key)
 		aux[i] = ft_strdup(mini->env[i + j]);
 		i++;
 	}
-	clean_env(mini->env);
+	clean_strlist(&mini->env);
 	mini->env = aux;
 }
 
@@ -60,7 +60,7 @@ void	ft_export(char ***env, char *key, char *value)
 		aux[i] = ft_strdup((*env)[i]);
 		i++;
 	}
-	clean_env((*env));
+	clean_strlist(&(*env));
 	*env = aux;
 	(*env)[i] = ft_strjoin(key, value);
 }
@@ -109,7 +109,7 @@ void	get_envp(char **envp, t_sys_config *data)
 	int	i;
 
 	i = 0;
-	data->env = (char **)ft_calloc(sizeof(char *), amount_vars(envp) + 1);
+	data->env = (char **)ft_calloc(sizeof(char *), ft_listlen(envp) + 1);
 	while (envp[i])
 	{
 		data->env[i] = ft_strdup(envp[i]);

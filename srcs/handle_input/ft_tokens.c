@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 00:06:05 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/15 12:25:34 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 01:32:51 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,3 @@ void	ft_token_add_end(t_token **node, t_token *new)
 	else
 		tail->next = new;
 }
-
-

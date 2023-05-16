@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:44:07 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/12 13:17:42 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 00:40:59 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,7 @@ t_sys_config	*start_sys(char **environ)
 	return (mini);
 }
 
-void	clean_sys(t_sys_config *mini)
-{
-	if (mini->new_parser)
-		free(mini->new_parser);
-	if (mini->str)
-		free(mini->str);
-	if (mini->exec)
-		free(mini->exec);
-	clean_strlist(&(mini->env));
-	clean_strlist(&(mini->prompt));
-	ft_token_free(&(mini->tokens));
-	clean_strlist(&(mini->path));
-	if (mini)
-		free(mini);
-}
+
 
 void	update_unbound_vars(char *key, t_sys_config *mini)
 {
@@ -77,18 +63,3 @@ void	update_unbound_vars(char *key, t_sys_config *mini)
 	}
 }
 
-void	clean_strlist(char ***strs)
-{
-	int	i;
-
-	i = 0;
-	if (!(*strs))
-		return ;
-	if (*strs)
-	{
-		while ((*strs)[i])
-			free((*strs)[i++]);
-		free(*strs);
-	}
-	*strs = NULL;
-}

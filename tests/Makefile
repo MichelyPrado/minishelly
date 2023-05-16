@@ -27,8 +27,12 @@ DIR_HANDLE								=				/handle_input/
 DIR_INTERFACES							=				/interfaces/
 DIR_OPERATORS							=				/operators/
 DIR_SIGNALS								=				/signals/
+DIR_TOOLS								=				/tools/
+DIR_GET_SET								=				/getters_and_setters/
 DIR_LIBFT								=				/libft/
 YOUR_FILES								=				$(wildcard $(FILES)$(DIR_BUILTINS)*.c)						\
+														$(wildcard $(FILES)$(DIR_TOOLS)*.c)							\
+														$(wildcard $(FILES)$(DIR_GET_SET)*.c)							\
 														$(wildcard $(FILES)$(DIR_SIGNALS)*.c)						\
 														$(wildcard $(FILES)$(DIR_ENVIRON)*.c)						\
 														$(wildcard $(FILES)$(DIR_HANDLE)*.c)						\

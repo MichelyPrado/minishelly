@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/12 12:09:09 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 01:43:41 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,20 +88,6 @@ t_token	*ft_create_tokens(t_sys_config *mini)
 	return (tokens);
 }
 
-int	ft_isspace(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (!(str[i] == '\t' || str[i] == ' '))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 t_types	tag_token(char *cmd)
 {
 	t_keyword_map	*keymap;
@@ -123,4 +109,20 @@ t_types	tag_token(char *cmd)
 	{"echo", OP_ECHO}
 	};
 	return (hash_func(cmd, keymap));
+}
+
+int	hash_func(char *cmd, t_keyword_map *keymap)
+{
+	int	i;
+
+	if (!cmd || ft_is_allspace(cmd))
+		return (OP_DEFAULT);
+	i = 0;
+	while (i < 14)
+	{
+		if (ft_strcmp(cmd, keymap[i].keyword) == 0)
+			return (keymap[i].type);
+		i++;
+	}
+	return (OP_CMD);
 }

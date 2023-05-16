@@ -6,13 +6,13 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 19:20:35 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/15 23:13:34 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 00:20:07 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	update_pwd(char ***pwd, ssize_t pwd_index, char *key, char **value)
+void	update_pwd(char ***pwd, ssize_t pwd_index, char *key, char **value)
 {
 	if ((*pwd)[pwd_index])
 		free((*pwd)[pwd_index]);
@@ -22,16 +22,6 @@ static void	update_pwd(char ***pwd, ssize_t pwd_index, char *key, char **value)
 	if (*value)
 		free(*value);
 	*value = NULL;
-}
-
-int	ft_listlen(char **token)
-{
-	int	i;
-
-	i = 0;
-	while (token[i])
-		i++;
-	return (i);
 }
 
 int	too_much_args(char **token)
