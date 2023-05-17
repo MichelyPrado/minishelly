@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/16 21:39:07 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/17 15:23:39 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,8 +192,7 @@ void			normal_exit(void (*f)(void *), int exit_code, \
 				void *item);
 void			sys_exit(void (*f)(t_sys_config *), int exit_code, \
 				t_sys_config *mini);
-void			sys_exit_err(void (*f)(t_sys_config *), int exit_code, \
-				t_sys_config *mini, char *msg);
+void			sys_exit_err(void (*f)(t_sys_config *), t_sys_config *mini, char *msg);
 // FREE														(frees)
 void			clean_exec(t_exec **exec);
 void			clean_data(t_sys_config *mini);
@@ -295,8 +294,7 @@ void			sig_a(int sig);
 void			sig_handler( int sig, siginfo_t *info, void *context);
 void			wait_signal(t_sa *sa);
 int				ft_ctrl_d(t_sys_config *mini);
-
-void			recycle_pipe(t_sys_config *mini);
+int				is_directory(char *path);
 //######################################################################//
 //############################# TOOLS ##################################//
 // LEN FUNCTIONS											(ft_lenfunctions)

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 21:51:33 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 20:53:15 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/17 14:30:35 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,12 @@ void	sys_exit(void (*f)(t_sys_config *), int exit_code, t_sys_config *mini)
 	exit(exit_code);
 }
 
-void	sys_exit_err(void (*f)(t_sys_config *), int exit_code,
-t_sys_config *mini, char *msg)
+void	sys_exit_err(void (*f)(t_sys_config *), t_sys_config *mini, char *msg)
 {
 	f(mini);
 	if (!msg)
 	{
-		ft_putstr_fd(strerror(exit_code), 2);
+		ft_putstr_fd(strerror(*get_status_code()), 2);
 		write(2, "\n", 1);
 	}
 	else
@@ -40,5 +39,5 @@ t_sys_config *mini, char *msg)
 		ft_putstr_fd(msg, 2);
 		write(2, "\n", 1);
 	}
-	exit (exit_code);
+	exit (*get_status_code());
 }

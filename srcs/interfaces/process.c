@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 20:44:47 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:12:51 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,32 @@ void	close_fds(t_sys_config *mini)
 
 int	exec_program(t_sys_config *mini)
 {
+	int	err;
+
+	err = 0;
 	if (mini->exec->flag == BFALSE)
 		mini->exec->pid = fork();
 	if (mini->exec->pid == 0)
 	{
-		if (cmd_path_valid(mini->tokens->token, mini->path))
-			sys_exit_err(clean_data, 127, mini, " command not found");
-		else if (execve(*mini->tokens->token, mini->tokens->token, mini->env)
-			== -1)
-			sys_exit_err(clean_data, EACCES, mini, " command not found");
+		err = cmd_path_valid(mini->tokens->token, mini->path);
+		if(err == -1)
+		{
+			if ((*mini->tokens->token[0] == '/' || !ft_strncmp(*mini->tokens->token, "..", 2) || !ft_strncmp(*mini->tokens->token, "./", 2)))
+				set_status_code(126);
+			sys_exit_err(clean_data, mini, " Permission denied");
+		}
+		if (!(*mini->tokens->token[0] == '/' || !ft_strncmp(*mini->tokens->token, "..", 2) || !ft_strncmp(*mini->tokens->token, "./", 2)))
+			;
+		else if (is_directory(*mini->tokens->token) == 1)
+		{
+			set_status_code(126);
+			sys_exit_err(clean_data, mini, " Is a directory");
+		}
+		if (execve(*mini->tokens->token, mini->tokens->token, mini->env) == -1)
+		{
+			set_status_code(127);
+			sys_exit_err(clean_data, mini, " command not found");
+		}
 		exit (0);
 	}
 	mini->exec->i++;
