@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 01:10:37 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 05:57:33 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:37:07 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int	check_is_a_valid_var(char *var)
 		i++;
 		while (var[i] && var[i] != '=')
 		{
-			if (!is_valid_char_for_var(var[i]) &&
-			!ft_isdigit(var[i]))
+			if (!is_valid_char_for_var(var[i])
+				&& !ft_isdigit(var[i]))
 				return (0);
 			i++;
 		}

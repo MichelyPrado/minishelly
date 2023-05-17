@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/16 18:55:08 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 21:51:48 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,11 @@ static void	args_check(int argc)
 	}
 }
 
-
 //função que faz a identificação dos tipos dos tokens
 void	print_tokens_test(t_sys_config *ms)
 {
 	int		i;
-	int		j = 0;;
+	int		j = 0;
 	t_token	*back;
 	t_token *tokens;
 
@@ -40,7 +39,7 @@ void	print_tokens_test(t_sys_config *ms)
 		{
 			ft_printf("'%s', ", tokens->token[i]);
 			if (i == 15)
-				break;
+				break ;
 			i++;
 		}
 		printf("]\n");
@@ -104,7 +103,6 @@ t_token	*reorder_tokens(t_token *tokens)
 		i++;
 		if (i == 15)
 			break ;
-		
 	}
 	return (bkp);
 }

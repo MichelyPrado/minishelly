@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 18:12:28 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 17:08:45 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:21:59 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_exit(t_sys_config *mini)
 		if (mini->tokens->token[1])
 			err = ft_atoi(mini->tokens->token[1]);
 		if (!err && (ft_strlen(mini->tokens->token[1]) > 2
-		|| !ft_isdigit(*mini->tokens->token[1])))
+				|| !ft_isdigit(*mini->tokens->token[1])))
 		{
 			err = 2;
 			ft_print_err(2, " numeric argument required");

@@ -6,23 +6,23 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:49:53 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 15:49:56 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:35:14 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int *get_num_pipes()
+int	*get_num_pipes(void)
 {
-    static int  num;
+	static int	num;
 
-    return (&num);
+	return (&num);
 }
 
-void set_num_pipes(int num)
+void	set_num_pipes(int num)
 {
-    int *sc;
+	int	*sc;
 
-    sc = get_status_code();
-    *sc = num;
+	sc = get_status_code();
+	*sc = num;
 }

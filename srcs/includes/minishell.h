@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/16 09:20:57 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 21:39:07 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,8 @@ typedef struct sigaction	t_sa;
 // BUILTIN CD												(cd)
 int				special_cases(char ***token, char **env);
 int				too_much_args(char **token);
-void			update_pwd(char ***pwd, ssize_t pwd_index, char *key, char **value);
+void			update_pwd(char ***pwd, ssize_t pwd_index, char *key,
+					char **value);
 int				ft_cd(t_sys_config *mini);
 // BUILTIN ECHO												(echo)
 int				ft_echo(t_sys_config *mini);
@@ -209,10 +210,10 @@ int				cmd_path_valid(char **token, char **path);
 //######################################################################//
 //###################### GETTERS AND SETTERS ###########################//
 // STATUS CODE GET AND SET									(status_code)
-int				*get_status_code();
+int				*get_status_code(void);
 void			set_status_code(int status_code);
 // QUANTIDADES DE PIPES										(num_pipes)
-int				*get_num_pipes();
+int				*get_num_pipes(void);
 void			set_num_pipes(int num);
 //######################################################################//
 //######################### HANDLE INPUT ###############################//
@@ -224,14 +225,14 @@ void			search_for_symbol(char **line, char c, char **env);
 // FUNCTIONS FOR HANDLE TOKENS								(ft_tokens_utils)
 t_token			*swap_tokens(t_token *bk, t_token **md, t_token *end);
 t_token			*copy_token(t_token *bk, t_token **md, t_token *end);
-char   			**rm_first_item(char **array);
+char			**rm_first_item(char **array);
 void			correct_puts(t_token *md, t_token *end);
 // FUNCTIONS FOR CREATE TOKENS								(ft_tokens)
 t_token			*ft_token_new(char **cmds, int type);
 t_token			*ft_token_last(t_token *node);
 void			ft_token_add_end(t_token **node, t_token *new);
 // PUT DATA IN TO TOKENS									(handle_tokens)
-int				change_quotes(char *src, char quote, int *i);
+int				change_quotes(char *src, char quote, int *i, int schar);
 char			*ft_token_repair(char *token);
 t_token			*ft_create_tokens(t_sys_config *mini);
 t_types			tag_token(char *cmd);
@@ -245,8 +246,6 @@ int				add_delimiters(char symbol, int *j, char *dst, char *c);
 t_err			check_readline(char *src, t_sys_config *mini);
 int				count_delimiter(char *str);
 
-
-
 //################ INTERFACES ################//
 
 // MS
@@ -256,7 +255,6 @@ int				minishelly(int argc, char **argv, char **environ);
 char			*cat_user(char **env);
 t_sys_config	*start_sys(char **environ);
 void			update_unbound_vars(char *key, t_sys_config *mini);
-
 
 // PROCESS
 void			close_fds(t_sys_config *mini);
@@ -297,7 +295,6 @@ void			sig_a(int sig);
 void			sig_handler( int sig, siginfo_t *info, void *context);
 void			wait_signal(t_sa *sa);
 int				ft_ctrl_d(t_sys_config *mini);
-
 
 void			recycle_pipe(t_sys_config *mini);
 //######################################################################//

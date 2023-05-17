@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:31:23 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/16 19:14:07 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:49:12 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	choice_dup2(t_sys_config *ms)
 	{
 		if (dup2(ms->exec->fd[ms->exec->i -1][0], 0) == -1)
 			sys_exit(clean_data, EBADF, ms);
-		return ;	
+		return ;
 	}
 	if (dup2(ms->exec->fd[ms->exec->i - 1][0], STDIN_FILENO) == -1)
 		sys_exit(clean_data, EBADF, ms);

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:29:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 18:46:39 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:52:29 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,3 @@ void	clean_data(t_sys_config *mini)
 		clean_exec(&mini->exec);
 	}
 }
-

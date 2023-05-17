@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 12:03:37 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/14 15:08:21 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:51:52 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_output(t_sys_config *ms)
 		close(fd);
 		func[ms->tokens->type](ms);
 		close(1);
-		if (dup2(bkp, 1) ==  -1)
+		if (dup2(bkp, 1) == -1)
 			sys_exit(clean_data, EBADF, ms);
 	}
 	return (0);

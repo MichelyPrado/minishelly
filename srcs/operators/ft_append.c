@@ -6,15 +6,15 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 16:00:04 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/14 16:08:55 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:50:48 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int ft_append(t_sys_config *ms)
+int	ft_append(t_sys_config *ms)
 {
-    int				fd;
+	int				fd;
 	int				bkp;
 	t_process_func	*func;
 
@@ -33,8 +33,8 @@ int ft_append(t_sys_config *ms)
 		close(fd);
 		func[ms->tokens->type](ms);
 		close(1);
-		if (dup2(bkp, 1) ==  -1)
+		if (dup2(bkp, 1) == -1)
 			sys_exit(clean_data, EBADF, ms);
 	}
-    return (0);
+	return (0);
 }

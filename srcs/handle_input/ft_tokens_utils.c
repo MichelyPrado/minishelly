@@ -6,13 +6,13 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 12:06:36 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 01:27:54 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:17:50 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_token *swap_tokens(t_token *bk, t_token **md, t_token *end)
+t_token	*swap_tokens(t_token *bk, t_token **md, t_token *end)
 {
 	t_token	*tmp;
 
@@ -21,7 +21,7 @@ t_token *swap_tokens(t_token *bk, t_token **md, t_token *end)
 		bk->next = end;
 	tmp->next = end->next;
 	end->next = tmp;
-   return (end);
+	return (end);
 }
 
 t_token	*copy_token(t_token *bk, t_token **md, t_token *end)
@@ -32,10 +32,10 @@ t_token	*copy_token(t_token *bk, t_token **md, t_token *end)
 	if (bk)
 		bk->next = cpy;
 	cpy->next = *md;
-    return (cpy);
+	return (cpy);
 }
 
-char    **rm_first_item(char **array)
+char	**rm_first_item(char **array)
 {
 	int		i;
 	char	**tmp;
@@ -43,9 +43,9 @@ char    **rm_first_item(char **array)
 	i = 0;
 	while (array[i])
 		i++;
-    if (i <= 1)
-        return (NULL);
-    tmp = ft_calloc(sizeof(char *), i);
+	if (i <= 1)
+		return (NULL);
+	tmp = ft_calloc(sizeof(char *), i);
 	i = 1;
 	while (array[i])
 	{
@@ -71,10 +71,10 @@ void	correct_puts(t_token *md, t_token *end)
 			free(md->token);
 		md->token = tmp;
 		end->token = rm_first_item(end->token);
-        if (!end->token)
-        {
-            md->next = end->next;
-            ft_node_free(&end);
-        }
+		if (!end->token)
+		{
+			md->next = end->next;
+			ft_node_free(&end);
+		}
 	}
 }

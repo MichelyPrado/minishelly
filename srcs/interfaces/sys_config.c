@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:44:07 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 17:07:07 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:43:44 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,3 @@ void	update_unbound_vars(char *key, t_sys_config *mini)
 		mini->path = split_paths(mini->env);
 	}
 }
-

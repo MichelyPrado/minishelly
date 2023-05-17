@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 18:59:16 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:44:47 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,13 @@ int	exec_program(t_sys_config *mini)
 	if (mini->exec->pid == 0)
 	{
 		if (cmd_path_valid(mini->tokens->token, mini->path))
-			sys_exit_err(clean_data, 127, mini," command not found");
-		else if (execve(*mini->tokens->token, mini->tokens->token, mini->env) == -1)
+			sys_exit_err(clean_data, 127, mini, " command not found");
+		else if (execve(*mini->tokens->token, mini->tokens->token, mini->env)
+			== -1)
 			sys_exit_err(clean_data, EACCES, mini, " command not found");
 		exit (0);
 	}
-	mini->exec->i++; 
+	mini->exec->i++;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 21:51:33 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/15 20:43:58 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:53:15 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	sys_exit(void (*f)(t_sys_config *), int exit_code, t_sys_config *mini)
 	exit(exit_code);
 }
 
-void	sys_exit_err(void (*f)(t_sys_config *), int exit_code, t_sys_config *mini, char *msg)
+void	sys_exit_err(void (*f)(t_sys_config *), int exit_code,
+t_sys_config *mini, char *msg)
 {
 	f(mini);
 	if (!msg)

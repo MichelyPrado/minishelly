@@ -6,13 +6,13 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 13:45:46 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/14 15:36:15 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:51:26 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int ft_input(t_sys_config * ms)
+int	ft_input(t_sys_config *ms)
 {
 	int				fd;
 	int				bkp;

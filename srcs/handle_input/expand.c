@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:05:08 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 03:34:19 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:19:31 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ ssize_t	find_key(char *line, char **env, int *i)
 	tmp = NULL;
 	*i += 1;
 	while (line[*i] && (is_valid_char_for_var(line[*i])
-		|| ft_isdigit(line[*i])))
+			|| ft_isdigit(line[*i])))
 		*i += 1;
 	tmp = ft_strndup(&line[1], (*i) - 1);
 	pos = search_envp(env, tmp);
@@ -39,7 +39,7 @@ void	expand_symbol(int i, char **line, char **env, char **pieces)
 	if (!env)
 	{
 		pieces[1] = ft_itoa(*get_status_code());
-		j = 2;	
+		j = 2;
 	}
 	else
 	{	
@@ -96,7 +96,7 @@ void	search_for_symbol(char **line, char c, char **env)
 		{
 			if (is_valid_char_for_var((*line)[i + 1]))
 				expand_symbol(i, line, env, pieces);
-			else if(check_next_eq('?', &(*line)[i]))
+			else if (check_next_eq('?', &(*line)[i]))
 				expand_symbol(i, line, NULL, pieces);
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/16 01:43:41 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 21:53:51 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 // passa para o proximo node
 // repete até a string acabar
 
-int	change_quotes(char *src, char quote, int *i)
+int	change_quotes(char *src, char quote, int *i, int schar)
 {
 	int		jump;
 	char	*p;
@@ -30,13 +30,13 @@ int	change_quotes(char *src, char quote, int *i)
 		if (p)
 		{
 			jump = (p - src) + 1;
-			src[0] = NO_PRINT;
-			src[p - src] = NO_PRINT;
+			src[0] = schar;
+			src[p - src] = schar;
 			*i += jump;
-			if (src[(p - src) + 1] == DQUOTE)
-				change_quotes(&src[p - src] + 1, DQUOTE, i);
-			if (src[(p - src) + 1] == SQUOTE)
-				change_quotes(&src[p - src] + 1, SQUOTE, i);
+			if (check_next_eq(DQUOTE, &src[(p - src)]))
+				change_quotes(&src[p - src] + 1, DQUOTE, i, schar);
+			if (check_next_eq(SQUOTE, &src[(p - src) + 1]))
+				change_quotes(&src[p - src] + 1, SQUOTE, i, schar);
 			return (jump);
 		}
 		else
@@ -52,14 +52,41 @@ char	*ft_token_repair(char *token)
 	i = 0;
 	while (token[i] != '\0')
 	{
-		change_quotes(&token[i], DQUOTE, &i);
-		change_quotes(&token[i], SQUOTE, &i);
+		change_quotes(&token[i], DQUOTE, &i, -42);
+		change_quotes(&token[i], SQUOTE, &i, -42);
 		if (token[i] == 32)
 			token[i] = NO_PRINT;
 		if (token[i] != '\0')
 			i++;
 	}
 	return (token);
+}
+
+char	*test(char *str)
+{
+	int		i;
+	int		j;
+	int		size;
+	char	*new;
+
+	i = 0;
+	size = 0;
+	while (str[i])
+	{
+		if (str[i] != -42)
+			size++;
+		i++;
+	}
+	new = ft_calloc(sizeof(char), size + 1);
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] != -42)
+			new[j++] = str[i];
+		i++;
+	}
+	return (new);
 }
 
 t_token	*ft_create_tokens(t_sys_config *mini)
@@ -76,6 +103,7 @@ t_token	*ft_create_tokens(t_sys_config *mini)
 	while (pieces[i])
 	{
 		pieces[i] = ft_token_repair(pieces[i]);
+		pieces[i] = test(pieces[i]);
 		token = ft_split(pieces[i], NO_PRINT);
 		op = tag_token(token[0]);
 		if (op)
