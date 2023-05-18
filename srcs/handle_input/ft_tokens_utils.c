@@ -12,6 +12,41 @@
 
 #include "../includes/minishell.h"
 
+t_token	*get_back_token(t_token *head, t_token *current)
+{
+	while (head)
+	{
+		if (head->next == current)
+			break ;
+		head = head->next;
+	}
+	//printf("find: %s\n", head->token[1]);
+	return (head);
+}
+
+void	ft_swap_token(t_token **head, t_token **current, t_token **dest)
+{
+	t_token	*tmp;
+	t_token	*htmp;
+	t_token	*aux = NULL;
+
+	tmp = NULL;
+	htmp = NULL;
+	aux = NULL;
+	if (!*dest)
+		return ;
+	if (*current == *head)
+		*head = *dest;
+	else
+		htmp = *head;
+	tmp = (*dest)->next;
+	(*dest)->next = *current;
+	aux = (*current)->next;
+    (*current)->next = tmp;
+	if (htmp)
+		get_back_token(htmp, *current)->next = aux;
+}
+
 t_token	*swap_tokens(t_token *bk, t_token **md, t_token *end)
 {
 	t_token	*tmp;

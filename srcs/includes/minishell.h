@@ -222,6 +222,7 @@ void			expand_symbol(int i, char **line, char **env, char **pieces);
 int				check_single_quotes(char *line);
 void			search_for_symbol(char **line, char c, char **env);
 // FUNCTIONS FOR HANDLE TOKENS								(ft_tokens_utils)
+void			ft_swap_token(t_token **head, t_token **current, t_token **dest);
 t_token			*swap_tokens(t_token *bk, t_token **md, t_token *end);
 t_token			*copy_token(t_token *bk, t_token **md, t_token *end);
 char			**rm_first_item(char **array);
@@ -291,6 +292,7 @@ void			close_fds(t_sys_config *mini);
 
 t_token	*swap_tokens_reverse(t_token *bk, t_token **md, t_token *end);
 
+void	ft_swap_token(t_token **head, t_token **current, t_token **dest);
 
 // Signals
 void			sig_a(int sig);

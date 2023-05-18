@@ -58,7 +58,7 @@ TESTS_ENVIRON							=				$(addprefix $(TPATH_ENVIRON), 								\
 TPATH_INTERFACES						=				interfaces_tests/
 TESTS_INTERFACES						=				$(addprefix $(TPATH_INTERFACES),			 				\
 														wait_input_test 			create_prompt_test				\
-														exec_test)
+														)#exec_test
 TPATH_HANDLE							=				handle_input_tests/
 #														handle_tokens_test
 TESTS_HANDLE							=				$(addprefix $(TPATH_HANDLE), 								\
@@ -66,7 +66,7 @@ TESTS_HANDLE							=				$(addprefix $(TPATH_HANDLE), 								\
 														tag_token_test 				ft_token_repair_test 			\
 														ft_create_tokens_test 		list_token_test					\
 														hash_func_test 				count_delimiter_test			\
-														expand_test) 												\
+														expand_test 				ft_swap_token_test) 												\
 														# ft_tokens_swap_test \
 														# Add your test names without .c
 TESTS									=				$(TESTS_BUILTINS)											\

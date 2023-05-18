@@ -1,6 +1,6 @@
 #include "../includes/tests_includes.h"
 
-void    alter_no_print(char *line, char s)
+void    alter_no_print(char *line, char s, int in)
 {
     int i;
 
@@ -8,7 +8,7 @@ void    alter_no_print(char *line, char s)
     while (line[i])
     {
         if (line[i] == s)
-            line[i] = -1;
+            line[i] = in;
         i++;
     }
 }
@@ -17,7 +17,7 @@ MU_TEST(test1) {
 	// CONFIG
     char    *token = ft_strdup("echo batata doce");
     char    *expected = ft_strdup("echo*batata*doce");
-    alter_no_print(expected, '*');
+    alter_no_print(expected, '*', -1);
     char    *result;
 
     // ACT
@@ -32,8 +32,9 @@ MU_TEST(test1) {
 MU_TEST(test2) {
 	// CONFIG
     char    *token = ft_strdup("echo \"batata doce\"");
-    char    *expected = ft_strdup("echo**batata doce*");
-    alter_no_print(expected, '*');
+    char    *expected = ft_strdup("echo*\abatata doce\a");
+    alter_no_print(expected, '*', -1);
+    alter_no_print(expected, '\a', -42);
     char    *result;
 
     // ACT
@@ -48,8 +49,9 @@ MU_TEST(test2) {
 MU_TEST(test3) {
 	// CONFIG
     char    *token1 = ft_strdup("echo \'batata doce\'");
-    char    *expected = ft_strdup("echo**batata doce*");
-    alter_no_print(expected, '*');
+    char    *expected = ft_strdup("echo*\abatata doce\a");
+    alter_no_print(expected, '*', -1);
+    alter_no_print(expected, '\a', -42);
     char    *result;
 
     // ACT
@@ -64,8 +66,9 @@ MU_TEST(test3) {
 MU_TEST(test4) {
 	// CONFIG
     char    *token = ft_strdup("echo \'batata  \"d    \'oce\" caramelo");
-    char    *expected = ft_strdup("echo**batata  \"d    *oce\"*caramelo");
-    alter_no_print(expected, '*');
+    char    *expected = ft_strdup("echo*\abatata  \"d    \aoce\"*caramelo");
+    alter_no_print(expected, '*', -1);
+    alter_no_print(expected, '\a', -42);
     char    *result;
 
     // ACT
@@ -80,8 +83,9 @@ MU_TEST(test4) {
 MU_TEST(test5) {
 	// CONFIG
     char    *token = ft_strdup("echo \"batata  \'d    \"oce\' caramelo");
-    char    *expected = ft_strdup("echo**batata  \'d    *oce'*caramelo");
-    alter_no_print(expected, '*');
+    char    *expected = ft_strdup("echo*\abatata  \'d    \aoce'*caramelo");
+    alter_no_print(expected, '*', -1);
+    alter_no_print(expected, '\a', -42);
     char    *result;
 
     // ACT
@@ -95,9 +99,10 @@ MU_TEST(test5) {
 
 MU_TEST(test6) {
 	// CONFIG
-    char    *token = ft_strdup("\"'' ! ''\" 'HUMOR AMOR '\"!\"'X\"\"\"\"\"\"\"' ");
-    char    *expected = ft_strdup("*'' ! ''***HUMOR AMOR **!**X\"\"\"\"\"\"\"**");
-    alter_no_print(expected, '*');
+    char    *token = ft_strdup("\"'' ! ''\" 'HUMOR AMOR '\"!\"\'X\"\"\"\"\"\"\"\' ");
+    char    *expected = ft_strdup("\a'' ! ''\a*\aHUMOR AMOR \a\a!\a\aX\"\"\"\"\"\"\"\a*");
+    alter_no_print(expected, '*', -1);
+    alter_no_print(expected, '\a', -42);
     char    *result;
 
     // ACT

@@ -158,7 +158,7 @@ int	minishelly(int argc, char **argv, char **environ)
 		mini->tokens = ft_create_tokens(mini);
 		*get_num_pipes() = count_pip(mini->tokens);
 		mini->tokens = reorder_tokens(mini->tokens);
-		print_tokens_test(mini);
+		//print_tokens_test(mini);
 		exec(mini);
 		add_history(mini->str);
 		ft_token_free(&mini->tokens);

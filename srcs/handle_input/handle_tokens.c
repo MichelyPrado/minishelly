@@ -35,7 +35,7 @@ int	change_quotes(char *src, char quote, int *i, int schar)
 			*i += jump;
 			if (check_next_eq(DQUOTE, &src[(p - src)]))
 				change_quotes(&src[p - src] + 1, DQUOTE, i, schar);
-			if (check_next_eq(SQUOTE, &src[(p - src) + 1]))
+			if (check_next_eq(SQUOTE, &src[(p - src)]))
 				change_quotes(&src[p - src] + 1, SQUOTE, i, schar);
 			return (jump);
 		}
