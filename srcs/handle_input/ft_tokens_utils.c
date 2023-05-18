@@ -20,7 +20,6 @@ t_token	*get_back_token(t_token *head, t_token *current)
 			break ;
 		head = head->next;
 	}
-	//printf("find: %s\n", head->token[1]);
 	return (head);
 }
 
@@ -45,29 +44,6 @@ void	ft_swap_token(t_token **head, t_token **current, t_token **dest)
     (*current)->next = tmp;
 	if (htmp)
 		get_back_token(htmp, *current)->next = aux;
-}
-
-t_token	*swap_tokens(t_token *bk, t_token **md, t_token *end)
-{
-	t_token	*tmp;
-
-	tmp = *md;
-	if (bk)
-		bk->next = end;
-	tmp->next = end->next;
-	end->next = tmp;
-	return (end);
-}
-
-t_token	*swap_tokens_reverse(t_token *bk, t_token **md, t_token *end)
-{
-	t_token	*tmp;
-
-	tmp = *md;
-	if (bk)
-		bk->next = end;
-	tmp->next = bk;
-	return (*md);
 }
 
 t_token	*copy_token(t_token *bk, t_token **md, t_token *end)

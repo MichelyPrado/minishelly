@@ -50,30 +50,6 @@ void	print_tokens_test(t_sys_config *ms)
 	}
 }
 
-static void	alters(t_token **bkp, t_token **back, t_token **tokens)
-{
-	if (!*back)
-	{
-		*bkp = swap_tokens((*back), tokens, (*tokens)->next);
-		*back = *bkp;
-	}
-	else 
-		*back = swap_tokens((*back), tokens, (*tokens)->next);
-}
-
-static void	alters2(t_token **bkp, t_token **back, t_token **tokens)
-{
-	static int joelma;
-	
-	if (!joelma)
-	{
-		joelma = 1;
-		*bkp = (*tokens)->next;
-	}
-	else
-		swap_tokens_reverse(*back, tokens, (*tokens)->next);
-}
-
 
 t_token	*reorder_tokens(t_token *tokens)
 {
@@ -105,12 +81,15 @@ t_token	*reorder_tokens(t_token *tokens)
 		}
 		else if (tokens->next && tokens->next->type == OP_OUTPUT
 			&& (tokens->type >= OP_CMD && tokens->type <= OP_ECHO))
-			alters(&bkp, &back, &tokens);
+			ft_swap_token(&bkp, &tokens, &tokens->next);
 		else if (tokens->next && tokens->next->type == OP_APPEND
 			&& (tokens->type >= OP_CMD && tokens->type <= OP_ECHO))
-			alters(&bkp, &back, &tokens);
-		else if (tokens->type == OP_INPUT && (!tokens->next || !(tokens->next->type >= OP_CMD && tokens->next->type <= OP_ECHO)))
-			alters2(&bkp, &back, &tokens);
+			ft_swap_token(&bkp, &tokens, &tokens->next);
+		else if (tokens->next && tokens->next->type == OP_INPUT
+			&& (tokens->type >= OP_CMD && tokens->type <= OP_ECHO)
+			&& (!tokens->next->next || !(tokens->next->next->type >= OP_CMD
+			&& tokens->next->next->type <= OP_ECHO)))
+			ft_swap_token(&bkp, &tokens, &tokens->next);
 		else
 		{
 			back = tokens;
