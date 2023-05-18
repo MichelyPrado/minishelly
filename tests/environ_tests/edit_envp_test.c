@@ -24,7 +24,7 @@ MU_TEST(alter_o_valor_da_variavel_USER_para_cruz) {
 
 	// ASSERTS
 	mu_assert_string_eq(mini.env[search_envp(environ, key)], expected_str);
-	clean_env(mini.env);
+	clean_strlist(&mini.env);
 }
 
 MU_TEST(passar_uma_key_nula_e_um_valor_valido_env_deve_ser_a_mesma) {
@@ -46,7 +46,7 @@ MU_TEST(passar_uma_key_nula_e_um_valor_valido_env_deve_ser_a_mesma) {
 		mu_assert_string_eq(environ[i], mini->env[i]);
 		i++;
 	}
-	clean_env(mini->env);
+	clean_strlist(&mini->env);
 }
 
 MU_TEST(passar_variavel_USER_com_value_NULL_deve_ser_USER_eq) {
@@ -62,7 +62,7 @@ MU_TEST(passar_variavel_USER_com_value_NULL_deve_ser_USER_eq) {
 
 	// ASSERTS
 	mu_assert_string_eq(mini->env[search_envp(environ, key)], expected_str);
-	clean_env(mini->env);
+	clean_strlist(&mini->env);
 }
 
 MU_TEST(passar_variavel_USER_com_value_dapaulin_e_env_NULL_deve_ser_env_NULL) {

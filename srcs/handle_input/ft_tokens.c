@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 00:06:05 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/09 16:12:03 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 01:32:51 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,48 +48,4 @@ void	ft_token_add_end(t_token **node, t_token *new)
 		*node = new;
 	else
 		tail->next = new;
-}
-
-void	free_cmds(char **cmds)
-{
-	int	i;
-
-	i = 0;
-	if (!cmds)
-		return ;
-	if (!cmds[i])
-	{
-		free(cmds);
-		cmds = NULL;
-		return ;
-	}
-	while (cmds[i])
-	{
-		if (cmds[i])
-			free(cmds[i]);
-		i++;
-	}
-	if (cmds)
-	{
-		free(cmds);
-		cmds = NULL;
-	}
-}
-
-void	ft_token_free(t_token **node)
-{
-	t_token	*head;
-	t_token	*temp;
-
-	head = *node;
-	temp = *node;
-	while (temp)
-	{
-		temp = head->next;
-		if (head->token)
-			clean_strlist(&head->token);
-		free(head);
-		head = temp;
-	}
-	*node = NULL;
 }

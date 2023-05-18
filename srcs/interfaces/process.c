@@ -6,124 +6,85 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/09 16:23:30 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/17 19:43:01 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	turn_void(t_sys_config *mini)
+void	close_fds(t_sys_config *mini)
 {
-	printf("%i\n", mini->tokens->type);
-	return (0);
+	int	i;
+
+	i = 0;
+	while (mini->exec->fd && i < *get_num_pipes())
+	{
+		close(mini->exec->fd[i][0]);
+		close(mini->exec->fd[i][1]);
+		i++;
+	}
 }
 
 int	exec_program(t_sys_config *mini)
 {
+	int	err;
+
+	err = 0;
+	if (mini->exec->flag == BFALSE)
+		mini->exec->pid = fork();
 	if (mini->exec->pid == 0)
 	{
-		cmd_path_valid(mini->tokens->token, mini->path);
-		execve(*mini->tokens->token, mini->tokens->token, mini->env);
+		err = cmd_path_valid(mini->tokens->token, mini->path);
+		if(err == -1)
+		{
+			if ((*mini->tokens->token[0] == '/' || !ft_strncmp(*mini->tokens->token, "..", 2) || !ft_strncmp(*mini->tokens->token, "./", 2)))
+				set_status_code(126);
+			sys_exit_err(clean_data, mini, " Permission denied");
+		}
+		if (!(*mini->tokens->token[0] == '/' || !ft_strncmp(*mini->tokens->token, "..", 2) || !ft_strncmp(*mini->tokens->token, "./", 2)))
+			;
+		else if (is_directory(*mini->tokens->token) == 1)
+		{
+			set_status_code(126);
+			sys_exit_err(clean_data, mini, " Is a directory");
+		}
+		if (execve(*mini->tokens->token, mini->tokens->token, mini->env) == -1)
+		{
+			set_status_code(127);
+			sys_exit_err(clean_data, mini, " command not found");
+		}
+		exit (0);
 	}
+	mini->exec->i++;
 	return (0);
 }
 
-t_process_func	*array_functions(void)
-{
-	t_process_func	*array_process;
-
-	array_process = (t_process_func *)malloc(sizeof(t_process_func) * 16);
-	array_process[OP_DEFAULT] = turn_void;
-	array_process[OP_AND] = turn_void;
-	array_process[OP_OR] = turn_void;
-	array_process[OP_PIPE] = ft_pipe;
-	array_process[OP_OUTPUT] = turn_void;
-	array_process[OP_INPUT] = turn_void;
-	array_process[OP_UNTIL] = turn_void;
-	array_process[OP_APPEND] = turn_void;
-	array_process[OP_CMD] = exec_program;
-	array_process[OP_EXIT] = ft_exit;
-	array_process[OP_CD] = ft_cd;
-	array_process[OP_ENV] = ft_env;
-	array_process[OP_UNSET] = b_unset;
-	array_process[OP_EXPORT] = b_export;
-	array_process[OP_PWD] = ft_pwd;
-	array_process[OP_ECHO] = ft_echo;
-	return (array_process);
-}
-
-t_exec		*init_exec()
-{
-	int		i;
-	t_exec	*exec;
-
-	i = 0;
-	exec = malloc(sizeof(t_exec));
-	exec->i = 0;
-	exec->pid = 0;
-	exec->pipes = 3;
-	exec->fd = (int **) malloc(exec->pipes * sizeof(int *));
-	while (i < exec->pipes)
-	{
-		exec->fd[i] = malloc(2 * sizeof(int));
-		pipe(exec->fd[i++]);
-	}
-	exec->status = 0;
-	exec->flag = BFALSE;
-	exec->func = array_functions();
-	return (exec);
-}
-
-void	close_fds(t_sys_config *mini)
-{
-	close(mini->exec->fd[0][0]);
-	close(mini->exec->fd[0][1]);
-	close(mini->exec->fd[1][0]);
-	close(mini->exec->fd[1][1]);
-}
-
-void	exec_commands(t_sys_config *mini)
+void	exec(t_sys_config *mini)
 {
 	int				i;
+	int				err;
+	static int		status;
 	t_process_func	*func;
 
-	i = 0;
 	mini->exec = init_exec();
 	func = (t_process_func *) mini->exec->func;
-	mini->exec->flag = BFALSE;
+	err = 0;
 	while (mini->tokens)
 	{
-		if (!mini->tokens->next && mini->exec->flag == BFALSE)
-		{
-			if (mini->tokens->type == OP_CMD)
-				mini->exec->pid = fork();
-			func[mini->tokens->type](mini);
-		}
-		else if (mini->tokens || (mini->tokens->next->type >= OP_AND
-		&& mini->tokens->next->type <= OP_APPEND))
-		{
-			mini->exec->pid = fork();
-			func[OP_PIPE](mini);
-			if (mini->exec->flag == BTRUE)
-				break;
-			i++;
-			mini->tokens = mini->tokens->next;
-			if (!mini->tokens->next->next)
-				mini->exec->flag = BTRUE;
-		}
+		err = func[mini->tokens->type](mini);
+		if (err)
+			break;
 		mini->tokens = mini->tokens->next;
 	}
-	close_fds(mini);
+	if (err)
+		ft_print_err(*get_status_code(), "vovozonha!\n");
 	i = 0;
-	while (i < mini->exec->pipes)
-		free(mini->exec->fd[i++]);
-	free(mini->exec->fd);
-	while (i)
+	close_fds(mini);
+	while (i < mini->exec->i)
 	{
-		waitpid(-1, &mini->exec->status, 0);
-		i--;
+		waitpid(-1, &status, 0);
+		if (WIFEXITED(status))
+			set_status_code(WEXITSTATUS(status));
+		i++;
 	}
-	if (mini->exec->func)
-		free(mini->exec->func);
-	return ;
 }

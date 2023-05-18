@@ -44,8 +44,8 @@ MU_TEST(Passando_uma_variavel_de_ambiente_existente_o_resultado_deve_ser_envp_se
 
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);
-	clean_env(mini->env);
-	free_cmds(environ);
+	clean_strlist(&mini->env);
+	clean_strlist(&environ);
 }
 
 MU_TEST(Passando_uma_variavel_de_ambiente_nula_o_resultado_deve_ser_o_mesmo_da_entrada) {
@@ -65,7 +65,7 @@ MU_TEST(Passando_uma_variavel_de_ambiente_nula_o_resultado_deve_ser_o_mesmo_da_e
 		mu_assert_string_eq(environ[i], mini->env[i]);
 		i++;
 	}
-	clean_env(mini->env);
+	clean_strlist(&mini->env);
 }
 
 MU_TEST(passando_a_variavel_de_ambiente_PATH_o_env_deve_ser_todas_as_outras_variaveis_menos_PATH) {
@@ -80,7 +80,7 @@ MU_TEST(passando_a_variavel_de_ambiente_PATH_o_env_deve_ser_todas_as_outras_vari
 
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);
-	clean_env(mini->env);
+	clean_strlist(&mini->env);
 }
 
 MU_TEST(Passando_uma_estrutura_nula_o_resultado_deve_ser_o_mesmo_da_entrada) {
@@ -108,7 +108,7 @@ MU_TEST(passando_a_ultima_variavel_de_ambiente__o_resultado_deve_ser_env_sem_a_u
 
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);
-	clean_env(mini->env);
+	clean_strlist(&mini->env);
 	if (*deleted_item)
 		free(deleted_item);
 }
@@ -125,7 +125,7 @@ MU_TEST(passando_uma_variavel_inexistente_deve_retornar_o_mesmo_env) {
 
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);
-	clean_env(mini->env);
+	clean_strlist(&mini->env);
 }
 
 MU_TEST(Passando_a_variavel_TERM_o_resultado_deve_ser_env_sem_a_variavel_TERM_nenhuma_outra_fora_essa) {
@@ -140,7 +140,7 @@ MU_TEST(Passando_a_variavel_TERM_o_resultado_deve_ser_env_sem_a_variavel_TERM_ne
 
 	// ASSERTS
 	comp_strs(environ, deleted_item, mini);
-	clean_env(mini->env);
+	clean_strlist(&mini->env);
 }
 
 MU_TEST_SUITE(test_suite) {

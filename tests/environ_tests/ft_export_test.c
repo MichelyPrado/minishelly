@@ -48,7 +48,7 @@ MU_TEST(Passando_key_como_MINISHELL_value_com_Minishelly_e_as_variaveis_de_ambie
 		i++;
 	}
 	mu_assert_string_eq(expected_insert, mini->env[i]);
-	clean_env(mini->env);
+	clean_strlist(&mini->env);
 }
 
 MU_TEST(Passando_uma_variavel_existente_KEY_como_PATH_e_outro_value_da_variavel_tem_que_ser_atualizado) {
@@ -68,7 +68,7 @@ MU_TEST(Passando_uma_variavel_existente_KEY_como_PATH_e_outro_value_da_variavel_
 	// ASSERTS
 	i = 0;
 	comp_strs(environ, expected_insert, mini, key);
-	clean_env(mini->env);
+	clean_strlist(&mini->env);
 }
 
 MU_TEST(Passando_key_como_NULL_com_value_WHAT_o_env_deve_permanecer_o_mesmo) {
@@ -92,7 +92,7 @@ MU_TEST(Passando_key_como_NULL_com_value_WHAT_o_env_deve_permanecer_o_mesmo) {
 		i++;
 	}
 	mu_assert_string_eq(expected_insert, mini->env[i]);
-	clean_env(mini->env);
+	clean_strlist(&mini->env);
 }
 
 MU_TEST(Passando_key_como_KLEYTON_com_value_NULL_o_env_possuir_a_variavel_KLEYTON_eq_NULL) {
@@ -116,7 +116,7 @@ MU_TEST(Passando_key_como_KLEYTON_com_value_NULL_o_env_possuir_a_variavel_KLEYTO
 		i++;
 	}
 	mu_assert_string_eq(expected_insert, mini->env[i]);
-	clean_env(mini->env);
+	clean_strlist(&mini->env);
 }
 
 MU_TEST(Passando_key_como_KLEYTON_com_value_RASTA_para_um_env_nulo_o_env_deve_possuir_somente_a_nova_variavel) {
@@ -133,7 +133,7 @@ MU_TEST(Passando_key_como_KLEYTON_com_value_RASTA_para_um_env_nulo_o_env_deve_po
 	// ASSERTS
 	mu_assert_string_eq("KLEYTON=RASTA", mini->env[0]);
 	mu_assert(NULL == mini->env[1], "Position is not NULL");
-	clean_env(mini->env);
+	clean_strlist(&mini->env);
 }
 
 MU_TEST(Passando_key_como_KLEYTON_sem_eq_deve_possuir_somente_a_nova_variavel) {
@@ -163,7 +163,7 @@ MU_TEST(Passando_key_como_KLEYTON_sem_eq_deve_possuir_somente_a_nova_variavel) {
 		i++;
 	}
 	mu_assert_string_eq(expected_env[i], mini->env[i]);
-	clean_env(mini->env);
+	clean_strlist(&mini->env);
 }
 
 MU_TEST_SUITE(test_suite) {

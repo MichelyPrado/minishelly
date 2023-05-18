@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 18:12:28 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/09 17:14:24 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/17 16:53:00 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,25 @@
 
 int	ft_exit(t_sys_config *mini)
 {
-	printf("Você saiu do Minishelly!\n");
-	clean_strlist(&mini->prompt);
-	clean_strlist(&mini->env);
-	clean_strlist(&mini->path);
-	if (mini->new_parser)
-		free(mini->new_parser);
-	if (mini->str)
-		free(mini->str);
-	ft_token_free(&mini->tokens);
-	if (mini->exec)
+	long	err;
+
+	err = 1;
+	if (ft_listlen(mini->tokens->token) <= 2)
 	{
-		int i = 0;
-		while (i < mini->exec->pipes)
+		if (mini->tokens->token[1])
+			err = ft_atoi(mini->tokens->token[1]);
+		if (!err && (ft_strlen(mini->tokens->token[1]) > 2
+				|| !ft_isdigit(*mini->tokens->token[1])))
 		{
-			if (mini->exec->fd[i])
-				free(mini->exec->fd[i]);
-			i++;
+			if (!(ft_strlen(mini->tokens->token[1]) > 19))
+			{
+				err = 2;
+				ft_print_err(2, " numeric argument required");
+			}
 		}
-		if (mini->exec->fd)
-			free(mini->exec->fd);
-		free(mini->exec->func);
-		free(mini->exec);
-		mini->exec = NULL;
 	}
-	if (mini)
-		free(mini);
-	exit(EXIT_SUCCESS);
+	else
+		ft_print_err(1, " too many arguments");
+	clean_sys(mini);
+	exit(err);
 }

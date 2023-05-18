@@ -6,13 +6,13 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 21:32:25 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/23 18:24:44 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 04:21:28 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	printf_export(char **token, char **env)
+int	printf_export(char **token, char **env)
 {
 	int		i;
 	int		size;
@@ -38,7 +38,7 @@ static int	printf_export(char **token, char **env)
 	return (0);
 }
 
-static int	check_existence(char **token, char **key, char **env, int i)
+int	check_existence(char **token, char **key, char **env, int i)
 {
 	int	loc;
 	int	size;
@@ -69,6 +69,8 @@ int	b_export(t_sys_config *mini)
 	i = 1;
 	while (token[i])
 	{
+		if (!check_is_a_valid_var(token[i]))
+			return (ft_print_err(1, " not a valid identifier"), 1);
 		size = check_existence(token, &key, mini->env, i);
 		if (!size)
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/09 14:22:10 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/18 15:19:08 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,107 @@ static void	args_check(int argc)
 }
 
 //função que faz a identificação dos tipos dos tokens
-void	print_tokens_test(t_token *tokens)
+void	print_tokens_test(t_sys_config *ms)
 {
-	int	i;
+	int		i;
+	int		j = 0;
+	t_token	*back;
+	t_token *tokens;
 
+	tokens = ms->tokens;
+	back = NULL;
 	while (tokens)
 	{
 		i = 0;
-		printf("Operador: %i\n[", tokens->type);
+		ft_printf("Operador: %i\tnum pipes: %i\n[", tokens->type, *get_num_pipes());
 		while (tokens->token[i])
 		{
-			printf("'%s', ", tokens->token[i]);
+			ft_printf("'%s', ", tokens->token[i]);
+			if (i == 15)
+				break ;
 			i++;
 		}
 		printf("]\n");
 		tokens = tokens->next;
+		j++;
+		if (j == 15)
+			exit (123);
 	}
+}
+
+
+t_token	*reorder_tokens(t_token *tokens)
+{
+	int		i = 0;
+	t_token	*tmp;
+	t_token	*bkp;
+	t_token	*back;
+	char	**token;
+
+	bkp = tokens;
+	back = NULL;
+	// AJUSTE dos fds
+	while (tokens)
+	{
+		correct_puts(tokens, tokens->next);
+		tokens = tokens->next;
+	}
+	// organizar pipes e outputs
+	tokens = bkp;
+	while (tokens)
+	{	
+		if (tokens->next && tokens->next->type == OP_PIPE
+			&& (!back || back->type != OP_PIPE))
+		{
+			if (!back)
+				bkp = copy_token(back, &tokens, tokens->next);
+			else 
+				copy_token(back, &tokens, tokens->next);
+			back = tokens->next;
+			tokens = back;
+		}
+		else if (tokens->next && tokens->next->type == OP_OUTPUT
+			&& ((tokens->type >= OP_CMD && tokens->type <= OP_ECHO) || tokens->type == OP_UNTIL))
+			ft_swap_token(&bkp, &tokens, &tokens->next);
+		else if (tokens->next && tokens->next->type == OP_APPEND
+			&& (tokens->type >= OP_CMD && tokens->type <= OP_ECHO))
+			ft_swap_token(&bkp, &tokens, &tokens->next);
+		else if (tokens->next && tokens->next->type == OP_INPUT
+			&& (tokens->type >= OP_CMD && tokens->type <= OP_ECHO))
+			ft_swap_token(&bkp, &tokens, &tokens->next);
+		else if ((tokens->type >= OP_CMD && tokens->type <= OP_ECHO) && (tokens->next && (tokens->next->type >= OP_CMD && tokens->next->type <= OP_ECHO)))
+		{
+			token = ft_listjoin(tokens->token, tokens->next->token);
+			tokens->token = token;
+			tmp = tokens->next->next;
+			free(tokens->next);
+			tokens->next = tmp;
+			//printf("%s\n", tokens->next->token[0]);
+		}
+		else
+		{
+			back = tokens;
+			tokens = tokens->next;
+		}
+		i++;
+		if (i == 15)
+			break ;
+	}
+	return (bkp);
+}
+
+int	count_pip(t_token *t)
+{
+	int	i;
+
+	i = 0;
+	while (t)
+	{
+		if (t->type == OP_PIPE)
+			i++;
+		t = t->next;
+	}
+	return (i);
 }
 
 int	minishelly(int argc, char **argv, char **environ)
@@ -57,9 +142,12 @@ int	minishelly(int argc, char **argv, char **environ)
 	{
 		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
 			continue ;
-		expand_symbol(&mini->new_parser, '$', mini->env);
+		search_for_symbol(&mini->new_parser, '$', mini->env);
 		mini->tokens = ft_create_tokens(mini);
-		exec_commands(mini);
+		*get_num_pipes() = count_pip(mini->tokens);
+		mini->tokens = reorder_tokens(mini->tokens);
+		//print_tokens_test(mini);
+		exec(mini);
 		add_history(mini->str);
 		ft_token_free(&mini->tokens);
 		if (mini->new_parser)

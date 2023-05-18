@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_lenfunctions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 18:17:06 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/15 23:21:47 by dapaulin         ###   ########.fr       */
+/*   Created: 2023/05/16 00:17:54 by dapaulin          #+#    #+#             */
+/*   Updated: 2023/05/16 20:38:32 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_env(t_sys_config *mini)
+int	ft_listlen(char **list)
 {
-	int	i;
+	int	len;
 
-	i = 0;
-	while (mini->env[i])
-	{
-		if (ft_strchr(mini->env[i], '='))
-			ft_printf("%s\n", mini->env[i]);
-		i++;
-	}
-	return (0);
+	len = 0;
+	while (*list != NULL && list[len])
+		len++;
+	return (len);
 }

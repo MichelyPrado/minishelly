@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/09 17:16:37 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/18 14:11:25 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,15 @@ RM								=						rm -rf
 
 LIBFT_PATH						=						./libft/
 LIBFT							=						$(LIBFT_PATH)/libft.a
+
+PATH_GET_SET 					=						./getters_and_setters/
+GET_SET							=						$(addprefix $(PATH_GET_SET), \
+														status_code.c num_pipes.c)
+PATH_TOOLS 						=						./tools/
+TOOLS							=						$(addprefix $(PATH_TOOLS), \
+														ft_lenfunctions.c ft_free_functions.c \
+														ft_check_functions.c ft_print_msg.c \
+														ft_joinfunctions.c)
 PATH_SIGNALS					=						./signals/
 SIGNALS							=						$(addprefix $(PATH_SIGNALS), \
 														signals.c ft_ctrl_d.c)
@@ -39,26 +48,30 @@ BUILTINS						=						$(addprefix $(PATH_BUILTINS), \
 														pwd.c unset.c)
 PATH_ENVIRON					=						./environ/
 ENVIRON							=						$(addprefix $(PATH_ENVIRON), \
-														envp_utils.c handle_env.c tool_box.c \
-														handle_path.c)
+														envp_utils.c handle_env.c \
+														handle_path.c frees.c exit_functions.c)
 PATH_HANDLE						=						./handle_input/
 HANDLE							=						$(addprefix $(PATH_HANDLE), \
-														ft_tokens.c handle_tokens.c hash.c \
-														parser_utils.c parser.c expand.c)
+														ft_tokens.c handle_tokens.c \
+														parser_utils.c parser.c expand.c	\
+														ft_tokens_utils.c)
 PATH_INTERFACES					=						./interfaces/
 INTERFACES						=						$(addprefix $(PATH_INTERFACES), \
 														process.c sys_config.c wait_input.c \
-														minishelly.c)
+														minishelly.c process_init.c)
 PATH_OPERATORS					=						./operators/
 OPERATORS						=						$(addprefix $(PATH_OPERATORS), \
-														ft_pipe.c)
+														ft_pipe.c ft_output.c ft_input.c \
+														ft_append.c ft_heredoc.c)
 SRC								=						minishell.c			\
 														$(BUILTINS)			\
 														$(ENVIRON)			\
 														$(HANDLE)			\
 														$(INTERFACES)		\
 														$(OPERATORS)		\
-														$(SIGNALS)						
+														$(SIGNALS)			\
+														$(TOOLS)			\
+														$(GET_SET)					
 OBJ								=						$(SRC:%.c=%.o)
 
 
@@ -68,11 +81,11 @@ all:							title $(LIBFT) $(NAME) complete
 v: all
 	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --quiet ./minishell
 
-$(OBJ): %.o: %.c $(HEADERS)
-	@$(CC)	 -g3 $(CCFLAGS) -c $< -o $@
+$(OBJ): %.o: %.c $(HEADERS) 
+	@$(CC)	 -g3 -fPIE $(CCFLAGS) -c $< -o $@
 	@echo "$(YELLOW)$(ROCKET)  Compilando $<$(RESET)"
 
-$(LIBFT):
+$(LIBFT): 
 								@$(MAKE) -C $(LIBFT_PATH) --no-print-directory
 
 $(NAME):						$(OBJ)
@@ -117,5 +130,5 @@ title_fclean:
 	@echo "$(YELLOW)--------------------------------------$(RESET)"
 
 complete:
-	@echo "$(GREEN)$(ROCKET)  libft compilada com sucesso!$(RESET)"
+	@echo "$(GREEN)$(ROCKET)  Minishelly compilada com sucesso!$(RESET)"
 	@echo "$(YELLOW)--------------------------------------$(RESET)"

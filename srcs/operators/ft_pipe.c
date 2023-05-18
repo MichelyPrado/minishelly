@@ -6,48 +6,48 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:31:23 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/08 18:38:16 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 20:49:12 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	recycle_pipe(t_sys_config *mini)
+void	choice_dup2(t_sys_config *ms)
 {
-	int	fd;
-
-	if (mini->exec->i % 2 == 0)
-		fd = 1;
-	else
-		fd = 0;
-	close(mini->exec->fd[fd][0]);
-	close(mini->exec->fd[fd][1]);
-	pipe(mini->exec->fd[fd]);
+	if (ms->exec->i == 0)
+	{
+		if (dup2(ms->exec->fd[ms->exec->i][1], 1) == -1)
+			sys_exit(clean_data, EBADF, ms);
+		return ;
+	}
+	else if (ms->exec->i == *get_num_pipes())
+	{
+		if (dup2(ms->exec->fd[ms->exec->i -1][0], 0) == -1)
+			sys_exit(clean_data, EBADF, ms);
+		return ;
+	}
+	if (dup2(ms->exec->fd[ms->exec->i - 1][0], STDIN_FILENO) == -1)
+		sys_exit(clean_data, EBADF, ms);
+	if (dup2(ms->exec->fd[ms->exec->i][1], STDOUT_FILENO) == -1)
+		sys_exit(clean_data, EBADF, ms);
 }
 
-void	make_dup2(t_sys_config *mini, int infd, int outfd)
-{
-	if (!mini->exec->flag)
-		dup2(mini->exec->fd[outfd][1], STDOUT_FILENO);
-	dup2(mini->exec->fd[infd][0], STDIN_FILENO);
-}
-
-int ft_pipe(t_sys_config *mini)
+int	ft_pipe(t_sys_config *mini)
 {
 	t_process_func	*func;
 
-	func = (t_process_func *)mini->exec->func;
+	func = (t_process_func *) mini->exec->func;
+	mini->exec->pid = fork();
+	if (mini->tokens->next)
+		mini->tokens = mini->tokens->next;
 	if (mini->exec->pid == 0)
 	{
-		if (mini->exec->i % 2 == 0)
-			make_dup2(mini, 1, 0);
-		else 
-			make_dup2(mini, 0, 1);
-        close_fds(mini);
+		mini->exec->flag = BTRUE;
+		choice_dup2(mini);
+		close_fds(mini);
 		func[mini->tokens->type](mini);
-		exit(127);
+		exit(1);
 	}
-    recycle_pipe(mini);
 	mini->exec->i++;
-    return (0);
+	return (0);
 }

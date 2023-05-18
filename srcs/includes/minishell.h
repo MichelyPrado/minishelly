@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/09 16:45:49 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/18 14:22:51 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@
 # include "../libft/includes/libft.h"
 # include "../libft/includes/ft_printf.h"
 
+// COLORS DEFINES
 # define L_RED "\033[0;31m"
 # define L_REDB "\033[1;31m"
 # define L_WHITE "\033[0;37m"
@@ -71,7 +72,7 @@
 # define L_BLUE "\033[0;34m"
 # define L_GREEN "\033[0;32m"
 # define L_GREENB "\033[1;32m"
-
+// PROMPT DEFINE
 # define SHELLNAME "Minishelly:"
 # define PROPQUOTE "quote"
 # define PROP "> "
@@ -81,7 +82,8 @@
 # define NO_PRINT -1
 # define CHAR_NULL 1
 # define MORE_ONE_SPACE 2
-
+// Number of functions in the exec array.
+# define NUM_FUNCS 16
 //typedef t_err (*t_function)(t_sys_config *);
 
 // DEFINE ERRORS
@@ -136,10 +138,8 @@ typedef enum e_first_or_end
 typedef struct s_exec
 {
 	int				i;
-	int				pipes;
 	int				pid;
 	int				**fd;
-	int				status;
 	t_first_or_end	flag;
 	void			*func;
 }				t_exec;
@@ -156,98 +156,168 @@ typedef struct s_sys_config
 	char	**path;
 }	t_sys_config;
 
-# define NUM_FUNCS 16
-typedef int	(*t_process_func)(t_sys_config *);
-typedef struct sigaction t_sa;
+typedef int					(*t_process_func)(t_sys_config *);
 
 typedef struct sigaction	t_sa;
 
-
-// Sys Config
-char			*cat_user(char **env);
-t_sys_config	*start_sys(char **environ);
-void			update_unbound_vars(char *key, t_sys_config *mini);
+//############################# BUILTINS ##############################//
+// BUILTIN CD												(cd)
+int				special_cases(char ***token, char **env);
+int				too_much_args(char **token);
+void			update_pwd(char ***pwd, ssize_t pwd_index, char *key,
+					char **value);
+int				ft_cd(t_sys_config *mini);
+// BUILTIN ECHO												(echo)
+int				ft_echo(t_sys_config *mini);
+// BUILTIN ENV												(env)
+int				ft_env(t_sys_config *mini);
+// BUILTIN EXIT												(exit)
+int				ft_exit(t_sys_config *mini);
+// BUILTIN EXPORT											(export)
+int				check_existence(char **token, char **key, char **env, int i);
+int				printf_export(char **token, char **env);
+int				b_export(t_sys_config *mini);
+// BUILTIN PWD												(pwd)
+int				ft_pwd(t_sys_config *mini);
+// BUILTIN UNSET											(unset)
+int				b_unset(t_sys_config *mini);
+//######################################################################//
+//############################ ENVIRON #################################//
+// ENVIRON UTILS											(envp_utils)
+size_t			keylen(char *var_env);
+char			**alloc_env(char **env, int slots);
+int				env_empty(char ***env, char *key, char *value);
+// EXIT FUNCTIONS											(exit_functions)
+void			normal_exit(void (*f)(void *), int exit_code, \
+				void *item);
+void			sys_exit(void (*f)(t_sys_config *), int exit_code, \
+				t_sys_config *mini);
+void			sys_exit_err(void (*f)(t_sys_config *), t_sys_config *mini, char *msg);
+// FREE														(frees)
+void			clean_exec(t_exec **exec);
+void			clean_data(t_sys_config *mini);
 void			clean_sys(t_sys_config *mini);
-void			clean_strlist(char ***strs);
-
-// Handle Env
+// CRUD ENVIRON												(handle_env)
 void			ft_unset(t_sys_config *mini, char *key);
 void			ft_export(char ***env, char *key, char *value);
 ssize_t			search_envp(char **envp, char *key);
 int				edit_envp(char ***env, char *key, char *new_value);
 void			get_envp(char **envp, t_sys_config *data);
-
-// Env Utils
-int				amount_vars(char **envp);
-size_t			keylen(char *var_env);
-void			clean_env(char **new_envp);
-char			**alloc_env(char **env, int slots);
-int				env_empty(char ***env, char *key, char *value);
-
-// Tools Box
-char			*join_key_value(char *key, char *value);
-
-// Handle  Path
+// PATH CONTROL												(handle_path)
 char			**split_paths(char **env);
 int				cmd_path_valid(char **token, char **path);
-
-// Parser
+//######################################################################//
+//###################### GETTERS AND SETTERS ###########################//
+// STATUS CODE GET AND SET									(status_code)
+int				*get_status_code(void);
+void			set_status_code(int status_code);
+// QUANTIDADES DE PIPES										(num_pipes)
+int				*get_num_pipes(void);
+void			set_num_pipes(int num);
+//######################################################################//
+//######################### HANDLE INPUT ###############################//
+// EXPAND DOLAR SIGN [$]									(expand)
+ssize_t			find_key(char *line, char **env, int *i);
+void			expand_symbol(int i, char **line, char **env, char **pieces);
+int				check_single_quotes(char *line);
+void			search_for_symbol(char **line, char c, char **env);
+// FUNCTIONS FOR HANDLE TOKENS								(ft_tokens_utils)
+void			ft_swap_token(t_token **head, t_token **current, t_token **dest);
+t_token			*copy_token(t_token *bk, t_token **md, t_token *end);
+char			**rm_first_item(char **array);
+void			correct_puts(t_token *md, t_token *end);
+// FUNCTIONS FOR CREATE TOKENS								(ft_tokens)
+t_token			*ft_token_new(char **cmds, int type);
+t_token			*ft_token_last(t_token *node);
+void			ft_token_add_end(t_token **node, t_token *new);
+// PUT DATA IN TO TOKENS									(handle_tokens)
+int				change_quotes(char *src, char quote, int *i, int schar);
+char			*ft_token_repair(char *token);
+t_token			*ft_create_tokens(t_sys_config *mini);
+t_types			tag_token(char *cmd);
+int				hash_func(char *cmd, t_keyword_map *keymap);
+// UTILS FOR PARSER											(parser_utils)
+int				insert_char_in_string(char *dst, int j, char c);
+int				check_quotes(char *src, char quote, int jump);
+int				jump_quotes(char *src, t_sys_config *mini, char quote, int *j);
+// PARSER CREATE											(parser)
 int				add_delimiters(char symbol, int *j, char *dst, char *c);
 t_err			check_readline(char *src, t_sys_config *mini);
 int				count_delimiter(char *str);
 
-// Parser Utils
-int				add_character(char *dst, int j, char c);
-int				check_next(char symbol, char *str);
-int				check_quotes(char *src, char quote, int jump);
-int				jump_quotes(char *src, t_sys_config *mini, char quote, int *j);
+//################ INTERFACES ################//
 
-// List Token
-t_token			*ft_token_new(char **cmds, int type);
-t_token			*ft_token_last(t_token *node);
-void			ft_token_add_end(t_token **node, t_token *new);
-void			free_cmds(char **cmds);
-void			ft_token_free(t_token **node);
+// MS
+int				minishelly(int argc, char **argv, char **environ);
 
-// handle tokens
-t_token			*ft_create_tokens(t_sys_config *mini);
-t_types			tag_token(char *cmd);
-int				ft_isspace(char *str);
-char			*ft_token_repair(char *token);
+// SYS CONFIG
+char			*cat_user(char **env);
+t_sys_config	*start_sys(char **environ);
+void			update_unbound_vars(char *key, t_sys_config *mini);
+
+// PROCESS
+void			close_fds(t_sys_config *mini);
+void			exec(t_sys_config *mini);
+int				exec_program(t_sys_config *mini);
+
+// HASH
+int				hash_func(char *cmd, t_keyword_map *keymap);
 
 // Wait input
 t_err			wait_input(t_sys_config *mini, int *prop, char *line);
 char			*create_prompt(int amount, ...);
 
-// HASH
-int				hash_func(char *cmd, t_keyword_map *keymap);
+// PROCESS INIT
+int				turn_void(t_sys_config *mini);
+t_exec			*init_exec(void);
+t_process_func	*array_functions(void);
 
-// Process
-void			exec_commands(t_sys_config *mini);
-int				minishelly(int argc, char **argv, char **environ);
-
-// Operators
+//################ OPERATORS ################//
+// PIPE
+void			choice_dup2(t_sys_config *ms);
 int				ft_pipe(t_sys_config *mini);
 
+// OUTPUT
+int				ft_output(t_sys_config *ms);
+
+// INPUT
+int				ft_input(t_sys_config *ms);
+
+// APPEND
+int				ft_append(t_sys_config *ms);
+
+// HEREDOC
+int				ft_heredoc(t_sys_config *ms);
 // FDS
 void			close_fds(t_sys_config *mini);
 
-// EXPAND
-void			expand_symbol(char **line, char c, char **env);
+t_token	*swap_tokens_reverse(t_token *bk, t_token **md, t_token *end);
+
+void	ft_swap_token(t_token **head, t_token **current, t_token **dest);
 
 // Signals
 void			sig_a(int sig);
 void			sig_handler( int sig, siginfo_t *info, void *context);
 void			wait_signal(t_sa *sa);
 int				ft_ctrl_d(t_sys_config *mini);
-
-//BUILTINS
-int				ft_env(t_sys_config *mini);
-int				ft_pwd(t_sys_config *mini);
-int				ft_echo(t_sys_config *mini);
-int				ft_cd(t_sys_config *mini);
-int				ft_exit(t_sys_config *mini);
-int				b_export(t_sys_config *mini);
-int				b_unset(t_sys_config *mini);
-
+int				is_directory(char *path);
+//######################################################################//
+//############################# TOOLS ##################################//
+// LEN FUNCTIONS											(ft_lenfunctions)
+int				ft_listlen(char **list);
+// FREE FUNCTIONS											(ft_free_functions)
+void			ft_token_free(t_token **node);
+void			ft_node_free(t_token **node);
+void			clean_strlist(char ***strs);
+void			clean_lstitens(char **lst);
+// CHECK FUNCTIONS											(ft_check_functions)
+int				is_valid_char_for_var(char c);
+int				ft_isspace(char c);
+int				ft_is_allspace(char *str);
+int				check_next_eq(char symbol, char *str);
+int				check_is_a_valid_var(char *var);
+// PRINT MESSAGES FUNCTIONS									(ft_print_msg)
+void			ft_print_err(int status_code, char *msg);
+// JOIN FUNCTIONS											(ft_joinfunctions.c)
+char **ft_listjoin(char **ls, char **lsd);
 #endif

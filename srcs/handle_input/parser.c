@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/23 17:40:14 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/16 21:32:59 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 int	add_delimiters(char symbol, int *j, char *dst, char *c)
 {
-	if (*c == symbol && check_next(symbol, c))
+	if (*c == symbol && check_next_eq(symbol, c))
 	{
-		*j += add_character(dst, *j, NO_PRINT);
-		*j += add_character(dst, *j, *c);
-		*j += add_character(dst, *j, *c);
-		*j += add_character(dst, *j, NO_PRINT);
+		*j += insert_char_in_string(dst, *j, NO_PRINT);
+		*j += insert_char_in_string(dst, *j, *c);
+		*j += insert_char_in_string(dst, *j, *c);
+		*j += insert_char_in_string(dst, *j, NO_PRINT);
 		return (2);
 	}
 	else if (*c == symbol && *c != '&')
 	{
-		*j += add_character(dst, *j, NO_PRINT);
-		*j += add_character(dst, *j, *c);
-		*j += add_character(dst, *j, NO_PRINT);
+		*j += insert_char_in_string(dst, *j, NO_PRINT);
+		*j += insert_char_in_string(dst, *j, *c);
+		*j += insert_char_in_string(dst, *j, NO_PRINT);
 		return (1);
 	}
 	return (0);
@@ -90,9 +90,9 @@ int	count_delimiter(char *readline)
 		if (readline[i] == '|' || readline[i] == '<' \
 		|| readline[i] == '>' || readline[i] == '&')
 		{
-			if (readline[i] == '&' && !check_next('&', &readline[i]))
+			if (readline[i] == '&' && !check_next_eq('&', &readline[i]))
 				continue ;
-			else if (check_next(readline[i], &readline[i]))
+			else if (check_next_eq(readline[i], &readline[i]))
 				i++;
 			j += 2;
 		}

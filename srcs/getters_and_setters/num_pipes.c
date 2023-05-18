@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   num_pipes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 18:17:06 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/15 23:21:47 by dapaulin         ###   ########.fr       */
+/*   Created: 2023/05/16 15:49:53 by dapaulin          #+#    #+#             */
+/*   Updated: 2023/05/16 20:35:14 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_env(t_sys_config *mini)
+int	*get_num_pipes(void)
 {
-	int	i;
+	static int	num;
 
-	i = 0;
-	while (mini->env[i])
-	{
-		if (ft_strchr(mini->env[i], '='))
-			ft_printf("%s\n", mini->env[i]);
-		i++;
-	}
-	return (0);
+	return (&num);
+}
+
+void	set_num_pipes(int num)
+{
+	int	*sc;
+
+	sc = get_status_code();
+	*sc = num;
 }

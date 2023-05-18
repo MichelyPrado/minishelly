@@ -21,7 +21,7 @@ MU_TEST(prim_arg) {
 
 	// ASSERTS
 	mu_assert_string_eq("GJS_DEBUG_TOPICS=JS ERROR;JS LOG", (mini.env)[0]);
-	clean_env(mini.env);
+	clean_strlist(&mini.env);
 }
 
 MU_TEST(testa_se_os_dois_primeiras_variaveis_de_ambiente_foram_alocadas) {
@@ -34,7 +34,7 @@ MU_TEST(testa_se_os_dois_primeiras_variaveis_de_ambiente_foram_alocadas) {
 	// ASSERTS
 	mu_assert_string_eq("GJS_DEBUG_TOPICS=JS ERROR;JS LOG", (mini.env)[0]);
 	mu_assert_string_eq("USER=dapaulin", (mini.env)[1]);
-	clean_env(mini.env);
+	clean_strlist(&mini.env);
 }
 
 MU_TEST(test) {
@@ -51,7 +51,7 @@ MU_TEST(test) {
 		mu_assert_string_eq(environ[i], (mini.env)[i]);
 		i++;
 	}
-	clean_env(mini.env);
+	clean_strlist(&mini.env);
 }
 
 MU_TEST_SUITE(test_suite) {

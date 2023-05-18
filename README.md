@@ -26,21 +26,21 @@
   - [x] exit
 - [ ] Exec commands
   - [x] run command
-  - [ ] pipe
+  - [x] pipe
   - [ ] operator &&
   - [ ] operator ||
-  - [ ] operator >
-  - [ ] operator <
-  - [ ] operator >>
+  - [X] operator >
+  - [X] operator <
+  - [X] operator >>
   - [ ] operator <<
   - [ ] operator *
 - [ ] Signals
   - [ ] ctrl-C
   - [ ] ctrl-D
   - [ ] ctrl-\
-- [ ] String parser
-  - [ ] expand environ var
-  - [ ] expand $? exit code
+- [x] String parser
+  - [x] expand environ var
+  - [x] expand $? exit code
   - [x] single quote
   - [x] double quote
   - [x] token creation
@@ -86,3 +86,22 @@ make
 ```bash
 make run-test TEST_NAME=<test_obj_dir>/<test_name>
 ```
+
+### Exit Codes
+
+- EACCES (13)
+> Erro de permissão de acesso execve
+
+- ENOMEM (12)
+> Erro de alocação de momeria.
+
+### Alterações no parser
+
+
+### Refactory
+- [ ] Alter name of function correct_puts
+- [X] Ajustar a concatenação de strings
+- [ ] Terminar função heredoc
+- [ ] Corrigir bug de concatenação de comando ex: echo oi > gol carla
+- [ ] Validar linhas de entrada antes de fazer os tokens
+- [ ] 

@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hash.c                                             :+:      :+:    :+:   */
+/*   ft_output.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/15 17:04:31 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 13:49:00 by dapaulin         ###   ########.fr       */
+/*   Created: 2023/05/12 12:03:37 by dapaulin          #+#    #+#             */
+/*   Updated: 2023/05/17 18:39:17 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	hash_func(char *cmd, t_keyword_map *keymap)
+int	ft_output(t_sys_config *ms)
 {
-	int	i;
+	int				fd;
+	int				bkp;
+	t_process_func	*func;
 
-	if (!cmd || ft_isspace(cmd))
-		return (OP_DEFAULT);
-	i = 0;
-	while (i < 14)
+	bkp = dup(1);
+	if (bkp == -1)
+		sys_exit(clean_data, EBADF, ms);
+	func = ms->exec->func;
+	fd = open(ms->tokens->token[1], O_WRONLY | O_CREAT, 0644);
+	if (fd == -1)
+		return (set_status_code(1), 1);
+	if (ms->tokens->next)
 	{
-		if (ft_strcmp(cmd, keymap[i].keyword) == 0)
-			return (keymap[i].type);
-		i++;
+		ms->tokens = ms->tokens->next;
+		dup2(fd, 1);
+		close(fd);
+		func[ms->tokens->type](ms);
+		close(1);
+		dup2(bkp, 1);
 	}
-	return (OP_CMD);
+	return (0);
 }

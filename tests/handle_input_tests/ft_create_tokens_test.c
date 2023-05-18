@@ -86,6 +86,7 @@ MU_TEST(test1) {
     mu_run_test(node3, tokens->next->next, 0);
     if (mini.new_parser)
         free(mini.new_parser);
+    clean_strlist(&tokens->token);
     clean_test(&node1);
     ft_token_free(&tokens);
 }

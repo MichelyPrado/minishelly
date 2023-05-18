@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y
-RUN apt-get install gcc -y
+RUN apt-get update && apt-get install -y build-essential
+RUN apt-get install libcmocka-dev -y
 RUN apt-get install -y libreadline-dev
 RUN apt-get install vim -y
 RUN apt-get install make -y

@@ -28,101 +28,91 @@ void	assert_token(char **exp_token, char **token, char *str_err)
 	mu_assert(exp_token[i] == token[i], str_err);
 }
 
-MU_TEST(test)
+MU_TEST(passing_a_file_with_no_permission_should_return_status_code_127)
 {
 	int     result;
 	char	str_err[BUFFER];
-	char    **token 			= ft_split("/dgsagdhagd\a", '\a');
-	char	*exp_token[] 		= {"/dgsagdhagd", NULL};
+	char    **token 			= ft_split("./files/goma\a", '\a');
+	char	*exp_token[] 		= {"./files/goma", NULL};
 	int     expectd 			= -1;
 
 	result = cmd_path_valid(token, g_path);
 
 	mu_assert_int_eq(expectd, result);
+	mu_assert_int_eq(127, *get_status_code());
 	assert_token(exp_token, token, str_err);
 	clean_strlist(&token);
 }
 
-MU_TEST(test1)
+MU_TEST(passing_a_valid_absolute_command_should_be_return_1)
 {
 	int     result;
 	char	str_err[BUFFER];
 	char    **token 			= ft_split("/usr/bin/cat\a", '\a');
 	char	*exp_token[] 		= {"/usr/bin/cat", NULL};
-	int     expectd 			= 0;
+	int     expectd 			= 1;
 
 	result = cmd_path_valid(token, g_path);
 
 	mu_assert_int_eq(expectd, result);
+	mu_assert_int_eq(0, *get_status_code());
 	assert_token(exp_token, token, str_err);
 	clean_strlist(&token);
 }
 
-MU_TEST(test2)
+MU_TEST(passing_a_valid_command_should_be_return_1)
 {
 	int     result;
 	char	str_err[BUFFER];
 	char    **token 			= ft_split("cat\a", '\a');
 	char	*exp_token[] 		= {"/usr/bin/cat", NULL};
+	int     expectd 			= 1;
+
+	result = cmd_path_valid(token, g_path);
+
+	mu_assert_int_eq(expectd, result);
+	mu_assert_int_eq(0, *get_status_code());
+	assert_token(exp_token, token, str_err);
+	clean_strlist(&token);
+}
+
+MU_TEST(passing_a_commando_with_no_exit_the_file_should_be_status_code_126)
+{
+	int     result;
+	char	str_err[BUFFER];
+	char    **token 			= ft_split("./junior\a", '\a');
+	char	*exp_token[] 		= {"./junior", NULL};
 	int     expectd 			= 0;
 
 	result = cmd_path_valid(token, g_path);
 
 	mu_assert_int_eq(expectd, result);
+	mu_assert_int_eq(126, *get_status_code());
 	assert_token(exp_token, token, str_err);
 	clean_strlist(&token);
 }
 
-MU_TEST(test3)
-{
-	int     result;
-	char	str_err[BUFFER];
-	char    **token 			= ft_split("grep\a", '\a');
-	char	*exp_token[] 		= {"/usr/bin/grep", NULL};
-	int     expectd 			= 0;
-
-	result = cmd_path_valid(token, g_path);
-
-	mu_assert_int_eq(expectd, result);
-	assert_token(exp_token, token, str_err);
-	clean_strlist(&token);
-}
-
-MU_TEST(test4)
-{
-	int     result;
-	char	str_err[BUFFER];
-	char    **token 			= ft_split("grep\a", '\a');
-	char	*exp_token[] 		= {"grep", NULL};
-	int     expectd 			= -1;
-
-	result = cmd_path_valid(token, NULL);
-
-	mu_assert_int_eq(expectd, result);
-	assert_token(exp_token, token, str_err);
-	clean_strlist(&token);
-}
-
-MU_TEST(test5)
+MU_TEST(passing_a_token_with_NULL_value_should_be_status_code_126)
 {
 	int     result;
 	char	str_err[BUFFER];
 	char    **token 			= ft_split(" ", ' ');
 	char	*exp_token[] 		= {NULL};
-	int     expectd 			= -1;
+	int     expectd 			= 0;
 
 	result = cmd_path_valid(token, g_path);
 
 	mu_assert_int_eq(expectd, result);
+	mu_assert_int_eq(126, *get_status_code());
 	assert_token(exp_token, token, str_err);
 	clean_strlist(&token);
 }
 
-MU_TEST(test6)
+MU_TEST(passing_a_null_token_should_be_status_code_126)
 {
 	int     result;
 	char	str_err[BUFFER];
-	int     expectd 			= -1;
+	int     expectd 			= 0;
 
 	result = cmd_path_valid(NULL, g_path);
 
@@ -130,13 +120,12 @@ MU_TEST(test6)
 }
 
 MU_TEST_SUITE(test_suite) {
-	MU_RUN_TEST(test);
-	MU_RUN_TEST(test1);
-	MU_RUN_TEST(test2);
-	MU_RUN_TEST(test3);
-	MU_RUN_TEST(test4);
-	MU_RUN_TEST(test5);
-	MU_RUN_TEST(test6);
+	MU_RUN_TEST(passing_a_file_with_no_permission_should_return_status_code_127);
+	MU_RUN_TEST(passing_a_valid_absolute_command_should_be_return_1);
+	MU_RUN_TEST(passing_a_valid_command_should_be_return_1);
+	MU_RUN_TEST(passing_a_commando_with_no_exit_the_file_should_be_status_code_126);
+	MU_RUN_TEST(passing_a_token_with_NULL_value_should_be_status_code_126);
+	MU_RUN_TEST(passing_a_null_token_should_be_status_code_126);
 }
 
 int main() {
