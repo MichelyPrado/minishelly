@@ -43,6 +43,9 @@ YOUR_FILES								=				$(wildcard $(FILES)$(DIR_BUILTINS)*.c)						\
 OBJS_FILES								=				$(YOUR_FILES:%.c=%.o)										\
 														$(addprefix $(FILES)$(DIR_LIBFT), libft.a)					\
 														# Add your files with the function you can test
+TPATH_TOOLS							=					tools_tests/
+TESTS_TOOLS							=					$(addprefix $(TPATH_TOOLS), 								\
+														ft_listjoin_test)
 TPATH_BUILTINS							=				builtins_tests/
 TESTS_BUILTINS							=				$(addprefix $(TPATH_BUILTINS), 								\
 														b_export_test ft_cd_test ) \
@@ -73,7 +76,8 @@ TESTS									=				$(TESTS_BUILTINS)											\
 														$(TESTS_ENVIRON)											\
 														$(TESTS_HANDLE)												\
 														$(TESTS_INTERFACES)											\
-														$(TESTS_OPERATORS)
+														$(TESTS_OPERATORS)											\
+														$(TESTS_TOOLS)
 EXEC_OUTS								=				$(addprefix $(DIR_OUTS), $(TESTS))										
 ################ CONFIG YOUR PROJECT #############
 FLAGS 									=	 			-Wall -Werror -Wextra

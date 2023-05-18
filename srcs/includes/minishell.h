@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/17 19:12:15 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/18 14:22:51 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,6 @@ int				check_single_quotes(char *line);
 void			search_for_symbol(char **line, char c, char **env);
 // FUNCTIONS FOR HANDLE TOKENS								(ft_tokens_utils)
 void			ft_swap_token(t_token **head, t_token **current, t_token **dest);
-t_token			*swap_tokens(t_token *bk, t_token **md, t_token *end);
 t_token			*copy_token(t_token *bk, t_token **md, t_token *end);
 char			**rm_first_item(char **array);
 void			correct_puts(t_token *md, t_token *end);
@@ -287,6 +286,8 @@ int				ft_input(t_sys_config *ms);
 // APPEND
 int				ft_append(t_sys_config *ms);
 
+// HEREDOC
+int				ft_heredoc(t_sys_config *ms);
 // FDS
 void			close_fds(t_sys_config *mini);
 
@@ -317,4 +318,6 @@ int				check_next_eq(char symbol, char *str);
 int				check_is_a_valid_var(char *var);
 // PRINT MESSAGES FUNCTIONS									(ft_print_msg)
 void			ft_print_err(int status_code, char *msg);
+// JOIN FUNCTIONS											(ft_joinfunctions.c)
+char **ft_listjoin(char **ls, char **lsd);
 #endif

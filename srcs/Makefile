@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/16 08:01:21 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/18 14:11:25 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,8 @@ GET_SET							=						$(addprefix $(PATH_GET_SET), \
 PATH_TOOLS 						=						./tools/
 TOOLS							=						$(addprefix $(PATH_TOOLS), \
 														ft_lenfunctions.c ft_free_functions.c \
-														ft_check_functions.c ft_print_msg.c)
+														ft_check_functions.c ft_print_msg.c \
+														ft_joinfunctions.c)
 PATH_SIGNALS					=						./signals/
 SIGNALS							=						$(addprefix $(PATH_SIGNALS), \
 														signals.c ft_ctrl_d.c)
@@ -61,7 +62,7 @@ INTERFACES						=						$(addprefix $(PATH_INTERFACES), \
 PATH_OPERATORS					=						./operators/
 OPERATORS						=						$(addprefix $(PATH_OPERATORS), \
 														ft_pipe.c ft_output.c ft_input.c \
-														ft_append.c)
+														ft_append.c ft_heredoc.c)
 SRC								=						minishell.c			\
 														$(BUILTINS)			\
 														$(ENVIRON)			\

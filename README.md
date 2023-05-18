@@ -100,4 +100,8 @@ make run-test TEST_NAME=<test_obj_dir>/<test_name>
 
 ### Refactory
 - [ ] Alter name of function correct_puts
-- [ ] Ajustar a concatenação de strings
+- [X] Ajustar a concatenação de strings
+- [ ] Terminar função heredoc
+- [ ] Corrigir bug de concatenação de comando ex: echo oi > gol carla
+- [ ] Validar linhas de entrada antes de fazer os tokens
+- [ ] 
