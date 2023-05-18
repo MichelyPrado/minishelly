@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/16 21:51:48 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/17 20:08:14 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	print_tokens_test(t_sys_config *ms)
 	while (tokens)
 	{
 		i = 0;
-		ft_printf("Operador: %i\tnum pipes: %i\n[", tokens->type, *get_num_pipes);
+		ft_printf("Operador: %i\tnum pipes: %i\n[", tokens->type, *get_num_pipes());
 		while (tokens->token[i])
 		{
 			ft_printf("'%s', ", tokens->token[i]);
@@ -60,6 +60,20 @@ static void	alters(t_token **bkp, t_token **back, t_token **tokens)
 	else 
 		*back = swap_tokens((*back), tokens, (*tokens)->next);
 }
+
+static void	alters2(t_token **bkp, t_token **back, t_token **tokens)
+{
+	static int joelma;
+	
+	if (!joelma)
+	{
+		joelma = 1;
+		*bkp = (*tokens)->next;
+	}
+	else
+		swap_tokens_reverse(*back, tokens, (*tokens)->next);
+}
+
 
 t_token	*reorder_tokens(t_token *tokens)
 {
@@ -95,6 +109,8 @@ t_token	*reorder_tokens(t_token *tokens)
 		else if (tokens->next && tokens->next->type == OP_APPEND
 			&& (tokens->type >= OP_CMD && tokens->type <= OP_ECHO))
 			alters(&bkp, &back, &tokens);
+		else if (tokens->type == OP_INPUT && (!tokens->next || !(tokens->next->type >= OP_CMD && tokens->next->type <= OP_ECHO)))
+			alters2(&bkp, &back, &tokens);
 		else
 		{
 			back = tokens;
@@ -142,7 +158,7 @@ int	minishelly(int argc, char **argv, char **environ)
 		mini->tokens = ft_create_tokens(mini);
 		*get_num_pipes() = count_pip(mini->tokens);
 		mini->tokens = reorder_tokens(mini->tokens);
-		//print_tokens_test(mini);
+		print_tokens_test(mini);
 		exec(mini);
 		add_history(mini->str);
 		ft_token_free(&mini->tokens);

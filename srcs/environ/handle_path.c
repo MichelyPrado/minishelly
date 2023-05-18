@@ -33,60 +33,56 @@ int	is_directory(char *path)
 	return (0);
 }
 
-static int	path_is_valid(int err, char *tmp, char **token)
+int	run_access(char *path)
 {
+	int	err;
+
+	err = access(path, F_OK);
 	if (err == 0)
 	{
-		if (*token)
-			free(*token);
-		*token = tmp;
-		return (1);
+		err = access(path, X_OK);
+		if (err == 0)
+		{
+			set_status_code(0);
+			return (1);
+		}
+		set_status_code(127);
+		return (0);
 	}
+	set_status_code(126);
 	return (0);
 }
 
 int	cmd_path_valid(char **token, char **path)
 {
 	int		i;
-	int		err;
 	char	*tmp;
 
-	tmp = NULL;
-	err = -1;
-	if (!token || !*token)
-		return (err);
 	i = 0;
-	if (!path)
-		return (err);
+	tmp = NULL;
+	if (!token || !*token)
+	{
+		set_status_code(126);
+		return (0);
+	}
 	while (path[i])
 	{
 		tmp = create_prompt(3, path[i], "/", *token);
-		err = access(tmp, F_OK);
-		if (err == 0)
+		if (run_access(tmp))
 		{
-			err = access(tmp, X_OK);
-			if (path_is_valid(err, tmp, token))
-				return (1);
-			else
-				set_status_code(127);
+			if (*token)
+				free(*token);
+			*token = tmp;
+			return (1);
 		}
-		else
-			set_status_code(126);
 		if (tmp)
 			free(tmp);
 		i++;
 	}
-	err = access(*token, F_OK);
-	if (err == 0)
-	{
-		err = access(*token, X_OK);
-		if (err == 0)
-			return (1);
-		else {
-			set_status_code(127);
-			return (-1);
-		}
-	}
-	set_status_code(126);
+	if (run_access(*token))
+		return (1);
+	else if (*get_status_code() == 127)
+		return (-1);
 	return (0);
 }
+

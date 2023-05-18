@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 12:03:37 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 20:51:52 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/17 18:39:17 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,15 @@ int	ft_output(t_sys_config *ms)
 	func = ms->exec->func;
 	fd = open(ms->tokens->token[1], O_WRONLY | O_CREAT, 0644);
 	if (fd == -1)
-		sys_exit(clean_data, ENOENT, ms);
+		return (set_status_code(1), 1);
 	if (ms->tokens->next)
 	{
 		ms->tokens = ms->tokens->next;
-		if (dup2(fd, 1) == -1)
-			sys_exit(clean_data, EBADF, ms);
+		dup2(fd, 1);
 		close(fd);
 		func[ms->tokens->type](ms);
 		close(1);
-		if (dup2(bkp, 1) == -1)
-			sys_exit(clean_data, EBADF, ms);
+		dup2(bkp, 1);
 	}
 	return (0);
 }

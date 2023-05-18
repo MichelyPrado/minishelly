@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/17 15:23:39 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/17 19:12:15 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,6 +288,9 @@ int				ft_append(t_sys_config *ms);
 
 // FDS
 void			close_fds(t_sys_config *mini);
+
+t_token	*swap_tokens_reverse(t_token *bk, t_token **md, t_token *end);
+
 
 // Signals
 void			sig_a(int sig);

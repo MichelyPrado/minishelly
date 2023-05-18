@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 16:00:04 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 20:50:48 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/17 18:53:16 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_append(t_sys_config *ms)
 	func = ms->exec->func;
 	fd = open(ms->tokens->token[1], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
-		sys_exit(clean_data, ENOENT, ms);
+		return (set_status_code(1), 1);
 	if (ms->tokens->next)
 	{
 		ms->tokens = ms->tokens->next;

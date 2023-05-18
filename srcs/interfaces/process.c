@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/17 16:12:51 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/17 19:43:01 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,22 @@ int	exec_program(t_sys_config *mini)
 void	exec(t_sys_config *mini)
 {
 	int				i;
+	int				err;
 	static int		status;
 	t_process_func	*func;
 
 	mini->exec = init_exec();
 	func = (t_process_func *) mini->exec->func;
+	err = 0;
 	while (mini->tokens)
 	{
-		func[mini->tokens->type](mini);
+		err = func[mini->tokens->type](mini);
+		if (err)
+			break;
 		mini->tokens = mini->tokens->next;
 	}
+	if (err)
+		ft_print_err(*get_status_code(), "vovozonha!\n");
 	i = 0;
 	close_fds(mini);
 	while (i < mini->exec->i)

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 12:06:36 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 20:17:50 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/17 20:07:37 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@ t_token	*swap_tokens(t_token *bk, t_token **md, t_token *end)
 	tmp->next = end->next;
 	end->next = tmp;
 	return (end);
+}
+
+t_token	*swap_tokens_reverse(t_token *bk, t_token **md, t_token *end)
+{
+	t_token	*tmp;
+
+	tmp = *md;
+	if (bk)
+		bk->next = end;
+	tmp->next = bk;
+	return (*md);
 }
 
 t_token	*copy_token(t_token *bk, t_token **md, t_token *end)
