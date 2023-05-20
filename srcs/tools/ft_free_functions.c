@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 00:36:44 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 20:38:07 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/20 12:12:26 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ void	clean_strlist(char ***strs)
 	if (*strs)
 	{
 		while ((*strs)[i])
-			free((*strs)[i++]);
+		{
+			free((*strs)[i]);
+			(*strs)[i] = NULL;
+			i++;
+		}
 		free(*strs);
 	}
 	*strs = NULL;
@@ -42,6 +46,26 @@ void	clean_lstitens(char **lst)
 			i++;
 		}
 	}
+}
+
+void	free_node_only(t_token **node)
+{
+	t_token	*head;
+	t_token	*temp;
+
+	head = *node;
+	temp = *node;
+	while (temp)
+	{
+		temp = head->next;
+		if (head)
+		{
+			free(head);
+			head = NULL;
+		}
+		head = temp;
+	}
+	*node = NULL;
 }
 
 void	ft_node_free(t_token **node)

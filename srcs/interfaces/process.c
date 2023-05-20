@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/17 19:43:01 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/20 12:13:35 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	exec_program(t_sys_config *mini)
 	if (mini->exec->pid == 0)
 	{
 		err = cmd_path_valid(mini->tokens->token, mini->path);
-		if(err == -1)
+		if (err == -1)
 		{
 			if ((*mini->tokens->token[0] == '/' || !ft_strncmp(*mini->tokens->token, "..", 2) || !ft_strncmp(*mini->tokens->token, "./", 2)))
 				set_status_code(126);
@@ -73,11 +73,11 @@ void	exec(t_sys_config *mini)
 	{
 		err = func[mini->tokens->type](mini);
 		if (err)
-			break;
+			break ;
 		mini->tokens = mini->tokens->next;
 	}
 	if (err)
-		ft_print_err(*get_status_code(), "vovozonha!\n");
+		ft_print_err(*get_status_code(), " vovozona\n");
 	i = 0;
 	close_fds(mini);
 	while (i < mini->exec->i)

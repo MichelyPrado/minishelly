@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/16 21:53:51 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/19 22:11:48 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*ft_token_repair(char *token)
 	while (token[i] != '\0')
 	{
 		change_quotes(&token[i], DQUOTE, &i, -42);
-		change_quotes(&token[i], SQUOTE, &i, -42);
+		change_quotes(&token[i], SQUOTE, &i, -21);
 		if (token[i] == 32)
 			token[i] = NO_PRINT;
 		if (token[i] != '\0')
@@ -62,7 +62,7 @@ char	*ft_token_repair(char *token)
 	return (token);
 }
 
-char	*test(char *str)
+char	*remove_quotes(char *str)
 {
 	int		i;
 	int		j;
@@ -73,7 +73,7 @@ char	*test(char *str)
 	size = 0;
 	while (str[i])
 	{
-		if (str[i] != -42)
+		if (str[i] != -42 && str[i] != -21)
 			size++;
 		i++;
 	}
@@ -82,7 +82,7 @@ char	*test(char *str)
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] != -42)
+		if (str[i] != -42 && str[i] != -21)
 			new[j++] = str[i];
 		i++;
 	}
@@ -103,7 +103,10 @@ t_token	*ft_create_tokens(t_sys_config *mini)
 	while (pieces[i])
 	{
 		pieces[i] = ft_token_repair(pieces[i]);
-		pieces[i] = test(pieces[i]);
+		search_for_symbol(&pieces[i], '$', mini->env);
+		if (!ft_strlen(pieces[i]))
+			return (NULL);
+		pieces[i] = remove_quotes(pieces[i]);
 		token = ft_split(pieces[i], NO_PRINT);
 		op = tag_token(token[0]);
 		if (op)

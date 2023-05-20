@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 00:17:54 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 20:38:32 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/19 01:09:15 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ int	ft_listlen(char **list)
 	int	len;
 
 	len = 0;
-	while (*list != NULL && list[len])
+	if (!list || !*list)
+		return (0);
+	while (list[len])
 		len++;
 	return (len);
 }
