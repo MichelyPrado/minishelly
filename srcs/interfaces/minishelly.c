@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/19 23:04:37 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/20 17:41:21 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	print_tokens_test(t_sys_config *ms)
 	}
 }
 
-
 t_token	*reorder_tokens(t_token *tokens)
 {
 	int		i = 0;
@@ -74,15 +73,15 @@ t_token	*reorder_tokens(t_token *tokens)
 			back = tokens->next;
 			tokens = back;
 		}
-		else if (tokens->next && tokens->next->type == OP_OUTPUT
-			&& ((tokens->type >= OP_CMD && tokens->type <= OP_ECHO) || tokens->type == OP_UNTIL))
-			ft_swap_token(&bkp, &tokens, &tokens->next);
-		else if (tokens->next && tokens->next->type == OP_APPEND
-			&& (tokens->type >= OP_CMD && tokens->type <= OP_ECHO))
-			ft_swap_token(&bkp, &tokens, &tokens->next);
-		else if (tokens->next && tokens->next->type == OP_INPUT
-			&& (tokens->type >= OP_CMD && tokens->type <= OP_ECHO))
-			ft_swap_token(&bkp, &tokens, &tokens->next);
+		// else if (tokens->next && tokens->next->type == OP_OUTPUT
+		// 	&& ((tokens->type >= OP_CMD && tokens->type <= OP_ECHO) || tokens->type == OP_UNTIL))
+		// 	ft_swap_token(&bkp, &tokens, &tokens->next);
+		// else if (tokens->next && tokens->next->type == OP_APPEND
+		// 	&& (tokens->type >= OP_CMD && tokens->type <= OP_ECHO))
+		// 	ft_swap_token(&bkp, &tokens, &tokens->next);
+		// else if (tokens->next && tokens->next->type == OP_INPUT
+		// 	&& (tokens->type >= OP_CMD && tokens->type <= OP_ECHO))
+		// 	ft_swap_token(&bkp, &tokens, &tokens->next);
 		else
 		{
 			back = tokens;
@@ -130,9 +129,10 @@ int	minishelly(int argc, char **argv, char **environ)
 		if (!mini->tokens)
 			continue ;
 		*get_num_pipes() = count_pip(mini->tokens);
-		ft_handle_files(mini->tokens);
-		mini->tokens = reorder_tokens(mini->tokens);
-		//print_tokens_test(mini);
+		mini->tokens = ft_handle_files(mini->tokens);
+		//mini->tokens = reorder_tokens(mini->tokens);
+		print_tokens_test(mini);
+		//break ;
 		exec(mini);
 		add_history(mini->str);
 		ft_token_free(&mini->tokens);

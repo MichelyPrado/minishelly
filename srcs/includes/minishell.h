@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/19 16:47:38 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/20 15:19:18 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ typedef struct s_token
 {
 	char			**token;
 	t_types			type;
+	
 	struct s_token	*next;
 }	t_token;
 
@@ -246,8 +247,9 @@ int				add_delimiters(char symbol, int *j, char *dst, char *c);
 t_err			check_readline(char *src, t_sys_config *mini);
 int				count_delimiter(char *str);
 // HANDLE OPERATORS
-void			ft_handle_files(t_token *t);
+t_token			*ft_handle_files(t_token *t);
 int				realloc_strings(t_token *back, t_token *end);
+int				ft_handle_operators(t_token **head, t_token *t);
 //################ INTERFACES ################//
 
 // MS
@@ -294,9 +296,9 @@ int				ft_heredoc(t_sys_config *ms);
 // FDS
 void			close_fds(t_sys_config *mini);
 
-t_token	*swap_tokens_reverse(t_token *bk, t_token **md, t_token *end);
+t_token			*swap_tokens_reverse(t_token *bk, t_token **md, t_token *end);
 
-void	ft_swap_token(t_token **head, t_token **current, t_token **dest);
+void			ft_swap_token(t_token **head, t_token **current, t_token **dest);
 
 // Signals
 void			sig_a(int sig);

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:25:16 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/19 16:48:30 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/20 12:15:51 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,3 @@ int	cmd_path_valid(char **token, char **path)
 		return (-1);
 	return (0);
 }
-

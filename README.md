@@ -104,4 +104,9 @@ make run-test TEST_NAME=<test_obj_dir>/<test_name>
 - [ ] Terminar função heredoc
 - [ ] Corrigir bug de concatenação de comando ex: echo oi > gol carla
 - [ ] Validar linhas de entrada antes de fazer os tokens
-- [ ] 
+
+
+# testes:
+```
+echo hi | grep hi > oi
+```

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 16:00:04 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/19 21:50:06 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/20 12:15:43 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int	ft_append(t_sys_config *ms)
 		{
 			fd = open(ms->tokens->token[1], O_WRONLY | O_CREAT | O_APPEND, 0644);
 			if (fd == -1)
-				return (set_status_code(1), 1);	
+				return (set_status_code(1), 1);
 		}
 		else
 			return (set_status_code(1), 1);
 	}
 	else
 	{
-		fd = open(ms->tokens->token[1], O_WRONLY | O_APPEND);	
+		fd = open(ms->tokens->token[1], O_WRONLY | O_APPEND);
 		if (fd == -1)
 			return (set_status_code(1), 1);
 	}

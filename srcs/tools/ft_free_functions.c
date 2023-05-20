@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 00:36:44 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/19 02:15:29 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/20 12:12:26 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	clean_strlist(char ***strs)
 		{
 			free((*strs)[i]);
 			(*strs)[i] = NULL;
-			i++;	
+			i++;
 		}
 		free(*strs);
 	}

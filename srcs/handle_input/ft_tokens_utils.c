@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 12:06:36 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/18 16:35:08 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/20 17:08:49 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_swap_token(t_token **head, t_token **current, t_token **dest)
 {
 	t_token	*tmp;
 	t_token	*htmp;
-	t_token	*aux = NULL;
+	t_token	*aux;
 
 	tmp = NULL;
 	htmp = NULL;
@@ -41,7 +41,7 @@ void	ft_swap_token(t_token **head, t_token **current, t_token **dest)
 	tmp = (*dest)->next;
 	(*dest)->next = *current;
 	aux = (*current)->next;
-    (*current)->next = tmp;
+	(*current)->next = tmp;
 	if (htmp)
 		get_back_token(htmp, *current)->next = aux;
 }
@@ -56,8 +56,6 @@ t_token	*copy_token(t_token *bk, t_token **md, t_token *end)
 	cpy->next = *md;
 	return (cpy);
 }
-
-
 
 void	correct_puts(t_token *md, t_token *end)
 {
