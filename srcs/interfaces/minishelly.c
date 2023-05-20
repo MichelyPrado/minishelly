@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/18 15:19:08 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/19 23:04:37 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,13 @@ void	print_tokens_test(t_sys_config *ms)
 t_token	*reorder_tokens(t_token *tokens)
 {
 	int		i = 0;
-	t_token	*tmp;
+	//t_token	*tmp;
 	t_token	*bkp;
 	t_token	*back;
-	char	**token;
+	//char	**token;
 
 	bkp = tokens;
 	back = NULL;
-	// AJUSTE dos fds
-	while (tokens)
-	{
-		correct_puts(tokens, tokens->next);
-		tokens = tokens->next;
-	}
-	// organizar pipes e outputs
 	tokens = bkp;
 	while (tokens)
 	{	
@@ -90,15 +83,6 @@ t_token	*reorder_tokens(t_token *tokens)
 		else if (tokens->next && tokens->next->type == OP_INPUT
 			&& (tokens->type >= OP_CMD && tokens->type <= OP_ECHO))
 			ft_swap_token(&bkp, &tokens, &tokens->next);
-		else if ((tokens->type >= OP_CMD && tokens->type <= OP_ECHO) && (tokens->next && (tokens->next->type >= OP_CMD && tokens->next->type <= OP_ECHO)))
-		{
-			token = ft_listjoin(tokens->token, tokens->next->token);
-			tokens->token = token;
-			tmp = tokens->next->next;
-			free(tokens->next);
-			tokens->next = tmp;
-			//printf("%s\n", tokens->next->token[0]);
-		}
 		else
 		{
 			back = tokens;
@@ -142,9 +126,11 @@ int	minishelly(int argc, char **argv, char **environ)
 	{
 		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
 			continue ;
-		search_for_symbol(&mini->new_parser, '$', mini->env);
 		mini->tokens = ft_create_tokens(mini);
+		if (!mini->tokens)
+			continue ;
 		*get_num_pipes() = count_pip(mini->tokens);
+		ft_handle_files(mini->tokens);
 		mini->tokens = reorder_tokens(mini->tokens);
 		//print_tokens_test(mini);
 		exec(mini);

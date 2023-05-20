@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:05:08 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 20:19:31 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/19 21:59:22 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ int	check_single_quotes(char *line)
 		else
 			dq = 0;
 	}
-	else if (dq == 0 && *line == '\'')
+	else if (dq == 0 && *line == -21)
 	{
-		p = ft_strchr(&line[1], '\'');
+		p = ft_strchr(&line[1], -21);
 		if (p)
 			return (p - line);
 	}

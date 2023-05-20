@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 13:45:46 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/18 15:36:42 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/18 15:45:36 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_input(t_sys_config *ms)
 	if (bkp == -1)
 		sys_exit(clean_data, EBADF, ms);
 	func = ms->exec->func;
-	if (access(ms->tokens->token[1], F_OK))
+	if (access(ms->tokens->token[1], F_OK) == -1)
 		return (set_status_code(1), 1);
 	fd = open(ms->tokens->token[1], O_RDONLY);
 	if (fd == -1)

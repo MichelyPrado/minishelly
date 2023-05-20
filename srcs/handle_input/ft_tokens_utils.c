@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 12:06:36 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/17 20:07:37 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/18 16:35:08 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,7 @@ t_token	*copy_token(t_token *bk, t_token **md, t_token *end)
 	return (cpy);
 }
 
-char	**rm_first_item(char **array)
-{
-	int		i;
-	char	**tmp;
 
-	i = 0;
-	while (array[i])
-		i++;
-	if (i <= 1)
-		return (NULL);
-	tmp = ft_calloc(sizeof(char *), i);
-	i = 1;
-	while (array[i])
-	{
-		tmp[i - 1] = array[i];
-		i++;
-	}
-	if (array)
-		free(array);
-	return (tmp);
-}
 
 void	correct_puts(t_token *md, t_token *end)
 {

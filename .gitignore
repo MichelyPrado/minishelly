@@ -4,3 +4,4 @@ tests/outs/*/*_test
 libft.a
 .vscode
 main.c
+*.txt

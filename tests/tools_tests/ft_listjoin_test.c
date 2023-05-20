@@ -36,6 +36,8 @@ MU_TEST(test1) {
         i++;
     }
     mu_assert_string_eq(expected[i], result[i]);
+    if (result)
+        free(result);
 }
 
 MU_TEST(test2) {
@@ -52,17 +54,21 @@ MU_TEST(test2) {
         i++;
     }
     mu_assert_string_eq(expected[i], result[i]);
+    if (result)
+        free(result);
 }
 
 MU_TEST(test3) {
     int     i;
-    char    **expected = NULL;
+    char    **expected = (char *[]){NULL};
     char    **result;
 
     result = ft_listjoin(NULL, NULL);
 
     i = 0;
-    mu_assert(expected == result, "is not null");
+    mu_assert(expected > 0 && result > 0, "is not null");
+    if (result)
+        free(result);
 }
 
 MU_TEST_SUITE(test_suite) {

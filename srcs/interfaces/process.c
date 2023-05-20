@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/17 19:43:01 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/19 21:50:41 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	exec(t_sys_config *mini)
 		mini->tokens = mini->tokens->next;
 	}
 	if (err)
-		ft_print_err(*get_status_code(), "vovozonha!\n");
+		ft_print_err(*get_status_code(), " vovozona\n");
 	i = 0;
 	close_fds(mini);
 	while (i < mini->exec->i)

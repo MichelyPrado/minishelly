@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/18 14:11:25 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/18 16:06:03 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ PATH_HANDLE						=						./handle_input/
 HANDLE							=						$(addprefix $(PATH_HANDLE), \
 														ft_tokens.c handle_tokens.c \
 														parser_utils.c parser.c expand.c	\
-														ft_tokens_utils.c)
+														ft_tokens_utils.c handle_operators.c)
 PATH_INTERFACES					=						./interfaces/
 INTERFACES						=						$(addprefix $(PATH_INTERFACES), \
 														process.c sys_config.c wait_input.c \

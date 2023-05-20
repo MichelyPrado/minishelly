@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/18 14:22:51 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/19 16:47:38 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ ssize_t			search_envp(char **envp, char *key);
 int				edit_envp(char ***env, char *key, char *new_value);
 void			get_envp(char **envp, t_sys_config *data);
 // PATH CONTROL												(handle_path)
+int				run_access(char *path, int flag);
 char			**split_paths(char **env);
 int				cmd_path_valid(char **token, char **path);
 //######################################################################//
@@ -244,7 +245,9 @@ int				jump_quotes(char *src, t_sys_config *mini, char quote, int *j);
 int				add_delimiters(char symbol, int *j, char *dst, char *c);
 t_err			check_readline(char *src, t_sys_config *mini);
 int				count_delimiter(char *str);
-
+// HANDLE OPERATORS
+void			ft_handle_files(t_token *t);
+int				realloc_strings(t_token *back, t_token *end);
 //################ INTERFACES ################//
 
 // MS
@@ -307,6 +310,7 @@ int				is_directory(char *path);
 int				ft_listlen(char **list);
 // FREE FUNCTIONS											(ft_free_functions)
 void			ft_token_free(t_token **node);
+void			free_node_only(t_token **node);
 void			ft_node_free(t_token **node);
 void			clean_strlist(char ***strs);
 void			clean_lstitens(char **lst);
@@ -319,5 +323,5 @@ int				check_is_a_valid_var(char *var);
 // PRINT MESSAGES FUNCTIONS									(ft_print_msg)
 void			ft_print_err(int status_code, char *msg);
 // JOIN FUNCTIONS											(ft_joinfunctions.c)
-char **ft_listjoin(char **ls, char **lsd);
+char			**ft_listjoin(char **ls, char **lsd);
 #endif
