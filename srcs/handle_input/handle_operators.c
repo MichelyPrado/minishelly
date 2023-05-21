@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 16:06:35 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/20 17:39:56 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/20 21:06:27 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	set_file_descriptor(t_token *t, t_token *aux)
 
 int	ft_handle_operators(t_token **head, t_token *t)
 {
-	//&& (t->next->type == OP_APPEND || t->next->type == OP_OUTPUT)
-	if (t && (t->type >= OP_CMD && t->type <= OP_ECHO) && t->next)
+	if (t && (t->type >= OP_CMD && t->type <= OP_ECHO) && t->next
+	&& (t->next->type >= OP_OUTPUT && t->next->type <= OP_APPEND))
 	{
 		ft_swap_token(head, &t, &t->next);
 		return (1);

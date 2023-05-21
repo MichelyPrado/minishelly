@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/20 15:19:18 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/20 19:09:59 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,6 +293,7 @@ int				ft_append(t_sys_config *ms);
 
 // HEREDOC
 int				ft_heredoc(t_sys_config *ms);
+int				test_heredoc(t_sys_config *ms);
 // FDS
 void			close_fds(t_sys_config *mini);
 

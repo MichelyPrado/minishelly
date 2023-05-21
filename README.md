@@ -32,7 +32,7 @@
   - [X] operator >
   - [X] operator <
   - [X] operator >>
-  - [ ] operator <<
+  - [X] operator <<
   - [ ] operator *
 - [ ] Signals
   - [ ] ctrl-C
@@ -109,4 +109,4 @@ make run-test TEST_NAME=<test_obj_dir>/<test_name>
 # testes:
 ```
 echo hi | grep hi > oi
-```
+```close(0);
