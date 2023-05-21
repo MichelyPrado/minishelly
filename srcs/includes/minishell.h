@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/20 22:33:03 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/20 23:14:05 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,10 +257,16 @@ int				jump_quotes(char *src, t_sys_config *mini, char quote, int *j);
 int				add_delimiters(char symbol, int *j, char *dst, char *c);
 t_err			check_readline(char *src, t_sys_config *mini);
 int				count_delimiter(char *str);
-// HANDLE OPERATORS
-t_token			*ft_handle_files(t_token *t);
-int				realloc_strings(t_token *back, t_token *end);
+// HANDLE OPERATORS AUX
+char			**rm_first_item(char **array);
+void			set_file_descriptor(t_token *t, t_token *aux);
 int				ft_handle_operators(t_token **head, t_token *t);
+t_token			*set_pipe(t_token **head, t_token *bk, t_token *end);
+int				realloc_strings(t_token *back, t_token *end);
+// HANDLE OPERATORS
+t_token			*ft_handle_files(t_token *head, t_token *t, t_token *aux);
+t_token			*handle_pipes(t_token **head, t_token *t);
+void			prepare_commands(t_sys_config *ms);
 //################ INTERFACES ################//
 
 // MS

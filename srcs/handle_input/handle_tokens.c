@@ -6,17 +6,11 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/19 22:11:48 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 14:04:06 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-// receber uma string separada por *
-// while que percore a string contando os caracteres e
-// quando achar um * ft_substr(new_parser, pos_inicial, qtd de caracteres)
-// criar um node e armazenar o comando dentro
-// passa para o proximo node
-// repete até a string acabar
 
 int	change_quotes(char *src, char quote, int *i, int schar)
 {
@@ -112,10 +106,14 @@ t_token	*ft_create_tokens(t_sys_config *mini)
 		if (op)
 			ft_token_add_end(&tokens, ft_token_new(token, op));
 		else
-			clean_strlist(&token);
+		{
+			clean_strlist(token);
+			token = NULL;
+		} 
 		i++;
 	}
-	clean_strlist(&pieces);
+	clean_strlist(pieces);
+	pieces = NULL;
 	return (tokens);
 }
 

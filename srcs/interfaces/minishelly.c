@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/20 21:02:43 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 13:31:53 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,6 @@ void	print_tokens_test(t_sys_config *ms)
 	}
 }
 
-int	count_pip(t_token *t)
-{
-	int	i;
-
-	i = 0;
-	while (t)
-	{
-		if (t->type == OP_PIPE)
-			i++;
-		t = t->next;
-	}
-	return (i);
-}
-
 int	minishelly(int argc, char **argv, char **environ)
 {
 	int				prop;
@@ -79,14 +65,14 @@ int	minishelly(int argc, char **argv, char **environ)
 	prop = 0;
 	while (1)
 	{
+		*get_num_pipes() = 0;
 		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
 			continue ;
 		mini->tokens = ft_create_tokens(mini);
 		if (!mini->tokens)
 			continue ;
-		*get_num_pipes() = count_pip(mini->tokens);
-		mini->tokens = ft_handle_files(mini->tokens);
-		//print_tokens_test(mini);
+		prepare_commands(mini);
+		print_tokens_test(mini);
 		exec(mini);
 		add_history(mini->str);
 		ft_token_free(&mini->tokens);

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 05:13:56 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/20 22:37:58 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/20 23:44:06 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	run_here_doc(t_sys_config *ms)
 	file_name = ms->tokens->token[1];
 	while (1) {
 		read_doc = readline(LABEL_HEREDOC);
+		search_for_symbol(&read_doc, '$', ms->env);
 		if (!read_doc)
 		{
 			printf(MSG_HEREDOC, file_name);
@@ -47,7 +48,6 @@ int	run_here_doc(t_sys_config *ms)
 
 void	heredoc_output(t_sys_config *ms, int size)
 {
-	int				fd;
 	t_process_func	*func;
 	char			*read_doc;
 

@@ -105,6 +105,21 @@ make run-test TEST_NAME=<test_obj_dir>/<test_name>
 - [ ] Corrigir bug de concatenação de comando ex: echo oi > gol carla
 - [ ] Validar linhas de entrada antes de fazer os tokens
 
+### Correct
+- [ ] Corrigir o comportamento do heredoc quando passado mais de um
+  pipe ou mais de um heredoc.
+
+```
+cat <<HERE <<DOC
+oi
+HERE
+time
+DOC
+
+cat <<HERE | ls
+oi
+HERE
+```
 
 # testes:
 ```

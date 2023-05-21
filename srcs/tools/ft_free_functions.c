@@ -6,11 +6,13 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 00:36:44 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/20 12:12:26 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 14:00:11 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+
 
 void	clean_strlist(char ***strs)
 {
