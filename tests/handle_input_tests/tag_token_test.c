@@ -16,7 +16,7 @@ MU_TEST(passing_a_space_should_be_default_operation) {
 MU_TEST(passing_AND_should_be_AND_operation) {
 	// CONFIG
     char    *cmd = "&&";
-    t_types expected = OP_AND;
+    t_types expected = OP_CMD;
     t_types result;
 
     // ACT
@@ -29,7 +29,7 @@ MU_TEST(passing_AND_should_be_AND_operation) {
 MU_TEST(passing_OR_should_be_OR_operation) {
 	// CONFIG
     char    *cmd = "||";
-    t_types expected = OP_OR;
+    t_types expected = OP_CMD;
     t_types result;
 
     // ACT

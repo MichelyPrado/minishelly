@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 05:13:56 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/20 23:44:06 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 20:27:14 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,14 @@ int	run_here_doc(t_sys_config *ms)
 
 void	heredoc_output(t_sys_config *ms, int size)
 {
+	int				fd;
 	t_process_func	*func;
 	char			*read_doc;
 
 	read_doc = NULL;
 	func = ms->exec->func;
-	*get_fd() = open(HEREDOC_FILE, O_RDONLY);
+	fd = open(HEREDOC_FILE, O_RDONLY | O_CREAT);
+	*get_fd() = fd;
 	if (ms->tokens->next)
 	{
 		ms->tokens = ms->tokens->next;
@@ -74,12 +76,14 @@ void	heredoc_output(t_sys_config *ms, int size)
 
 int ft_heredoc(t_sys_config *ms)
 {
+	int				fd;
 	int				size;
 
 	size = 0;
 	*get_fd_bkp() = dup(1);
-	*get_fd() = open(HEREDOC_FILE, \
+	fd = open(HEREDOC_FILE, \
 	O_WRONLY | O_CREAT | O_TRUNC | O_APPEND, S_IRWXU);
+	*get_fd() = fd;
 	size = run_here_doc(ms);
 	heredoc_output(ms, size);
 	*get_fd_bkp() = dup(0);

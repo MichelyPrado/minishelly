@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/21 15:29:10 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 19:37:17 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	change_quotes(char *src, char quote, int *i, int schar)
 			src[p - src] = schar;
 			*i += jump;
 			if (check_next_eq(DQUOTE, &src[(p - src)]))
-				change_quotes(&src[p - src] + 1, DQUOTE, i, schar);
+				change_quotes(&src[p - src] + 1, DQUOTE, i, -42);
 			if (check_next_eq(SQUOTE, &src[(p - src)]))
-				change_quotes(&src[p - src] + 1, SQUOTE, i, schar);
+				change_quotes(&src[p - src] + 1, SQUOTE, i, -21);
 			return (jump);
 		}
 		else
@@ -100,8 +100,12 @@ t_token	*ft_create_tokens(t_sys_config *mini)
 	{
 		pieces[i] = ft_token_repair(pieces[i]);
 		search_for_symbol(&pieces[i], '$', mini->env);
+		// verificar se essa linha não vai dar erro.
 		if (!ft_strlen(pieces[i]))
+		{
+			clean_strlist(&pieces);	
 			return (NULL);
+		}
 		pieces[i] = remove_quotes(pieces[i]);
 		token = ft_split(pieces[i], NO_PRINT);
 		op = tag_token(token[0]);
@@ -110,14 +114,10 @@ t_token	*ft_create_tokens(t_sys_config *mini)
 			ft_token_add_end(&tokens, ft_token_new(token, op));
 		}
 		else
-		{
 			clean_strlist(&token);
-			token = NULL;
-		} 
 		i++;
 	}
 	clean_strlist(&pieces);
-	pieces = NULL;
 	return (tokens);
 }
 
@@ -126,13 +126,11 @@ t_types	tag_token(char *cmd)
 	t_keyword_map	*keymap;
 
 	keymap = (t_keyword_map[]){
-	{"&&", OP_AND},
-	{"|", OP_PIPE},
-	{"||", OP_OR},
 	{">", OP_OUTPUT},
 	{"<", OP_INPUT},
 	{"<<", OP_UNTIL},
 	{">>", OP_APPEND},
+	{"|", OP_PIPE},
 	{"exit", OP_EXIT},
 	{"cd", OP_CD},
 	{"env", OP_ENV},
@@ -151,7 +149,7 @@ int	hash_func(char *cmd, t_keyword_map *keymap)
 	if (!cmd || ft_is_allspace(cmd))
 		return (OP_DEFAULT);
 	i = 0;
-	while (i < 14)
+	while (i < NUM_SYMBOLS)
 	{
 		if (ft_strcmp(cmd, keymap[i].keyword) == 0)
 			return (keymap[i].type);

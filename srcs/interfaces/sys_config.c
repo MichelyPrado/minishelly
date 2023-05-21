@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:44:07 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/21 16:54:31 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:25:51 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_sys_config	*start_sys(char **environ)
 	get_envp(environ, mini);
 	mini->exec = &((t_exec){0});
 	mini->prompt = ft_calloc(sizeof(char **), 3);
-	if (mini->prompt)
+	if (!mini->prompt)
 	{
 		clean_strlist(&mini->prompt);
 		normal_exit(free, ENOMEM, mini);
@@ -45,12 +45,6 @@ t_sys_config	*start_sys(char **environ)
 	mini->tokens = &((t_token){0});
 	mini->nlen_parser = 0;
 	mini->path = split_paths(mini->env);
-	if (mini->path)
-	{
-		clean_strlist(&mini->prompt);
-		clean_strlist(&mini->path);
-		normal_exit(free, ENOMEM, mini);
-	}
 	mini->str = NULL;
 	return (mini);
 }

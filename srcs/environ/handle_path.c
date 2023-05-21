@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:25:16 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/20 12:15:51 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:03:59 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	cmd_path_valid(char **token, char **path)
 		set_status_code(126);
 		return (0);
 	}
-	while (path[i])
+	while (path && path[i])
 	{
 		tmp = create_prompt(3, path[i], "/", *token);
 		if (run_access(tmp, X_OK))

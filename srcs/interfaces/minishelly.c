@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/21 16:35:47 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 20:17:49 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ static void	args_check(int argc, char **argv)
 		exit (0);
 }
 
-void	clean_end_cmd(t_sys_config *ms)
+void	clean_no_exec(t_sys_config *ms)
 {
-	clean_exec(&ms->exec);
 	ft_token_free(&ms->tokens);
 	if (ms->new_parser)
 		free(ms->new_parser);
@@ -36,6 +35,12 @@ void	clean_end_cmd(t_sys_config *ms)
 	if (ms->str)
 		free(ms->str);
 	ms->str = NULL;
+}
+
+void	clean_end_cmd(t_sys_config *ms)
+{
+	clean_no_exec(ms);
+	clean_exec(&ms->exec);
 }
 
 int	minishelly(int argc, char **argv, char **environ)
@@ -55,8 +60,12 @@ int	minishelly(int argc, char **argv, char **environ)
 		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
 			continue ;
 		mini->tokens = ft_create_tokens(mini);
+		// Criar validador de entradas erradas.
 		if (!mini->tokens)
+		{
+			clean_no_exec(mini);
 			continue ;
+		}
 		prepare_commands(mini);
 		print_tokens_test(mini);
 		exec(mini);

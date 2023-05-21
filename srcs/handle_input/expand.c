@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:05:08 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/21 15:26:35 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 19:04:27 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ void	search_for_symbol(char **line, char c, char **env)
 			else if (check_next_eq('?', &(*line)[i]))
 				expand_symbol(i, line, NULL, pieces);
 		}
+		if (!(*line)[i])
+			break ;
 		i++;
 	}
 	if (pieces)

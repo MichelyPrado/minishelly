@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/21 17:14:01 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 20:10:47 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,13 @@ int	count_delimiter(char *readline)
 		if (readline[i] == '|' || readline[i] == '<' \
 		|| readline[i] == '>')
 		{
-			if (readline[i] == '|' && !check_next_eq('|', &readline[i]))
+			if (readline[i] == '|' && check_next_eq('|', &readline[i]))
 			{
-				*get_num_pipes() += 1;
+				i++;	
 				continue ;
 			}
+			else if (readline[i] == '|')
+				*get_num_pipes() += 1;
 			else if (check_next_eq(readline[i], &readline[i]))
 				i++;
 			j += 2;

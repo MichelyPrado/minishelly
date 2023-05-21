@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/21 16:54:44 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 19:43:10 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@
 # define MORE_ONE_SPACE 2
 
 // Number of functions in the exec array.
-
-# define NUM_FUNCS 16
+# define NUM_SYMBOLS 12
+# define NUM_FUNCS 14
 
 //############################ LABELS #############################//
 
@@ -128,21 +128,19 @@ typedef enum e_err
 typedef enum e_types
 {
 	OP_DEFAULT = 0,
-	OP_AND = 1,
-	OP_OR = 2,
-	OP_PIPE = 3,
-	OP_OUTPUT = 4,
-	OP_INPUT = 5,
-	OP_UNTIL = 6,
-	OP_APPEND = 7,
-	OP_CMD = 8,
-	OP_EXIT = 9,
-	OP_CD = 10,
-	OP_ENV = 11,
-	OP_UNSET = 12,
-	OP_EXPORT = 13,
-	OP_PWD = 14,
-	OP_ECHO = 15
+	OP_OUTPUT = 1,
+	OP_INPUT = 2,
+	OP_UNTIL = 3,
+	OP_APPEND = 4,
+	OP_PIPE = 5,
+	OP_CMD = 6,
+	OP_EXIT = 7,
+	OP_CD = 8,
+	OP_ENV = 9,
+	OP_UNSET = 10,
+	OP_EXPORT = 11,
+	OP_PWD = 12,
+	OP_ECHO = 13
 }	t_types;
 
 typedef struct s_keyword_map

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:31:23 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/20 20:52:20 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:33:54 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_pipe(t_sys_config *mini)
 		exit(1);
 	}
 	else {
-		while (mini->tokens->type >= 4 && mini->tokens->type <= 7)
+		while (mini->tokens->type >= OP_OUTPUT && mini->tokens->type <= OP_APPEND)
 			mini->tokens = mini->tokens->next;
 	} 
 	mini->exec->i++;

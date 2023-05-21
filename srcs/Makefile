@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/20 23:16:33 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/21 19:42:26 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ CLEAN = 🧹
 FOLDER = 📂
 ERROR = ❌
 
+HEADERS							=						./includes/minishell.h
 NAME							=						minishell
 
 CC								=						cc
@@ -90,7 +91,7 @@ $(OBJ): %.o: %.c $(HEADERS)
 $(LIBFT): 
 								@$(MAKE) -C $(LIBFT_PATH) --no-print-directory
 
-$(NAME):						$(OBJ)
+$(NAME):						$(OBJ) $(HEADERS)
 								@$(CC) -g3 $(CCFLAGS) $(OBJ) $(RL) $(LIBFT) $(PRINT) -o $(NAME)
 	@echo	"$(GREEN)"
 	@echo	'                d8,            d8,         d8b              d8b  d8b           '

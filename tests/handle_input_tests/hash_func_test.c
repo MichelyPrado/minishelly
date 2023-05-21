@@ -1,9 +1,7 @@
 #include "../includes/tests_includes.h"
 
 t_keyword_map keyword[] = {
-    {"&&", OP_AND},
     {"|", OP_PIPE},
-    {"||", OP_OR},
     {">", OP_OUTPUT},
     {"<", OP_INPUT},
     {"<<", OP_UNTIL},
