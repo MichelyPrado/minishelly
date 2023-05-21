@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/21 13:29:14 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 17:14:01 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	add_delimiters(char symbol, int *j, char *dst, char *c)
 {
-	if (*c == symbol && check_next_eq(symbol, c))
+	if (*c == symbol && check_next_eq(symbol, c) && !check_next_eq('|', c))
 	{
 		*j += insert_char_in_string(dst, *j, NO_PRINT);
 		*j += insert_char_in_string(dst, *j, *c);
@@ -22,7 +22,7 @@ int	add_delimiters(char symbol, int *j, char *dst, char *c)
 		*j += insert_char_in_string(dst, *j, NO_PRINT);
 		return (2);
 	}
-	else if (*c == symbol && *c != '&')
+	else if (*c == symbol)
 	{
 		*j += insert_char_in_string(dst, *j, NO_PRINT);
 		*j += insert_char_in_string(dst, *j, *c);
@@ -55,7 +55,6 @@ t_err	check_readline(char *src, t_sys_config *mini)
 		jump += add_delimiters('|', &j, mini->new_parser, &src[i]);
 		jump += add_delimiters('<', &j, mini->new_parser, &src[i]);
 		jump += add_delimiters('>', &j, mini->new_parser, &src[i]);
-		jump += add_delimiters('&', &j, mini->new_parser, &src[i]);
 		if (!src[i + jump])
 			break ;
 		if (!jump)
@@ -88,12 +87,13 @@ int	count_delimiter(char *readline)
 			return (-1);
 		i += jump;
 		if (readline[i] == '|' || readline[i] == '<' \
-		|| readline[i] == '>' || readline[i] == '&')
+		|| readline[i] == '>')
 		{
 			if (readline[i] == '|' && !check_next_eq('|', &readline[i]))
+			{
 				*get_num_pipes() += 1;
-			if (readline[i] == '&' && !check_next_eq('&', &readline[i]))
 				continue ;
+			}
 			else if (check_next_eq(readline[i], &readline[i]))
 				i++;
 			j += 2;
