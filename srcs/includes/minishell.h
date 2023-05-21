@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/20 19:09:59 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/20 22:33:03 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,15 @@
 # define MORE_ONE_SPACE 2
 // Number of functions in the exec array.
 # define NUM_FUNCS 16
-//typedef t_err (*t_function)(t_sys_config *);
+
+//############################ LABELS #############################//
+
+# define HEREDOC_FILE ".heredoc"
+# define LABEL_HEREDOC "heredoc> "
+# define MSG_HEREDOC "\nwarning: here-document delimited by end-of-file \
+ (wanted '%s')\n"
+
+//######################## ERROR MESSAGES #########################//
 
 // DEFINE ERRORS
 typedef enum e_err
@@ -213,9 +221,12 @@ int				cmd_path_valid(char **token, char **path);
 // STATUS CODE GET AND SET									(status_code)
 int				*get_status_code(void);
 void			set_status_code(int status_code);
-// QUANTIDADES DE PIPES										(num_pipes)
+// AMOUNT DE PIPES										(num_pipes)
 int				*get_num_pipes(void);
 void			set_num_pipes(int num);
+// FILE DESCRIPTORS
+int				*get_fd(void);
+int				*get_fd_bkp(void);
 //######################################################################//
 //######################### HANDLE INPUT ###############################//
 // EXPAND DOLAR SIGN [$]									(expand)
@@ -291,13 +302,16 @@ int				ft_input(t_sys_config *ms);
 // APPEND
 int				ft_append(t_sys_config *ms);
 
+//######################################################################//
+//########################### OPERATORS ################################//
 // HEREDOC
+void			heredoc_output(t_sys_config *ms, int size);
 int				ft_heredoc(t_sys_config *ms);
-int				test_heredoc(t_sys_config *ms);
+
+
 // FDS
 void			close_fds(t_sys_config *mini);
 
-t_token			*swap_tokens_reverse(t_token *bk, t_token **md, t_token *end);
 
 void			ft_swap_token(t_token **head, t_token **current, t_token **dest);
 

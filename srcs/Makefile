@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/18 16:06:03 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/20 22:23:44 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ LIBFT							=						$(LIBFT_PATH)/libft.a
 
 PATH_GET_SET 					=						./getters_and_setters/
 GET_SET							=						$(addprefix $(PATH_GET_SET), \
-														status_code.c num_pipes.c)
+														status_code.c num_pipes.c	 \
+														file_descriptor.c)
 PATH_TOOLS 						=						./tools/
 TOOLS							=						$(addprefix $(PATH_TOOLS), \
 														ft_lenfunctions.c ft_free_functions.c \
