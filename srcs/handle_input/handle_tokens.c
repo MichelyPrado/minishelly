@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/21 14:04:06 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 15:29:10 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ char	*remove_quotes(char *str)
 			new[j++] = str[i];
 		i++;
 	}
+	if (str)
+		free(str);
 	return (new);
 }
 
@@ -92,8 +94,8 @@ t_token	*ft_create_tokens(t_sys_config *mini)
 	char	**pieces;
 
 	i = 0;
-	pieces = ft_split(mini->new_parser, NO_PRINT);
 	tokens = NULL;
+	pieces = ft_split(mini->new_parser, NO_PRINT);
 	while (pieces[i])
 	{
 		pieces[i] = ft_token_repair(pieces[i]);
@@ -104,15 +106,17 @@ t_token	*ft_create_tokens(t_sys_config *mini)
 		token = ft_split(pieces[i], NO_PRINT);
 		op = tag_token(token[0]);
 		if (op)
+		{
 			ft_token_add_end(&tokens, ft_token_new(token, op));
+		}
 		else
 		{
-			clean_strlist(token);
+			clean_strlist(&token);
 			token = NULL;
 		} 
 		i++;
 	}
-	clean_strlist(pieces);
+	clean_strlist(&pieces);
 	pieces = NULL;
 	return (tokens);
 }

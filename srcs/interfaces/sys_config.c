@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:44:07 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 20:43:44 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 16:54:31 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,13 @@ t_sys_config	*start_sys(char **environ)
 		normal_exit(free, ENOMEM, mini);
 	get_envp(environ, mini);
 	mini->exec = &((t_exec){0});
-	mini->prompt = malloc(sizeof(char **) * 3);
-	mini->prompt[0] = create_prompt(6, L_GREEN, SHELLNAME, \
+	mini->prompt = ft_calloc(sizeof(char **), 3);
+	if (mini->prompt)
+	{
+		clean_strlist(&mini->prompt);
+		normal_exit(free, ENOMEM, mini);
+	}
+	mini->prompt[0] = create_prompt(6, L_GREEN, SHELLYNAME, \
 									L_BLUE, cat_user(mini->env), L_WHITE, PROP);
 	mini->prompt[1] = create_prompt(4, L_GREEN, PROPQUOTE, L_WHITE, PROP);
 	mini->prompt[2] = NULL;
@@ -40,6 +45,12 @@ t_sys_config	*start_sys(char **environ)
 	mini->tokens = &((t_token){0});
 	mini->nlen_parser = 0;
 	mini->path = split_paths(mini->env);
+	if (mini->path)
+	{
+		clean_strlist(&mini->prompt);
+		clean_strlist(&mini->path);
+		normal_exit(free, ENOMEM, mini);
+	}
 	mini->str = NULL;
 	return (mini);
 }
@@ -50,7 +61,7 @@ void	update_unbound_vars(char *key, t_sys_config *mini)
 	{
 		if (mini->prompt[0])
 			free(mini->prompt[0]);
-		mini->prompt[0] = create_prompt(6, L_GREEN, SHELLNAME, L_BLUE, \
+		mini->prompt[0] = create_prompt(6, L_GREEN, SHELLYNAME, L_BLUE, \
 		cat_user(mini->env), L_WHITE, PROP);
 	}
 	else if (!ft_strcmp(key, "PATH"))

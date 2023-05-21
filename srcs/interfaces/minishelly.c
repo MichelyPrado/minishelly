@@ -6,22 +6,67 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/21 13:31:53 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 16:35:47 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	args_check(int argc)
+void	print_tokens_test(t_sys_config *ms);
+
+static void	args_check(int argc, char **argv)
 {
 	if (argc != 1)
 	{
 		printf("Invalid number of arguments!\n");
 		exit(EXIT_FAILURE);
 	}
+	if (!*argv)
+		exit (0);
 }
 
-//função que faz a identificação dos tipos dos tokens
+void	clean_end_cmd(t_sys_config *ms)
+{
+	clean_exec(&ms->exec);
+	ft_token_free(&ms->tokens);
+	if (ms->new_parser)
+		free(ms->new_parser);
+	ms->new_parser = NULL;
+	ms->nlen_parser = 0;
+	if (ms->str)
+		free(ms->str);
+	ms->str = NULL;
+}
+
+int	minishelly(int argc, char **argv, char **environ)
+{
+	int				prop;
+	t_sa			sa;
+	t_sys_config	*mini;
+
+	sa = (t_sa){0};
+	prop = 0;
+	wait_signal(&sa);
+	args_check(argc, argv);
+	mini = start_sys(environ);
+	while (1)
+	{
+		*get_num_pipes() = 0;
+		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
+			continue ;
+		mini->tokens = ft_create_tokens(mini);
+		if (!mini->tokens)
+			continue ;
+		prepare_commands(mini);
+		print_tokens_test(mini);
+		exec(mini);
+		add_history(mini->str);
+		clean_end_cmd(mini);
+	}
+	return (0);
+}
+
+
 void	print_tokens_test(t_sys_config *ms)
 {
 	int		i;
@@ -48,40 +93,4 @@ void	print_tokens_test(t_sys_config *ms)
 		if (j == 15)
 			exit (123);
 	}
-}
-
-int	minishelly(int argc, char **argv, char **environ)
-{
-	int				prop;
-	t_sa			sa;
-	t_sys_config	*mini;
-
-	sa = (t_sa){0};
-	wait_signal(&sa);
-	args_check(argc);
-	if (!*argv)
-		return (0);
-	mini = start_sys(environ);
-	prop = 0;
-	while (1)
-	{
-		*get_num_pipes() = 0;
-		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
-			continue ;
-		mini->tokens = ft_create_tokens(mini);
-		if (!mini->tokens)
-			continue ;
-		prepare_commands(mini);
-		print_tokens_test(mini);
-		exec(mini);
-		add_history(mini->str);
-		ft_token_free(&mini->tokens);
-		if (mini->new_parser)
-			free(mini->new_parser);
-		mini->new_parser = NULL;
-		mini->nlen_parser = 0;
-		free(mini->str);
-		mini->str = NULL;
-	}
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/20 23:24:19 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 16:27:33 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,11 @@ void	exec(t_sys_config *mini)
 	int				i;
 	int				err;
 	static int		status;
+	t_token			*restart;
 	t_process_func	*func;
 
 	mini->exec = init_exec();
+	restart = mini->tokens;
 	func = (t_process_func *) mini->exec->func;
 	err = 0;
 	while (mini->tokens)
@@ -87,4 +89,5 @@ void	exec(t_sys_config *mini)
 			set_status_code(WEXITSTATUS(status));
 		i++;
 	}
+	mini->tokens = restart;
 }

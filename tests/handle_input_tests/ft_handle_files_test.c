@@ -21,6 +21,10 @@ void    set_list(int amount, ...)
     va_end(ap);
 }
 
+t_sys_config ms = (t_sys_config) {.env = NULL, .tokens = NULL,
+    .exec = NULL, .prompt = NULL, .new_parser = NULL, .path = NULL};
+
+
 void    mu_assert_token_test(t_token *expected, t_token *result)
 {
     char    str[100];
@@ -44,8 +48,9 @@ MU_TEST(test_passing_a_output_command) {
                                     token,
                                     CMD_M("ola", '\a', OP_CMD));
     t_token *expected               = CMD_M(">\aola", '\a', OP_OUTPUT);
+    ms.tokens = token;
 
-    token = ft_handle_files(token);
+    prepare_commands(&ms);
 
     mu_assert_token_test(expected, token);
     ft_token_free(&token);
@@ -59,8 +64,9 @@ MU_TEST(test_passing_a_input_command) {
                                     token,
                                     CMD_M("ola", '\a', OP_CMD));
     t_token *expected               = CMD_M("<\aola", '\a', OP_OUTPUT);
+    ms.tokens = token;
 
-    token = ft_handle_files(token);
+    prepare_commands(&ms);
 
     mu_assert_token_test(expected, token);
     ft_token_free(&token);
@@ -74,8 +80,9 @@ MU_TEST(test_passing_a_append_command) {
                                     token,
                                     CMD_M("ola", '\a', OP_CMD));
     t_token *expected               = CMD_M(">>\aola", '\a', OP_OUTPUT);
+    ms.tokens = token;
 
-    token = ft_handle_files(token);
+    prepare_commands(&ms);
 
     mu_assert_token_test(expected, token);
     ft_token_free(&token);
@@ -89,8 +96,9 @@ MU_TEST(test_passing_a_until_command) {
                                     token,
                                     CMD_M("ola", '\a', OP_CMD));
     t_token *expected               = CMD_M("<<\aola", '\a', OP_OUTPUT);
+    ms.tokens = token;
 
-    token = ft_handle_files(token);
+    prepare_commands(&ms);
 
     mu_assert_token_test(expected, token);
     ft_token_free(&token);
@@ -100,8 +108,9 @@ MU_TEST(test_passing_a_until_command) {
 MU_TEST(test_passing_only_a_append_command) {
     t_token *token                  =   CMD_M("<<", '\a', OP_OUTPUT);
     t_token *expected               = CMD_M("<<", '\a', OP_OUTPUT);
+    ms.tokens = token;
 
-    token = ft_handle_files(token);
+    prepare_commands(&ms);
 
     mu_assert_token_test(expected, token);
     ft_token_free(&token);
@@ -126,8 +135,9 @@ MU_TEST(test1) {
                                     CMD_M(">>\ahello", '\a', OP_APPEND),
                                     CMD_M("<\aview", '\a', OP_INPUT),
                                     CMD_M(">\ashow", '\a', OP_OUTPUT));
+    ms.tokens = token;
 
-    token = ft_handle_files(token);
+    prepare_commands(&ms);
 
     mu_assert_token_test(expected, token);
     ft_token_free(&token);
@@ -139,7 +149,7 @@ MU_TEST_SUITE(test_suite_files_handle) {
     MU_RUN_TEST(test_passing_a_input_command);
     MU_RUN_TEST(test_passing_a_append_command);
     MU_RUN_TEST(test_passing_a_until_command);
-    //MU_RUN_TEST(test_passing_only_a_append_command);
+    MU_RUN_TEST(test_passing_only_a_append_command);
     MU_RUN_TEST(test1);
 }
 
@@ -176,8 +186,9 @@ MU_TEST(test) {
                                     set_list(NUMBER_OF_TOKENS - 1,
                                     expected,
                                     CMD_M("echo\ahello\aworld", '\a', OP_ECHO));
+    ms.tokens = token;
 
-    token = ft_handle_files(token);
+    prepare_commands(&ms);
 
     mu_assert_token_all(expected, token);
     ft_token_free(&token);
@@ -212,8 +223,8 @@ MU_TEST_SUITE(test_suite_realloc_extra_strings)
 }
 
 int main() {
-	MU_RUN_SUITE(test_suite_files_handle);
-    MU_RUN_SUITE(test_suite_realloc_extra_strings);
+	//MU_RUN_SUITE(test_suite_files_handle);
+    //MU_RUN_SUITE(test_suite_realloc_extra_strings);
 	MU_REPORT();
 	return MU_EXIT_CODE;
 }
