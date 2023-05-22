@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishelly.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/22 07:15:46 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:11:32 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,11 @@ int	minishelly(int argc, char **argv, char **environ)
 			continue ;
 		}
 		prepare_commands(mini);
-		//print_tokens_test(mini);
+		print_tokens_test(mini);
 		exec(mini);
 		add_history(mini->str);
-		//clean_end_cmd(mini);
+		ft_token_free(&mini->head);
+		clean_end_cmd(mini);
 	}
 	return (0);
 }

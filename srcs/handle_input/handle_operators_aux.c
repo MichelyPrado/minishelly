@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_operators_aux.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 23:14:37 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/20 23:15:34 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:10:02 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_token	*set_pipe(t_token **head, t_token *bk, t_token *end)
 
 	if (bk->type == OP_PIPE)
 		return (*head);
-	cpy = ft_token_new(end->token, end->type);
+	cpy = ft_token_new(ft_split("|", ' '), OP_PIPE);
 	if (*head == bk)
 	{
 		cpy->next = *head;
@@ -83,6 +83,7 @@ t_token	*set_pipe(t_token **head, t_token *bk, t_token *end)
 	bk->next = cpy;
 	cpy->next = tmp;
 	return (*head);
+	(void)end;
 }
 
 int	realloc_strings(t_token *back, t_token *end)

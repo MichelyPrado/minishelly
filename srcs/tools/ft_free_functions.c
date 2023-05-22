@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 00:36:44 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/22 02:50:11 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:15:31 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,30 +83,15 @@ void	ft_node_free(t_token **node)
 
 void	ft_token_free(t_token **node)
 {
-	int		i;
 	t_token	*head;
 	t_token	*temp;
 
-	i = 0;
 	head = *node;
 	temp = *node;
 	while (temp)
 	{
 		temp = head->next;
-		if (head)
-		{
-			i = 0;
-			if (head->token)
-			{
-				while ((head->token[i]))
-				{
-					free((head->token[i]));
-					i++;	
-				}
-				free(head->token);
-			}
-			free(head);
-		}
+		ft_node_free(&head);
 		head = temp;
 	}
 	*node = NULL;
