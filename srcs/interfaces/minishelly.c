@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/21 21:37:01 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 21:57:40 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int	minishelly(int argc, char **argv, char **environ)
 void	print_tokens_test(t_sys_config *ms)
 {
 	int		i;
-	int		j = 0;
 	t_token	*back;
 	t_token *tokens;
 
@@ -102,8 +101,5 @@ void	print_tokens_test(t_sys_config *ms)
 		}
 		printf("]\n");
 		tokens = tokens->next;
-		j++;
-		if (j == 15)
-			exit (123);
 	}
 }
