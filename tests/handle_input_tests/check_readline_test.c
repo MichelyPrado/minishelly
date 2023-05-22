@@ -387,8 +387,8 @@ MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(test2);
 	MU_RUN_TEST(test3);
 	MU_RUN_TEST(test4);
-	MU_RUN_TEST(test5);
 	MU_RUN_TEST(test6);
+	MU_RUN_TEST(test5);
 }
 
 int main() {

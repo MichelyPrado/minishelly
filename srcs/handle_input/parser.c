@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/21 20:10:47 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 21:08:50 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 int	add_delimiters(char symbol, int *j, char *dst, char *c)
 {
-	if (*c == symbol && check_next_eq(symbol, c) && !check_next_eq('|', c))
+	if (*c == '|' && check_next_eq(symbol, c))
+	{
+		*j += insert_char_in_string(dst, *j, *c);
+		*j += insert_char_in_string(dst, *j, *c);
+		return (2);
+	}
+	else if (*c == symbol && check_next_eq(symbol, c) && *c != '|')
 	{
 		*j += insert_char_in_string(dst, *j, NO_PRINT);
 		*j += insert_char_in_string(dst, *j, *c);
