@@ -218,13 +218,13 @@ MU_TEST(test_passing_a_until_command_with_text_in_the_end_and_a_echo_before_shou
 
 MU_TEST_SUITE(test_suite_realloc_extra_strings)
 {
-    MU_RUN_TEST(test);
+    //MU_RUN_TEST(test);
     //MU_RUN_TEST(test_passing_a_until_command_with_text_in_the_end_and_a_echo_before_should_be_realloc_text);
 }
 
 int main() {
-	//MU_RUN_SUITE(test_suite_files_handle);
-    //MU_RUN_SUITE(test_suite_realloc_extra_strings);
+	MU_RUN_SUITE(test_suite_files_handle);
+    MU_RUN_SUITE(test_suite_realloc_extra_strings);
 	MU_REPORT();
 	return MU_EXIT_CODE;
 }

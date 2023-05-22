@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 16:06:35 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/22 02:25:18 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 03:29:27 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ t_token	*handle_pipes(t_token **head, t_token *t)
 			break ;
 		while (t && (t->type >= OP_OUTPUT && t->type <= OP_APPEND))
 			t = t->next;
+		if (!t)
+			break ;
 		if (t->next && t->next->type == OP_PIPE)
 			set_pipe(head, back, t->next);
 		back = t;

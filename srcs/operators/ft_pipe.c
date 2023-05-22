@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:31:23 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/22 02:38:55 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 03:04:45 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	ft_pipe(t_sys_config *mini)
 		choice_dup2(mini);
 		close_fds(mini);
 		func[mini->tokens->type](mini);
-		clean_end_cmd(mini);
 		exit(1);
 	}
 	else {

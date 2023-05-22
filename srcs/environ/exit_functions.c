@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 21:51:33 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/21 17:16:13 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 03:03:47 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,7 @@ void	sys_exit_err(void (*f)(t_sys_config *), t_sys_config *mini, char *msg)
 		ft_putstr_fd(msg, 2);
 		write(2, "\n", 1);
 	}
+	if (mini)
+		free(mini);
 	exit (*get_status_code());
 }

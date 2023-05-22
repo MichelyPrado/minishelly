@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/22 02:37:43 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 03:18:57 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	minishelly(int argc, char **argv, char **environ)
 		// Criar validador de entradas erradas.
 		if (!mini->tokens)
 		{
-			set_status_code(0);
+			//set_status_code(0);
 			clean_no_exec(mini);
 			continue ;
 		}
