@@ -120,11 +120,19 @@ cat <<HERE | ls
 oi
 HERE
 ```
-- [ ] command echoi da leak.
+- [X] command echoi da leak.
 - [X] Erro na expanção comando "echo '$USER'"$USER""
-- [ ] echo hi | cat |cat|cat |cat|cat|cat|cat|cat|cat arrumar
-
+- [X] echo hi | cat |cat|cat |cat|cat|cat|cat|cat|cat arrumar
+- [ ] echo "hi" | cat | cat | cat | cat | cat | cat | cat && ctrl - d
+- [ ] | - testar esse pipe.
+- [ ] ls |& ls
+- [ ] ls | > oi
 # testes:
 ```
 echo hi | grep hi > oi
 ```close(0);
+
+- [ ] sinais para processos
+- [ ] terminar heredoc
+- [X] historico para comandos errados.
+- [ ] exit code

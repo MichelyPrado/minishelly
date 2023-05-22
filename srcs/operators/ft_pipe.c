@@ -6,7 +6,7 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:31:23 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/22 15:13:29 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:41:35 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	ft_pipe(t_sys_config *mini)
 		close_fds(mini);
 		if (func[mini->tokens->type](mini))
 			exit(*get_status_code());
+		clean_sys(mini);
 		set_status_code(0);
 		exit (0);
 	}

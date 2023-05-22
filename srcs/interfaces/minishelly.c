@@ -6,7 +6,7 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/22 15:16:53 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:12:39 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,34 @@ static void	args_check(int argc, char **argv)
 		exit (0);
 }
 
+int	ft_valid_flow(t_sys_config *ms)
+{
+	t_token *t;
 
+	t = ms->tokens;
+	while (t)
+	{
+		if ((t->type >= OP_OUTPUT && t->type <= OP_APPEND) && !t->next)
+		{
+			ft_printf("syntax error near unexpected token 'newline'\n");
+			add_history(ms->str);
+			clean_no_exec(ms);
+			return (1);
+		}
+		else if (t->type == OP_PIPE && (t->next->type == OP_OUTPUT || t->next->type == OP_APPEND))
+			;
+		else if (((t->type >= OP_OUTPUT && t->type <= OP_APPEND) || t->type == OP_PIPE)
+		&& t->next && !(t->next->type >= OP_CMD && t->next->type <= OP_ECHO))
+		{
+			ft_printf("syntax error near unexpected token '%s'\n", t->next->token[0]);
+			add_history(ms->str);
+			clean_no_exec(ms);
+			return (1);
+		}
+		t = t->next;
+	}
+	return (0);
+}
 
 int	minishelly(int argc, char **argv, char **environ)
 {
@@ -44,8 +71,14 @@ int	minishelly(int argc, char **argv, char **environ)
 			continue ;
 		mini->tokens = ft_create_tokens(mini);
 		// Criar validador de entradas erradas.
+		if (ft_valid_flow(mini))
+		{
+			
+			continue ;
+		}
 		if (!mini->tokens)
 		{
+			add_history(mini->str);
 			set_status_code(0);
 			clean_no_exec(mini);
 			continue ;
