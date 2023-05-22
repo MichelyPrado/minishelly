@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 21:51:33 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/22 03:36:25 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:36:26 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ void	sys_exit_err(void (*f)(t_sys_config *), t_sys_config *mini, char *msg)
 		ft_putstr_fd(msg, 2);
 		write(2, "\n", 1);
 	}
-	//if (mini)
-	//	free(mini);
+	clean_sys(mini);
 	exit (*get_status_code());
 	f(mini);
 }
