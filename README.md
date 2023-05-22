@@ -122,7 +122,7 @@ HERE
 ```
 - [ ] command echoi da leak.
 - [X] Erro na expanção comando "echo '$USER'"$USER""
-- [ ] 
+- [ ] echo hi | cat |cat|cat |cat|cat|cat|cat|cat|cat arrumar
 
 # testes:
 ```

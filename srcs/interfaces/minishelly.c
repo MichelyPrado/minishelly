@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/21 20:17:49 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 21:37:01 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ int	minishelly(int argc, char **argv, char **environ)
 	int				prop;
 	t_sa			sa;
 	t_sys_config	*mini;
+	t_token			*reset;
 
-	sa = (t_sa){0};
 	prop = 0;
+	sa = (t_sa){0};
+	reset = NULL;
 	wait_signal(&sa);
 	args_check(argc, argv);
 	mini = start_sys(environ);
@@ -60,6 +62,7 @@ int	minishelly(int argc, char **argv, char **environ)
 		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
 			continue ;
 		mini->tokens = ft_create_tokens(mini);
+		reset = mini->tokens;
 		// Criar validador de entradas erradas.
 		if (!mini->tokens)
 		{
@@ -69,6 +72,7 @@ int	minishelly(int argc, char **argv, char **environ)
 		prepare_commands(mini);
 		print_tokens_test(mini);
 		exec(mini);
+		mini->tokens = reset;
 		add_history(mini->str);
 		clean_end_cmd(mini);
 	}
