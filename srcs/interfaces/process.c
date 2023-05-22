@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/22 03:17:18 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 06:59:53 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	exec_program(t_sys_config *mini)
 			set_status_code(127);
 			sys_exit_err(clean_data, mini, " command not found :(");
 		}
+		set_status_code(0);
 		exit (0);
 	}
 	mini->exec->i++;
@@ -87,5 +88,5 @@ void	exec(t_sys_config *mini)
 			set_status_code(WEXITSTATUS(status));
 		i++;
 	}
-	clean_exec(&mini->exec);
+	//clean_exec(&mini->exec);
 }

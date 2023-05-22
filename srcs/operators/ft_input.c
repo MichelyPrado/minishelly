@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 13:45:46 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/20 16:09:33 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 07:02:06 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ int	ft_input(t_sys_config *ms)
 		if (dup2(bkp, 0) == -1)
 			sys_exit(clean_data, EBADF, ms);
 	}
-	return (ms->tokens->type);
+	set_status_code(0);
+	return (0);
 }
