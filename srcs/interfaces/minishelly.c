@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/21 21:57:40 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 02:37:43 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,54 +25,34 @@ static void	args_check(int argc, char **argv)
 		exit (0);
 }
 
-void	clean_no_exec(t_sys_config *ms)
-{
-	ft_token_free(&ms->tokens);
-	if (ms->new_parser)
-		free(ms->new_parser);
-	ms->new_parser = NULL;
-	ms->nlen_parser = 0;
-	if (ms->str)
-		free(ms->str);
-	ms->str = NULL;
-}
 
-void	clean_end_cmd(t_sys_config *ms)
-{
-	clean_no_exec(ms);
-	clean_exec(&ms->exec);
-}
 
 int	minishelly(int argc, char **argv, char **environ)
 {
 	int				prop;
 	t_sa			sa;
 	t_sys_config	*mini;
-	t_token			*reset;
 
 	prop = 0;
 	sa = (t_sa){0};
-	reset = NULL;
 	wait_signal(&sa);
 	args_check(argc, argv);
 	mini = start_sys(environ);
 	while (1)
 	{
-		*get_num_pipes() = 0;
 		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
 			continue ;
 		mini->tokens = ft_create_tokens(mini);
-		reset = mini->tokens;
 		// Criar validador de entradas erradas.
 		if (!mini->tokens)
 		{
+			set_status_code(0);
 			clean_no_exec(mini);
 			continue ;
 		}
 		prepare_commands(mini);
 		print_tokens_test(mini);
 		exec(mini);
-		mini->tokens = reset;
 		add_history(mini->str);
 		clean_end_cmd(mini);
 	}

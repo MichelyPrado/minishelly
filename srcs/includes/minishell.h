@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/21 19:43:10 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 02:38:40 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ typedef struct s_sys_config
 	char	**env;
 	int		nlen_parser;
 	char	*new_parser;
+	t_token	*head;
 	t_token	*tokens;
 	char	**prompt;
 	t_exec	*exec;
@@ -235,6 +236,8 @@ void			sys_exit_err(void (*f)(t_sys_config *), t_sys_config *mini, char *msg);
 void			clean_exec(t_exec **exec);
 void			clean_data(t_sys_config *mini);
 void			clean_sys(t_sys_config *mini);
+void			clean_no_exec(t_sys_config *ms);
+void			clean_end_cmd(t_sys_config *ms);
 // CRUD ENVIRON												(handle_env)
 
 void			ft_unset(t_sys_config *mini, char *key);
@@ -253,14 +256,17 @@ int				cmd_path_valid(char **token, char **path);
 
 int				*get_status_code(void);
 void			set_status_code(int status_code);
-// AMOUNT DE PIPES										(num_pipes)
+
+// AMOUNT DE PIPES											(num_pipes)
 
 int				*get_num_pipes(void);
 void			set_num_pipes(int num);
-// FILE DESCRIPTORS
+
+// FILE DESCRIPTORS											(file_descriptor)
 
 int				*get_fd(void);
 int				*get_fd_bkp(void);
+
 //######################################################################//
 //######################### HANDLE INPUT ###############################//
 // EXPAND DOLAR SIGN [$]									(expand)
@@ -284,7 +290,7 @@ void			ft_token_add_end(t_token **node, t_token *new);
 
 int				change_quotes(char *src, char quote, int *i, int schar);
 char			*ft_token_repair(char *token);
-t_token			*ft_create_tokens(t_sys_config *mini);
+t_token			*ft_create_tokens(t_sys_config *ms);
 t_types			tag_token(char *cmd);
 int				hash_func(char *cmd, t_keyword_map *keymap);
 // UTILS FOR PARSER											(parser_utils)
@@ -377,7 +383,7 @@ int				is_directory(char *path);
 int				ft_listlen(char **list);
 // FREE FUNCTIONS											(ft_free_functions)
 
-void			ft_token_free(t_token **node);
+void			ft_token_free(t_token **tokens);
 void			free_node_only(t_token **node);
 void			ft_node_free(t_token **node);
 void			clean_strlist(char ***strs);

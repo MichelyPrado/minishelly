@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 16:06:35 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/21 20:17:25 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 02:25:18 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,5 @@ void	prepare_commands(t_sys_config *ms)
 	head = ft_handle_files(head, head, aux);
 	head = handle_pipes(&head, head);
 	ms->tokens = head;
+	ms->head = head;
 }

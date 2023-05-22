@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/21 19:37:17 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 02:24:16 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,21 +85,19 @@ char	*remove_quotes(char *str)
 	return (new);
 }
 
-t_token	*ft_create_tokens(t_sys_config *mini)
+t_token	*ft_create_tokens(t_sys_config *ms)
 {
 	int		i;
 	t_types	op;
-	t_token	*tokens;
 	char	**token;
 	char	**pieces;
 
 	i = 0;
-	tokens = NULL;
-	pieces = ft_split(mini->new_parser, NO_PRINT);
+	pieces = ft_split(ms->new_parser, NO_PRINT);
 	while (pieces[i])
 	{
 		pieces[i] = ft_token_repair(pieces[i]);
-		search_for_symbol(&pieces[i], '$', mini->env);
+		search_for_symbol(&pieces[i], '$', ms->env);
 		// verificar se essa linha não vai dar erro.
 		if (!ft_strlen(pieces[i]))
 		{
@@ -110,15 +108,13 @@ t_token	*ft_create_tokens(t_sys_config *mini)
 		token = ft_split(pieces[i], NO_PRINT);
 		op = tag_token(token[0]);
 		if (op)
-		{
-			ft_token_add_end(&tokens, ft_token_new(token, op));
-		}
+			ft_token_add_end(&ms->head, ft_token_new(token, op));
 		else
 			clean_strlist(&token);
 		i++;
 	}
 	clean_strlist(&pieces);
-	return (tokens);
+	return (ms->head);
 }
 
 t_types	tag_token(char *cmd)
