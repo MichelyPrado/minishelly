@@ -6,13 +6,13 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 05:13:56 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/22 22:46:56 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:28:54 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	run_here_doc(t_sys_config *ms)
+void	run_here_doc(t_token *t, char **env)
 {
 	int		fd;
 	int		bkp;
@@ -23,11 +23,11 @@ void	run_here_doc(t_sys_config *ms)
 	bkp = dup(1);
 	fd = open(HEREDOC_FILE, \
 	O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	file_name = ms->tokens->token[1];
+	file_name = t->token[1];
 	while (1)
 	{
 		read_doc = readline(LABEL_HEREDOC);
-		search_for_symbol(&read_doc, '$', ms->env);
+		search_for_symbol(&read_doc, '$', env);
 		if (!read_doc)
 		{
 			printf(MSG_HEREDOC, file_name);
@@ -74,8 +74,6 @@ void	heredoc_output(t_sys_config *ms)
 
 int	ft_heredoc(t_sys_config *ms)
 {
-	run_here_doc(ms);
-	if (ms->tokens->next && ms->tokens->next->type != OP_UNTIL)
-		heredoc_output(ms);
+	heredoc_output(ms);
 	return (0);
 }

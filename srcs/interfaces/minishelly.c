@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/22 22:40:29 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:07:49 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	minishelly(int argc, char **argv, char **environ)
 	sa = (t_sa){0};
 	wait_signal(&sa);
 	args_check(argc, argv);
+	*get_fd_bkp_out() = dup(1);
+	*get_fd_bkp_in() = dup(0);
 	mini = start_sys(environ);
 	while (1)
 	{
@@ -85,7 +87,7 @@ int	minishelly(int argc, char **argv, char **environ)
 			continue ;
 		}
 		prepare_commands(mini);
-		print_tokens_test(mini);
+		//print_tokens_test(mini);
 		exec(mini);
 		add_history(mini->str);
 		ft_token_free(&mini->head);

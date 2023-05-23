@@ -133,7 +133,7 @@ HERE
 echo hi | grep hi > oi
 ```close(0);
 
-- [ ] sinais para processos
+- [X] sinais para processos
 - [ ] terminar heredoc
 - [X] historico para comandos errados.
 - [ ] exit code
