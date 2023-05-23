@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:21:28 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 00:45:53 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:26:01 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	get_envp(char **envp, t_sys_config *data)
 
 	i = 0;
 	data->env = (char **)ft_calloc(sizeof(char *), ft_listlen(envp) + 1);
-	while (envp[i])
+	while (envp && envp[i])
 	{
 		data->env[i] = ft_strdup(envp[i]);
 		i++;

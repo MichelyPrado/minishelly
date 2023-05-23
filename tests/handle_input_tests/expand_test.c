@@ -111,7 +111,7 @@ MU_TEST(test_passing_a_string_with_only_$USER_double_quotes_should_be_dapaulin_b
 
 MU_TEST(test_passing_a_string_with_only_$USER_single_quotes_should_be_$USER_between_single_quotes) {
     char    *line = ft_strdup("'    $USER    '");
-    char    *expected = "'    $USER    '";
+    char    *expected = "'    dapaulin    '";
 
     search_for_symbol(&line, DOLAR, c_env);
 

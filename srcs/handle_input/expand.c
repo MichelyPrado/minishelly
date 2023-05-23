@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:05:08 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 20:19:31 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:52:06 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ int	check_single_quotes(char *line)
 		else
 			dq = 0;
 	}
-	else if (dq == 0 && *line == '\'')
+	else if (dq == 0 && *line == -21)
 	{
-		p = ft_strchr(&line[1], '\'');
+		p = ft_strchr(&line[1], -21);
 		if (p)
 			return (p - line);
 	}
@@ -78,14 +78,10 @@ int	check_single_quotes(char *line)
 
 void	search_for_symbol(char **line, char c, char **env)
 {
-	int		j;
 	int		i;
-	ssize_t	pos;
 	char	**pieces;
 
 	i = 0;
-	j = 0;
-	pos = -1;
 	if (!*line)
 		return ;
 	pieces = ft_calloc(4, sizeof(char *));
@@ -99,6 +95,8 @@ void	search_for_symbol(char **line, char c, char **env)
 			else if (check_next_eq('?', &(*line)[i]))
 				expand_symbol(i, line, NULL, pieces);
 		}
+		if (!(*line)[i])
+			break ;
 		i++;
 	}
 	if (pieces)

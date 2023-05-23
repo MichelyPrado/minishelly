@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lenfunctions.c                                  :+:      :+:    :+:   */
+/*   file_descriptor.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/16 00:17:54 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/19 01:09:15 by dapaulin         ###   ########.fr       */
+/*   Created: 2023/05/20 22:06:59 by dapaulin          #+#    #+#             */
+/*   Updated: 2023/05/22 20:34:04 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_listlen(char **list)
+int	*get_fd(void)
 {
-	int	len;
+	static int	fd;
 
-	len = 0;
-	if (!list || !*list)
-		return (0);
-	while (list[len])
-		len++;
-	return (len);
+	return (&fd);
+}
+
+int	*get_fd_bkp_out(void)
+{
+	static int	bkp;
+
+	return (&bkp);
+}
+
+int	*get_fd_bkp_in(void)
+{
+	static int	bkp;
+
+	return (&bkp);
 }

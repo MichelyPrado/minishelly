@@ -32,7 +32,7 @@
   - [X] operator >
   - [X] operator <
   - [X] operator >>
-  - [ ] operator <<
+  - [X] operator <<
   - [ ] operator *
 - [ ] Signals
   - [ ] ctrl-C
@@ -104,4 +104,36 @@ make run-test TEST_NAME=<test_obj_dir>/<test_name>
 - [ ] Terminar função heredoc
 - [ ] Corrigir bug de concatenação de comando ex: echo oi > gol carla
 - [ ] Validar linhas de entrada antes de fazer os tokens
-- [ ] 
+
+### Correct
+- [ ] Corrigir o comportamento do heredoc quando passado mais de um
+  pipe ou mais de um heredoc.
+
+```
+cat <<HERE <<DOC
+oi
+HERE
+time
+DOC
+
+cat <<HERE | ls
+oi
+HERE
+```
+- [X] command echoi da leak.
+- [X] Erro na expanção comando "echo '$USER'"$USER""
+- [X] echo hi | cat |cat|cat |cat|cat|cat|cat|cat|cat arrumar
+- [X] echo "hi" | cat | cat | cat | cat | cat | cat | cat && ctrl - d
+- [X] | - testar esse pipe.
+- [ ] ls |& ls
+- [X] ls | > oi
+- [ ] echo hi | grep hi > oi
+# testes:
+```
+echo hi | grep hi > oi
+```close(0);
+
+- [X] sinais para processos
+- [ ] terminar heredoc
+- [X] historico para comandos errados.
+- [ ] exit code

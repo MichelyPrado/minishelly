@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:19:42 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/18 05:26:43 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:19:42 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,14 @@ t_process_func	*array_functions(void)
 {
 	t_process_func	*array_process;
 
-	array_process = (t_process_func *)malloc(sizeof(t_process_func) * 16);
+	array_process = (t_process_func *)malloc(sizeof(t_process_func) \
+	* NUM_FUNCS);
 	array_process[OP_DEFAULT] = turn_void;
-	array_process[OP_AND] = turn_void;
-	array_process[OP_OR] = turn_void;
-	array_process[OP_PIPE] = ft_pipe;
 	array_process[OP_OUTPUT] = ft_output;
 	array_process[OP_INPUT] = ft_input;
 	array_process[OP_UNTIL] = ft_heredoc;
 	array_process[OP_APPEND] = ft_append;
+	array_process[OP_PIPE] = ft_pipe;
 	array_process[OP_CMD] = exec_program;
 	array_process[OP_EXIT] = ft_exit;
 	array_process[OP_CD] = ft_cd;

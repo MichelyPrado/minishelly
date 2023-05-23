@@ -6,7 +6,7 @@ MU_TEST(passing_6_string_should_be_all_then_together) {
     char    *result;
 
     // ACT
-    result = create_prompt(6, L_GREEN, SHELLNAME, L_BLUE, " dapaulin", L_WHITE, PROP);
+    result = create_prompt(6, L_GREEN, SHELLYNAME, L_BLUE, " dapaulin", L_WHITE, PROP);
 
     //ASSERT
     mu_assert_string_eq(expected, result);
@@ -19,7 +19,7 @@ MU_TEST(passing_amount_0_should_be_null) {
     char    *result;
 
     // ACT
-    result = create_prompt(0, L_GREEN, SHELLNAME, L_BLUE, " dapaulin", L_WHITE, PROP);
+    result = create_prompt(0, L_GREEN, SHELLYNAME, L_BLUE, " dapaulin", L_WHITE, PROP);
 
     //ASSERT
     mu_assert_string_eq(expected, result);

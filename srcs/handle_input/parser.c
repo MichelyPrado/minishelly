@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 21:32:59 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 19:20:43 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 int	add_delimiters(char symbol, int *j, char *dst, char *c)
 {
-	if (*c == symbol && check_next_eq(symbol, c))
+	if (*c == '|' && check_next_eq(symbol, c))
+	{
+		*j += insert_char_in_string(dst, *j, *c);
+		*j += insert_char_in_string(dst, *j, *c);
+		return (2);
+	}
+	else if (*c == symbol && check_next_eq(symbol, c) && *c != '|')
 	{
 		*j += insert_char_in_string(dst, *j, NO_PRINT);
 		*j += insert_char_in_string(dst, *j, *c);
@@ -22,7 +28,7 @@ int	add_delimiters(char symbol, int *j, char *dst, char *c)
 		*j += insert_char_in_string(dst, *j, NO_PRINT);
 		return (2);
 	}
-	else if (*c == symbol && *c != '&')
+	else if (*c == symbol)
 	{
 		*j += insert_char_in_string(dst, *j, NO_PRINT);
 		*j += insert_char_in_string(dst, *j, *c);
@@ -55,8 +61,7 @@ t_err	check_readline(char *src, t_sys_config *mini)
 		jump += add_delimiters('|', &j, mini->new_parser, &src[i]);
 		jump += add_delimiters('<', &j, mini->new_parser, &src[i]);
 		jump += add_delimiters('>', &j, mini->new_parser, &src[i]);
-		jump += add_delimiters('&', &j, mini->new_parser, &src[i]);
-		if (!src[i + jump])
+		if (!src[jump])
 			break ;
 		if (!jump)
 			mini->new_parser[j++] = src[i++];
@@ -88,10 +93,15 @@ int	count_delimiter(char *readline)
 			return (-1);
 		i += jump;
 		if (readline[i] == '|' || readline[i] == '<' \
-		|| readline[i] == '>' || readline[i] == '&')
+		|| readline[i] == '>')
 		{
-			if (readline[i] == '&' && !check_next_eq('&', &readline[i]))
+			if (readline[i] == '|' && check_next_eq('|', &readline[i]))
+			{
+				i++;
 				continue ;
+			}
+			else if (readline[i] == '|')
+				*get_num_pipes() += 1;
 			else if (check_next_eq(readline[i], &readline[i]))
 				i++;
 			j += 2;

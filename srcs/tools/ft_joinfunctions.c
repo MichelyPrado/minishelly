@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lenfunctions.c                                  :+:      :+:    :+:   */
+/*   ft_joinfunctions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/16 00:17:54 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/19 01:09:15 by dapaulin         ###   ########.fr       */
+/*   Created: 2023/05/18 14:00:10 by dapaulin          #+#    #+#             */
+/*   Updated: 2023/05/20 12:08:01 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_listlen(char **list)
+char	**ft_listjoin(char **ls, char **lsd)
 {
-	int	len;
+	int		i;
+	int		j;
+	char	**ret;
 
-	len = 0;
-	if (!list || !*list)
-		return (0);
-	while (list[len])
-		len++;
-	return (len);
+	ret = NULL;
+	ret = ft_calloc(sizeof(char *), ft_listlen(ls) + ft_listlen(lsd) + 1);
+	i = 0;
+	while (ls && ls[i])
+	{
+		ret[i] = ls[i];
+		i++;
+	}
+	j = 0;
+	while (lsd && lsd[j])
+	{
+		ret[i + j] = lsd[j];
+		j++;
+	}
+	return (ret);
 }

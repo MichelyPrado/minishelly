@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 19:20:35 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 05:39:36 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 14:57:17 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	too_much_args(char **token)
 {
 	if (ft_listlen(token) > 2)
 	{
-		ft_print_err(1, "cd: too many arguments. 😿");
+		ft_print_err(1, "cd: too many arguments. 😿\n");
 		return (1);
 	}
 	return (0);
@@ -36,6 +36,8 @@ int	too_much_args(char **token)
 
 int	special_cases(char ***token, char **env)
 {
+	if (too_much_args(*token))
+		return (1);
 	if (!(*token)[1])
 	{
 		clean_strlist(token);
@@ -43,6 +45,11 @@ int	special_cases(char ***token, char **env)
 		(*token)[0] = ft_strdup("cd");
 		(*token)[1] = ft_strdup("$HOME");
 		search_for_symbol(&(*token)[1], '$', env);
+		if (!ft_strlen((*token)[1]))
+		{
+			ft_print_err(1, " cd: HOME not set\n");
+			return (1);
+		}
 	}
 	return (0);
 }
@@ -52,16 +59,12 @@ int	ft_cd(t_sys_config *mini)
 	ssize_t		old_pwd_index;
 	ssize_t		pwd_index;
 	char		*pwd_value;
-	int			err;
 
-	if (too_much_args(mini->tokens->token))
-		return (1);
-	pwd_value = getcwd(NULL, 0);
+	if (special_cases(&mini->tokens->token, mini->env))
+		return (0);
 	pwd_index = search_envp(mini->env, "PWD");
 	old_pwd_index = search_envp(mini->env, "OLDPWD");
-	err = special_cases(&mini->tokens->token, mini->env);
-	if (err)
-		return (err);
+	pwd_value = getcwd(NULL, 0);
 	if (chdir(mini->tokens->token[1]) != -1)
 	{
 		update_pwd(&(mini->env), old_pwd_index, "OLDPWD=", &pwd_value);
@@ -70,7 +73,7 @@ int	ft_cd(t_sys_config *mini)
 		return (0);
 	}
 	else
-		ft_print_err(1, " No such file or directory");
+		ft_print_err(1, " No such file or directory\n");
 	if (pwd_value)
 		free(pwd_value);
 	return (0);

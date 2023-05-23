@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:25:16 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/17 16:10:50 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/21 18:03:59 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ int	is_directory(char *path)
 	return (0);
 }
 
-int	run_access(char *path)
+int	run_access(char *path, int flag)
 {
 	int	err;
 
 	err = access(path, F_OK);
 	if (err == 0)
 	{
-		err = access(path, X_OK);
+		err = access(path, flag);
 		if (err == 0)
 		{
 			set_status_code(0);
@@ -65,10 +65,10 @@ int	cmd_path_valid(char **token, char **path)
 		set_status_code(126);
 		return (0);
 	}
-	while (path[i])
+	while (path && path[i])
 	{
 		tmp = create_prompt(3, path[i], "/", *token);
-		if (run_access(tmp))
+		if (run_access(tmp, X_OK))
 		{
 			if (*token)
 				free(*token);
@@ -79,10 +79,9 @@ int	cmd_path_valid(char **token, char **path)
 			free(tmp);
 		i++;
 	}
-	if (run_access(*token))
+	if (run_access(*token, X_OK))
 		return (1);
 	else if (*get_status_code() == 127)
 		return (-1);
 	return (0);
 }
-

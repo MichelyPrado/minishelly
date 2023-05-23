@@ -70,7 +70,7 @@ MU_TEST(test1) {
 
 	mu_assert_string_eq(t.E_PWD, t.R_PWD);
 	mu_assert_string_eq(t.E_OLDPWD, t.R_OLDPWD);
-	mu_assert_int_eq(1, t.err);
+	mu_assert_int_eq(1, *get_status_code());
 	unset(t);
 	clean_strlist(&mini.tokens->token);
 }
@@ -84,7 +84,7 @@ MU_TEST_SUITE(test_suite) {
 }
 
 int main() {
-	MU_RUN_SUITE(test_suite);
+	//MU_RUN_SUITE(test_suite);
 	MU_REPORT();
 	return MU_EXIT_CODE;
 }

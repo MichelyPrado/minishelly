@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/18 14:11:25 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/22 02:28:38 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ CLEAN = 🧹
 FOLDER = 📂
 ERROR = ❌
 
+HEADERS							=						./includes/minishell.h
 NAME							=						minishell
 
 CC								=						cc
@@ -33,7 +34,8 @@ LIBFT							=						$(LIBFT_PATH)/libft.a
 
 PATH_GET_SET 					=						./getters_and_setters/
 GET_SET							=						$(addprefix $(PATH_GET_SET), \
-														status_code.c num_pipes.c)
+														status_code.c num_pipes.c	 \
+														file_descriptor.c)
 PATH_TOOLS 						=						./tools/
 TOOLS							=						$(addprefix $(PATH_TOOLS), \
 														ft_lenfunctions.c ft_free_functions.c \
@@ -54,7 +56,8 @@ PATH_HANDLE						=						./handle_input/
 HANDLE							=						$(addprefix $(PATH_HANDLE), \
 														ft_tokens.c handle_tokens.c \
 														parser_utils.c parser.c expand.c	\
-														ft_tokens_utils.c)
+														ft_tokens_utils.c handle_operators.c \
+														handle_operators_aux.c)
 PATH_INTERFACES					=						./interfaces/
 INTERFACES						=						$(addprefix $(PATH_INTERFACES), \
 														process.c sys_config.c wait_input.c \
@@ -88,7 +91,7 @@ $(OBJ): %.o: %.c $(HEADERS)
 $(LIBFT): 
 								@$(MAKE) -C $(LIBFT_PATH) --no-print-directory
 
-$(NAME):						$(OBJ)
+$(NAME):						$(OBJ) $(HEADERS)
 								@$(CC) -g3 $(CCFLAGS) $(OBJ) $(RL) $(LIBFT) $(PRINT) -o $(NAME)
 	@echo	"$(GREEN)"
 	@echo	'                d8,            d8,         d8b              d8b  d8b           '

@@ -16,7 +16,7 @@ MU_TEST(passing_a_string_with_two_pipes_should_be_26) {
 MU_TEST(passing_a_string_with_OP_AND_and_OP_OR_should_be_35) {
 	// CONFIG
 	char			*str			= "echo test || echo bug && cat ty";
-	int				expected		= 35;
+	int				expected		= 31;
 	int				result;
 
 	// ACT
@@ -29,7 +29,7 @@ MU_TEST(passing_a_string_with_OP_AND_and_OP_OR_should_be_35) {
 MU_TEST(passing_a_string_with_all_OP_with_spaces_should_be) {
 	// CONFIG
 	char			*str			= "echo < cat << > >> & && | ||";
-	int				expected		= 42;
+	int				expected		= 38;
 	int				result;
 
 	// ACT

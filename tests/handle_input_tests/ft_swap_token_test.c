@@ -135,6 +135,7 @@ MU_TEST_SUITE(test_outputs) {
 }
 
 int main() {
+    MU_RUN_SUITE(test_swap);
     MU_RUN_SUITE(test_outputs);
 	MU_REPORT();
 	return MU_EXIT_CODE;

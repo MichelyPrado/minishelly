@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/17 19:43:01 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:28:34 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,48 @@ int	exec_program(t_sys_config *mini)
 	if (mini->exec->pid == 0)
 	{
 		err = cmd_path_valid(mini->tokens->token, mini->path);
-		if(err == -1)
+		if (err == -1)
 		{
-			if ((*mini->tokens->token[0] == '/' || !ft_strncmp(*mini->tokens->token, "..", 2) || !ft_strncmp(*mini->tokens->token, "./", 2)))
+			if ((*mini->tokens->token[0] == '/' \
+			|| !ft_strncmp(*mini->tokens->token, "..", 2) \
+			|| !ft_strncmp(*mini->tokens->token, "./", 2)))
 				set_status_code(126);
-			sys_exit_err(clean_data, mini, " Permission denied");
+			sys_exit_err(clean_sys, mini, " Permission denied");
 		}
-		if (!(*mini->tokens->token[0] == '/' || !ft_strncmp(*mini->tokens->token, "..", 2) || !ft_strncmp(*mini->tokens->token, "./", 2)))
+		if (!(*mini->tokens->token[0] == '/' \
+		|| !ft_strncmp(*mini->tokens->token, "..", 2) \
+		|| !ft_strncmp(*mini->tokens->token, "./", 2)))
 			;
 		else if (is_directory(*mini->tokens->token) == 1)
 		{
 			set_status_code(126);
-			sys_exit_err(clean_data, mini, " Is a directory");
+			sys_exit_err(clean_sys, mini, " Is a directory");
 		}
 		if (execve(*mini->tokens->token, mini->tokens->token, mini->env) == -1)
 		{
 			set_status_code(127);
-			sys_exit_err(clean_data, mini, " command not found");
+			sys_exit_err(clean_sys, mini, " command not found :(");
 		}
+		clean_sys(mini);
+		set_status_code(0);
 		exit (0);
 	}
 	mini->exec->i++;
 	return (0);
+}
+
+int	has_heredoc(t_token *t, char **env)
+{
+	int	has;
+
+	has = 0;
+	while (t && t->type != OP_PIPE)
+	{
+		if (t->type == OP_UNTIL)
+			run_here_doc(t, env);	
+		t = t->next;
+	}
+	return (has);
 }
 
 void	exec(t_sys_config *mini)
@@ -69,16 +89,20 @@ void	exec(t_sys_config *mini)
 	mini->exec = init_exec();
 	func = (t_process_func *) mini->exec->func;
 	err = 0;
+	i = 0;
 	while (mini->tokens)
 	{
+		if (mini->tokens->type == OP_PIPE)
+			has_heredoc(mini->tokens->next, mini->env);
+		else
+			has_heredoc(mini->tokens, mini->env);
 		err = func[mini->tokens->type](mini);
-		if (err)
-			break;
+		if (err || !mini->tokens)
+			break ;
 		mini->tokens = mini->tokens->next;
 	}
 	if (err)
-		ft_print_err(*get_status_code(), "vovozonha!\n");
-	i = 0;
+		ft_print_err(*get_status_code(), " vovozona\n");
 	close_fds(mini);
 	while (i < mini->exec->i)
 	{
@@ -87,4 +111,5 @@ void	exec(t_sys_config *mini)
 			set_status_code(WEXITSTATUS(status));
 		i++;
 	}
+	clean_exec(&mini->exec);
 }

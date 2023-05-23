@@ -56,7 +56,7 @@ MU_TEST(passing_all_operators_should_be_the_operator_with_NO_PRINT_around) {
 	t_err			err;
 	t_sys_config	conf			= (t_sys_config){0};
 	char			*cmds_pipe		= "echo | michely & davy && wc < > << >> || ";
-	char			*expected_cmds 	= ft_strdup("echo *|* michely & davy *&&* wc *<* *>* *<<* *>>* *||* ");
+	char			*expected_cmds 	= ft_strdup("echo *|* michely & davy && wc *<* *>* *<<* *>>* || ");
 	alter_no_print(expected_cmds, '*');
 
 	// ACT
@@ -94,7 +94,7 @@ MU_TEST(passing_a_double_pipe_should_be_NO_PRINT_PIPE_PIPE_NO_PRINT) {
 	t_err			err;
 	t_sys_config	conf			= (t_sys_config){0};
 	char			*cmds_pipe		= "||";
-	char			*expected_cmds 	= ft_strdup("*||*");
+	char			*expected_cmds 	= ft_strdup("||");
 	alter_no_print(expected_cmds, '*');
 
 	// ACT
@@ -113,7 +113,7 @@ MU_TEST(passing_all_operators_with_no_spaces_should_be_the_operator_with_NO_PRIN
 	t_err			err;
 	t_sys_config	conf			= (t_sys_config){0};
 	char			*cmds_pipe		= "echo|michely&davy&&wc<><<>>||";
-	char			*expected_cmds 	= ft_strdup("echo*|*michely&davy*&&*wc*<**>**<<**>>**||*");
+	char			*expected_cmds 	= ft_strdup("echo*|*michely&davy&&wc*<**>**<<**>>*||");
 	alter_no_print(expected_cmds, '*');
 
 	// ACT
@@ -241,7 +241,7 @@ MU_TEST(passing_all_operators_with_no_spaces_and_operators_start_and_finish_the_
 	t_err			err;
 	t_sys_config	conf			= (t_sys_config){0};
 	char			*cmds_pipe		= "|michely&davy&&wc<><<>>||";
-	char			*expected_cmds 	= ft_strdup("*|*michely&davy*&&*wc*<**>**<<**>>**||*");
+	char			*expected_cmds 	= ft_strdup("*|*michely&davy&&wc*<**>**<<**>>*||");
 	alter_no_print(expected_cmds, '*');
 
 	// ACT
@@ -387,8 +387,8 @@ MU_TEST_SUITE(test_suite) {
 	MU_RUN_TEST(test2);
 	MU_RUN_TEST(test3);
 	MU_RUN_TEST(test4);
-	MU_RUN_TEST(test5);
 	MU_RUN_TEST(test6);
+	MU_RUN_TEST(test5);
 }
 
 int main() {

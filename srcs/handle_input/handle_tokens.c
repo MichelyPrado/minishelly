@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/16 21:53:51 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:17:07 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-// receber uma string separada por *
-// while que percore a string contando os caracteres e
-// quando achar um * ft_substr(new_parser, pos_inicial, qtd de caracteres)
-// criar um node e armazenar o comando dentro
-// passa para o proximo node
-// repete até a string acabar
 
 int	change_quotes(char *src, char quote, int *i, int schar)
 {
@@ -34,9 +28,9 @@ int	change_quotes(char *src, char quote, int *i, int schar)
 			src[p - src] = schar;
 			*i += jump;
 			if (check_next_eq(DQUOTE, &src[(p - src)]))
-				change_quotes(&src[p - src] + 1, DQUOTE, i, schar);
+				change_quotes(&src[p - src] + 1, DQUOTE, i, -42);
 			if (check_next_eq(SQUOTE, &src[(p - src)]))
-				change_quotes(&src[p - src] + 1, SQUOTE, i, schar);
+				change_quotes(&src[p - src] + 1, SQUOTE, i, -21);
 			return (jump);
 		}
 		else
@@ -53,7 +47,7 @@ char	*ft_token_repair(char *token)
 	while (token[i] != '\0')
 	{
 		change_quotes(&token[i], DQUOTE, &i, -42);
-		change_quotes(&token[i], SQUOTE, &i, -42);
+		change_quotes(&token[i], SQUOTE, &i, -21);
 		if (token[i] == 32)
 			token[i] = NO_PRINT;
 		if (token[i] != '\0')
@@ -62,7 +56,7 @@ char	*ft_token_repair(char *token)
 	return (token);
 }
 
-char	*test(char *str)
+char	*remove_quotes(char *str)
 {
 	int		i;
 	int		j;
@@ -73,7 +67,7 @@ char	*test(char *str)
 	size = 0;
 	while (str[i])
 	{
-		if (str[i] != -42)
+		if (str[i] != -42 && str[i] != -21)
 			size++;
 		i++;
 	}
@@ -82,38 +76,45 @@ char	*test(char *str)
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] != -42)
+		if (str[i] != -42 && str[i] != -21)
 			new[j++] = str[i];
 		i++;
 	}
+	if (str)
+		free(str);
 	return (new);
 }
 
-t_token	*ft_create_tokens(t_sys_config *mini)
+t_token	*ft_create_tokens(t_sys_config *ms)
 {
 	int		i;
 	t_types	op;
-	t_token	*tokens;
 	char	**token;
 	char	**pieces;
 
 	i = 0;
-	pieces = ft_split(mini->new_parser, NO_PRINT);
-	tokens = NULL;
+	pieces = ft_split(ms->new_parser, NO_PRINT);
 	while (pieces[i])
 	{
 		pieces[i] = ft_token_repair(pieces[i]);
-		pieces[i] = test(pieces[i]);
+		search_for_symbol(&pieces[i], '$', ms->env);
+		// verificar se essa linha não vai dar erro.
+		if (!ft_strlen(pieces[i]))
+		{
+			clean_strlist(&pieces);
+			return (NULL);
+		}
+		pieces[i] = remove_quotes(pieces[i]);
 		token = ft_split(pieces[i], NO_PRINT);
 		op = tag_token(token[0]);
 		if (op)
-			ft_token_add_end(&tokens, ft_token_new(token, op));
+			ft_token_add_end(&ms->head, ft_token_new(token, op));
 		else
 			clean_strlist(&token);
 		i++;
 	}
 	clean_strlist(&pieces);
-	return (tokens);
+	return (ms->head);
 }
 
 t_types	tag_token(char *cmd)
@@ -121,13 +122,11 @@ t_types	tag_token(char *cmd)
 	t_keyword_map	*keymap;
 
 	keymap = (t_keyword_map[]){
-	{"&&", OP_AND},
-	{"|", OP_PIPE},
-	{"||", OP_OR},
 	{">", OP_OUTPUT},
 	{"<", OP_INPUT},
 	{"<<", OP_UNTIL},
 	{">>", OP_APPEND},
+	{"|", OP_PIPE},
 	{"exit", OP_EXIT},
 	{"cd", OP_CD},
 	{"env", OP_ENV},
@@ -146,7 +145,7 @@ int	hash_func(char *cmd, t_keyword_map *keymap)
 	if (!cmd || ft_is_allspace(cmd))
 		return (OP_DEFAULT);
 	i = 0;
-	while (i < 14)
+	while (i < NUM_SYMBOLS)
 	{
 		if (ft_strcmp(cmd, keymap[i].keyword) == 0)
 			return (keymap[i].type);

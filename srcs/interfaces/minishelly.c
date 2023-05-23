@@ -6,31 +6,103 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/18 15:19:08 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:55:35 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	args_check(int argc)
+void	print_tokens_test(t_sys_config *ms);
+
+static void	args_check(int argc, char **argv)
 {
 	if (argc != 1)
 	{
 		printf("Invalid number of arguments!\n");
 		exit(EXIT_FAILURE);
 	}
+	if (!*argv)
+		exit (0);
 }
 
-//função que faz a identificação dos tipos dos tokens
+int	print_flow_msg(t_sys_config *ms, char *msg)
+{
+	ft_printf("syntax error near unexpected token '%s'\n", msg);
+	add_history(ms->str);
+	clean_no_exec(ms);
+	return (1);
+}
+
+int	ft_valid_flow(t_sys_config *ms)
+{
+	t_token	*t;
+
+	t = ms->tokens;
+	if (!t)
+		return (0);
+	if (t->type == OP_PIPE)
+		return (print_flow_msg(ms, "|"));
+	while (t)
+	{
+		if ((t->type >= OP_OUTPUT && t->type <= OP_APPEND) && !t->next)
+			return (print_flow_msg(ms, "newline"));
+		else if (t->type == OP_PIPE && \
+		(t->next->type == OP_OUTPUT || t->next->type == OP_APPEND))
+			;
+		else if ((t->type >= OP_OUTPUT && t->type <= OP_PIPE) \
+		&& t->next && !(t->next->type >= OP_CMD \
+		&& t->next->type <= OP_ECHO))
+			return (print_flow_msg(ms, t->next->token[0]));
+		t = t->next;
+	}
+	return (0);
+}
+
+int	minishelly(int argc, char **argv, char **environ)
+{
+	int				prop;
+	t_sa			sa;
+	t_sys_config	*mini;
+
+	prop = 0;
+	sa = (t_sa){0};
+	wait_signal(&sa);
+	args_check(argc, argv);
+	*get_fd_bkp_out() = dup(1);
+	*get_fd_bkp_in() = dup(0);
+	mini = start_sys(environ);
+	while (1)
+	{
+		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
+			continue ;
+		mini->tokens = ft_create_tokens(mini);
+		// Criar validador de entradas erradas.
+		if (ft_valid_flow(mini))
+			continue ;
+		if (!mini->tokens)
+		{
+			add_history(mini->str);
+			set_status_code(0);
+			clean_no_exec(mini);
+			continue ;
+		}
+		prepare_commands(mini);
+		//print_tokens_test(mini);
+		exec(mini);
+		add_history(mini->str);
+		ft_token_free(&mini->head);
+		clean_end_cmd(mini);
+	}
+	return (0);
+}
+
+
 void	print_tokens_test(t_sys_config *ms)
 {
 	int		i;
-	int		j = 0;
-	t_token	*back;
 	t_token *tokens;
 
 	tokens = ms->tokens;
-	back = NULL;
 	while (tokens)
 	{
 		i = 0;
@@ -44,118 +116,5 @@ void	print_tokens_test(t_sys_config *ms)
 		}
 		printf("]\n");
 		tokens = tokens->next;
-		j++;
-		if (j == 15)
-			exit (123);
 	}
-}
-
-
-t_token	*reorder_tokens(t_token *tokens)
-{
-	int		i = 0;
-	t_token	*tmp;
-	t_token	*bkp;
-	t_token	*back;
-	char	**token;
-
-	bkp = tokens;
-	back = NULL;
-	// AJUSTE dos fds
-	while (tokens)
-	{
-		correct_puts(tokens, tokens->next);
-		tokens = tokens->next;
-	}
-	// organizar pipes e outputs
-	tokens = bkp;
-	while (tokens)
-	{	
-		if (tokens->next && tokens->next->type == OP_PIPE
-			&& (!back || back->type != OP_PIPE))
-		{
-			if (!back)
-				bkp = copy_token(back, &tokens, tokens->next);
-			else 
-				copy_token(back, &tokens, tokens->next);
-			back = tokens->next;
-			tokens = back;
-		}
-		else if (tokens->next && tokens->next->type == OP_OUTPUT
-			&& ((tokens->type >= OP_CMD && tokens->type <= OP_ECHO) || tokens->type == OP_UNTIL))
-			ft_swap_token(&bkp, &tokens, &tokens->next);
-		else if (tokens->next && tokens->next->type == OP_APPEND
-			&& (tokens->type >= OP_CMD && tokens->type <= OP_ECHO))
-			ft_swap_token(&bkp, &tokens, &tokens->next);
-		else if (tokens->next && tokens->next->type == OP_INPUT
-			&& (tokens->type >= OP_CMD && tokens->type <= OP_ECHO))
-			ft_swap_token(&bkp, &tokens, &tokens->next);
-		else if ((tokens->type >= OP_CMD && tokens->type <= OP_ECHO) && (tokens->next && (tokens->next->type >= OP_CMD && tokens->next->type <= OP_ECHO)))
-		{
-			token = ft_listjoin(tokens->token, tokens->next->token);
-			tokens->token = token;
-			tmp = tokens->next->next;
-			free(tokens->next);
-			tokens->next = tmp;
-			//printf("%s\n", tokens->next->token[0]);
-		}
-		else
-		{
-			back = tokens;
-			tokens = tokens->next;
-		}
-		i++;
-		if (i == 15)
-			break ;
-	}
-	return (bkp);
-}
-
-int	count_pip(t_token *t)
-{
-	int	i;
-
-	i = 0;
-	while (t)
-	{
-		if (t->type == OP_PIPE)
-			i++;
-		t = t->next;
-	}
-	return (i);
-}
-
-int	minishelly(int argc, char **argv, char **environ)
-{
-	int				prop;
-	t_sa			sa;
-	t_sys_config	*mini;
-
-	sa = (t_sa){0};
-	wait_signal(&sa);
-	args_check(argc);
-	if (!*argv)
-		return (0);
-	mini = start_sys(environ);
-	prop = 0;
-	while (1)
-	{
-		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
-			continue ;
-		search_for_symbol(&mini->new_parser, '$', mini->env);
-		mini->tokens = ft_create_tokens(mini);
-		*get_num_pipes() = count_pip(mini->tokens);
-		mini->tokens = reorder_tokens(mini->tokens);
-		//print_tokens_test(mini);
-		exec(mini);
-		add_history(mini->str);
-		ft_token_free(&mini->tokens);
-		if (mini->new_parser)
-			free(mini->new_parser);
-		mini->new_parser = NULL;
-		mini->nlen_parser = 0;
-		free(mini->str);
-		mini->str = NULL;
-	}
-	return (0);
 }
