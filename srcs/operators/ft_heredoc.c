@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 05:13:56 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/22 21:08:55 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/22 22:46:56 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	heredoc_output(t_sys_config *ms)
 int	ft_heredoc(t_sys_config *ms)
 {
 	run_here_doc(ms);
-	if (ms->tokens->next && ms->tokens->type != OP_UNTIL)
+	if (ms->tokens->next && ms->tokens->next->type != OP_UNTIL)
 		heredoc_output(ms);
 	return (0);
 }
