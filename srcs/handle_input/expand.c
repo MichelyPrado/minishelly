@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:05:08 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/21 19:04:27 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:17:26 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,52 @@ int	check_single_quotes(char *line)
 	return (0);
 }
 
+// void	search_for_symbol(char **line, char c, char **env)
+// {
+// 	int		j;
+// 	int		i;
+// 	ssize_t	pos;
+// 	char	**pieces;
+
+// 	i = 0;
+// 	j = 0;
+// 	pos = -1;
+// 	if (!*line)
+// 		return ;
+// 	pieces = ft_calloc(4, sizeof(char *));
+// 	while ((*line)[i])
+// 	{
+// 		i += check_single_quotes(&(*line)[i]);
+// 		if ((*line)[i] == c)
+// 		{
+// 			if (is_valid_char_for_var((*line)[i + 1]))
+// 				expand_symbol(i, line, env, pieces);
+// 			else if (check_next_eq('?', &(*line)[i]))
+// 				expand_symbol(i, line, NULL, pieces);
+// 		}
+// 		if (!(*line)[i])
+// 			break ;
+// 		i++;
+// 	}
+// 	if (pieces)
+// 		free(pieces);
+// }
+
+void	handle_symbol_expan(char **line, int i, char **env, char **pieces)
+{
+	if (is_valid_char_for_var((*line)[i + 1]))
+		expand_symbol(i, line, env, pieces);
+	else if (check_next_eq('?', &(*line)[i]))
+		expand_symbol(i, line, NULL, pieces);
+}
+
 void	search_for_symbol(char **line, char c, char **env)
 {
-	int		j;
 	int		i;
 	ssize_t	pos;
 	char	**pieces;
 
 	i = 0;
-	j = 0;
 	pos = -1;
 	if (!*line)
 		return ;
@@ -93,12 +130,7 @@ void	search_for_symbol(char **line, char c, char **env)
 	{
 		i += check_single_quotes(&(*line)[i]);
 		if ((*line)[i] == c)
-		{
-			if (is_valid_char_for_var((*line)[i + 1]))
-				expand_symbol(i, line, env, pieces);
-			else if (check_next_eq('?', &(*line)[i]))
-				expand_symbol(i, line, NULL, pieces);
-		}
+			handle_symbol_expan(line, i, env, pieces);
 		if (!(*line)[i])
 			break ;
 		i++;
