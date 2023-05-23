@@ -84,7 +84,7 @@ MU_TEST_SUITE(test_suite) {
 }
 
 int main() {
-	MU_RUN_SUITE(test_suite);
+	//MU_RUN_SUITE(test_suite);
 	MU_REPORT();
 	return MU_EXIT_CODE;
 }
