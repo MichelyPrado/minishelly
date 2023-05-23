@@ -6,7 +6,7 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/23 16:20:49 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:29:05 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,7 +363,7 @@ int				ft_append(t_sys_config *ms);
 //######################################################################//
 //########################### OPERATORS ################################//
 // HEREDOC
-
+void			run_here_doc(t_token *t, char **env);
 void			heredoc_output(t_sys_config *ms);
 int				ft_heredoc(t_sys_config *ms);
 

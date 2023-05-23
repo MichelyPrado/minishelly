@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/22 19:31:41 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/23 15:28:34 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,20 @@ int	exec_program(t_sys_config *mini)
 	return (0);
 }
 
+int	has_heredoc(t_token *t, char **env)
+{
+	int	has;
+
+	has = 0;
+	while (t && t->type != OP_PIPE)
+	{
+		if (t->type == OP_UNTIL)
+			run_here_doc(t, env);	
+		t = t->next;
+	}
+	return (has);
+}
+
 void	exec(t_sys_config *mini)
 {
 	int				i;
@@ -75,18 +89,20 @@ void	exec(t_sys_config *mini)
 	mini->exec = init_exec();
 	func = (t_process_func *) mini->exec->func;
 	err = 0;
+	i = 0;
 	while (mini->tokens)
 	{
+		if (mini->tokens->type == OP_PIPE)
+			has_heredoc(mini->tokens->next, mini->env);
+		else
+			has_heredoc(mini->tokens, mini->env);
 		err = func[mini->tokens->type](mini);
-		if (err)
-			break ;
-		if (!mini->tokens)
+		if (err || !mini->tokens)
 			break ;
 		mini->tokens = mini->tokens->next;
 	}
 	if (err)
 		ft_print_err(*get_status_code(), " vovozona\n");
-	i = 0;
 	close_fds(mini);
 	while (i < mini->exec->i)
 	{

@@ -6,7 +6,11 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 16:05:08 by dapaulin          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/05/23 14:17:26 by msilva-p         ###   ########.fr       */
+=======
+/*   Updated: 2023/05/23 15:52:06 by dapaulin         ###   ########.fr       */
+>>>>>>> d1e12e4fafb25cc312cbfdcc54779126611880ea
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +122,9 @@ void	handle_symbol_expan(char **line, int i, char **env, char **pieces)
 void	search_for_symbol(char **line, char c, char **env)
 {
 	int		i;
-	ssize_t	pos;
 	char	**pieces;
 
 	i = 0;
-	pos = -1;
 	if (!*line)
 		return ;
 	pieces = ft_calloc(4, sizeof(char *));

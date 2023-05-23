@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:26:30 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/21 16:32:00 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:03:08 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ void	wait_signal(t_sa *sa)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	sig_a(int sig)
-{
-	const char	*signal_mini;
+// void	sig_a(int sig)
+// {
+// 	const char	*signal_mini;
 
-	signal_mini = 0;
-	if (sig == SIGINT)
-		signal_mini = "SIGINT";
-	else if (sig == SIGQUIT)
-		signal_mini = "SIGQUIT";
-}
+// 	signal_mini = 0;
+// 	if (sig == SIGINT)
+// 		signal_mini = "SIGINT";
+// 	else if (sig == SIGQUIT)
+// 		signal_mini = "SIGQUIT";
+// }
