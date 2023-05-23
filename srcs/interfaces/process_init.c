@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:19:42 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/21 19:36:07 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:19:42 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ t_process_func	*array_functions(void)
 {
 	t_process_func	*array_process;
 
-	array_process = (t_process_func *)malloc(sizeof(t_process_func) * NUM_FUNCS);
+	array_process = (t_process_func *)malloc(sizeof(t_process_func) \
+	* NUM_FUNCS);
 	array_process[OP_DEFAULT] = turn_void;
 	array_process[OP_OUTPUT] = ft_output;
 	array_process[OP_INPUT] = ft_input;

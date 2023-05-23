@@ -123,10 +123,11 @@ HERE
 - [X] command echoi da leak.
 - [X] Erro na expanção comando "echo '$USER'"$USER""
 - [X] echo hi | cat |cat|cat |cat|cat|cat|cat|cat|cat arrumar
-- [ ] echo "hi" | cat | cat | cat | cat | cat | cat | cat && ctrl - d
-- [ ] | - testar esse pipe.
+- [X] echo "hi" | cat | cat | cat | cat | cat | cat | cat && ctrl - d
+- [X] | - testar esse pipe.
 - [ ] ls |& ls
-- [ ] ls | > oi
+- [X] ls | > oi
+- [ ] echo hi | grep hi > oi
 # testes:
 ```
 echo hi | grep hi > oi

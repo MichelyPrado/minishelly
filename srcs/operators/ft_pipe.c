@@ -6,7 +6,7 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:31:23 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/22 15:41:35 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/22 19:29:35 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int	ft_pipe(t_sys_config *mini)
 	func = (t_process_func *) mini->exec->func;
 	if (mini->tokens->next)
 	{
-		//if (mini->tokens->next->type >= 4 && mini->tokens->next->type <= 7)
-		//	return (0);
 		mini->exec->pid = fork();
 			mini->tokens = mini->tokens->next;
 	}
@@ -55,10 +53,12 @@ int	ft_pipe(t_sys_config *mini)
 		set_status_code(0);
 		exit (0);
 	}
-	else {
-		while (mini->tokens->type >= OP_OUTPUT && mini->tokens->type <= OP_APPEND)
+	else
+	{
+		while (mini->tokens && mini->tokens->type >= OP_OUTPUT \
+		&& mini->tokens->type <= OP_APPEND)
 			mini->tokens = mini->tokens->next;
-	} 
+	}
 	mini->exec->i++;
 	return (0);
 }

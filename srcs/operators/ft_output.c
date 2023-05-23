@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_output.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 12:03:37 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/20 16:01:51 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:23:11 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_output(t_sys_config *ms)
 	{
 		if (*get_status_code() == 126)
 		{
-			fd = open(ms->tokens->token[1], O_WRONLY | O_CREAT,  0644);
+			fd = open(ms->tokens->token[1], O_WRONLY | O_CREAT, 0644);
 			if (fd == -1)
 				return (set_status_code(1), 1);
 		}

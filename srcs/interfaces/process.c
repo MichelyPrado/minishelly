@@ -6,7 +6,7 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/22 15:47:17 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/22 19:31:41 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,15 @@ int	exec_program(t_sys_config *mini)
 		err = cmd_path_valid(mini->tokens->token, mini->path);
 		if (err == -1)
 		{
-			if ((*mini->tokens->token[0] == '/' || !ft_strncmp(*mini->tokens->token, "..", 2) || !ft_strncmp(*mini->tokens->token, "./", 2)))
+			if ((*mini->tokens->token[0] == '/' \
+			|| !ft_strncmp(*mini->tokens->token, "..", 2) \
+			|| !ft_strncmp(*mini->tokens->token, "./", 2)))
 				set_status_code(126);
 			sys_exit_err(clean_sys, mini, " Permission denied");
 		}
-		if (!(*mini->tokens->token[0] == '/' || !ft_strncmp(*mini->tokens->token, "..", 2) || !ft_strncmp(*mini->tokens->token, "./", 2)))
+		if (!(*mini->tokens->token[0] == '/' \
+		|| !ft_strncmp(*mini->tokens->token, "..", 2) \
+		|| !ft_strncmp(*mini->tokens->token, "./", 2)))
 			;
 		else if (is_directory(*mini->tokens->token) == 1)
 		{
@@ -76,6 +80,8 @@ void	exec(t_sys_config *mini)
 		err = func[mini->tokens->type](mini);
 		if (err)
 			break ;
+		if (!mini->tokens)
+			break ;
 		mini->tokens = mini->tokens->next;
 	}
 	if (err)
@@ -89,5 +95,5 @@ void	exec(t_sys_config *mini)
 			set_status_code(WEXITSTATUS(status));
 		i++;
 	}
-	//clean_exec(&mini->exec);
+	clean_exec(&mini->exec);
 }

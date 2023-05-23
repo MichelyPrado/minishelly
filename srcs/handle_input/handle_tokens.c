@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/22 02:24:16 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:17:07 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ t_token	*ft_create_tokens(t_sys_config *ms)
 		// verificar se essa linha não vai dar erro.
 		if (!ft_strlen(pieces[i]))
 		{
-			clean_strlist(&pieces);	
+			clean_strlist(&pieces);
 			return (NULL);
 		}
 		pieces[i] = remove_quotes(pieces[i]);

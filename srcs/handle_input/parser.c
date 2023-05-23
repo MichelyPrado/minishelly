@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/21 21:08:50 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 19:20:43 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_err	check_readline(char *src, t_sys_config *mini)
 		jump += add_delimiters('|', &j, mini->new_parser, &src[i]);
 		jump += add_delimiters('<', &j, mini->new_parser, &src[i]);
 		jump += add_delimiters('>', &j, mini->new_parser, &src[i]);
-		if (!src[i + jump])
+		if (!src[jump])
 			break ;
 		if (!jump)
 			mini->new_parser[j++] = src[i++];
@@ -97,7 +97,7 @@ int	count_delimiter(char *readline)
 		{
 			if (readline[i] == '|' && check_next_eq('|', &readline[i]))
 			{
-				i++;	
+				i++;
 				continue ;
 			}
 			else if (readline[i] == '|')

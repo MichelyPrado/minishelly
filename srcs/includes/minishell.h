@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/22 02:38:40 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 20:59:51 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ typedef struct s_token
 {
 	char			**token;
 	t_types			type;
-	
+
 	struct s_token	*next;
 }	t_token;
 
@@ -230,7 +230,8 @@ void			normal_exit(void (*f)(void *), int exit_code, \
 				void *item);
 void			sys_exit(void (*f)(t_sys_config *), int exit_code, \
 				t_sys_config *mini);
-void			sys_exit_err(void (*f)(t_sys_config *), t_sys_config *mini, char *msg);
+void			sys_exit_err(void (*f)(t_sys_config *),
+					t_sys_config *mini, char *msg);
 // FREE														(frees)
 
 void			clean_exec(t_exec **exec);
@@ -265,7 +266,8 @@ void			set_num_pipes(int num);
 // FILE DESCRIPTORS											(file_descriptor)
 
 int				*get_fd(void);
-int				*get_fd_bkp(void);
+int				*get_fd_bkp_out(void);
+int				*get_fd_bkp_in(void);
 
 //######################################################################//
 //######################### HANDLE INPUT ###############################//
@@ -277,7 +279,8 @@ int				check_single_quotes(char *line);
 void			search_for_symbol(char **line, char c, char **env);
 // FUNCTIONS FOR HANDLE TOKENS								(ft_tokens_utils)
 
-void			ft_swap_token(t_token **head, t_token **current, t_token **dest);
+void			ft_swap_token(t_token **head, t_token **current,
+					t_token **dest);
 t_token			*copy_token(t_token *bk, t_token **md, t_token *end);
 char			**rm_first_item(char **array);
 void			correct_puts(t_token *md, t_token *end);
@@ -360,15 +363,14 @@ int				ft_append(t_sys_config *ms);
 //########################### OPERATORS ################################//
 // HEREDOC
 
-void			heredoc_output(t_sys_config *ms, int size);
+void			heredoc_output(t_sys_config *ms);
 int				ft_heredoc(t_sys_config *ms);
-
 
 // FDS
 void			close_fds(t_sys_config *mini);
 
-
-void			ft_swap_token(t_token **head, t_token **current, t_token **dest);
+void			ft_swap_token(t_token **head, t_token **current,
+					t_token **dest);
 
 // Signals
 void			sig_a(int sig);

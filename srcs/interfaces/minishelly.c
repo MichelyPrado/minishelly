@@ -6,7 +6,7 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/22 18:12:39 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/22 19:44:39 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,34 @@ static void	args_check(int argc, char **argv)
 		exit (0);
 }
 
+int	print_flow_msg(t_sys_config *ms, char *msg)
+{
+	ft_printf("syntax error near unexpected token '%s'\n", msg);
+	add_history(ms->str);
+	clean_no_exec(ms);
+	return (1);
+}
+
 int	ft_valid_flow(t_sys_config *ms)
 {
-	t_token *t;
+	t_token	*t;
 
 	t = ms->tokens;
+	if (!t)
+		return (0);
+	if (t->type == OP_PIPE)
+		return (print_flow_msg(ms, "|"));
 	while (t)
 	{
 		if ((t->type >= OP_OUTPUT && t->type <= OP_APPEND) && !t->next)
-		{
-			ft_printf("syntax error near unexpected token 'newline'\n");
-			add_history(ms->str);
-			clean_no_exec(ms);
-			return (1);
-		}
-		else if (t->type == OP_PIPE && (t->next->type == OP_OUTPUT || t->next->type == OP_APPEND))
+			return (print_flow_msg(ms, "newline"));
+		else if (t->type == OP_PIPE && \
+		(t->next->type == OP_OUTPUT || t->next->type == OP_APPEND))
 			;
-		else if (((t->type >= OP_OUTPUT && t->type <= OP_APPEND) || t->type == OP_PIPE)
-		&& t->next && !(t->next->type >= OP_CMD && t->next->type <= OP_ECHO))
-		{
-			ft_printf("syntax error near unexpected token '%s'\n", t->next->token[0]);
-			add_history(ms->str);
-			clean_no_exec(ms);
-			return (1);
-		}
+		else if ((t->type >= OP_OUTPUT && t->type <= OP_PIPE) \
+		&& t->next && !(t->next->type >= OP_CMD \
+		&& t->next->type <= OP_ECHO))
+			return (print_flow_msg(ms, t->next->token[0]));
 		t = t->next;
 	}
 	return (0);
@@ -72,10 +76,7 @@ int	minishelly(int argc, char **argv, char **environ)
 		mini->tokens = ft_create_tokens(mini);
 		// Criar validador de entradas erradas.
 		if (ft_valid_flow(mini))
-		{
-			
 			continue ;
-		}
 		if (!mini->tokens)
 		{
 			add_history(mini->str);
@@ -84,7 +85,7 @@ int	minishelly(int argc, char **argv, char **environ)
 			continue ;
 		}
 		prepare_commands(mini);
-		//print_tokens_test(mini);
+		print_tokens_test(mini);
 		exec(mini);
 		add_history(mini->str);
 		ft_token_free(&mini->head);

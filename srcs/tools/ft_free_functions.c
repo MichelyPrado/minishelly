@@ -6,13 +6,11 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 00:36:44 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/22 15:15:31 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/22 18:15:08 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-
 
 void	clean_strlist(char ***strs)
 {

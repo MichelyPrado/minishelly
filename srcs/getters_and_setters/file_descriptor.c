@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_descriptor.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 22:06:59 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/20 22:31:07 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/22 20:34:04 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,14 @@ int	*get_fd(void)
 	return (&fd);
 }
 
-int	*get_fd_bkp(void)
+int	*get_fd_bkp_out(void)
+{
+	static int	bkp;
+
+	return (&bkp);
+}
+
+int	*get_fd_bkp_in(void)
 {
 	static int	bkp;
 
