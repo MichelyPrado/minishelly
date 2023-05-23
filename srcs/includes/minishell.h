@@ -6,7 +6,7 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/22 20:59:51 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/23 16:20:49 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,6 +277,7 @@ ssize_t			find_key(char *line, char **env, int *i);
 void			expand_symbol(int i, char **line, char **env, char **pieces);
 int				check_single_quotes(char *line);
 void			search_for_symbol(char **line, char c, char **env);
+void			handle_symbol_expan(char **line, int i, char **env, char **pieces);
 // FUNCTIONS FOR HANDLE TOKENS								(ft_tokens_utils)
 
 void			ft_swap_token(t_token **head, t_token **current,
