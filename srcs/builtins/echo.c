@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 18:21:24 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/20 20:49:37 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:43:28 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ int	ft_echo(t_sys_config *mini)
 	}
 	if (new_line == 1)
 		ft_printf("\n");
+	*get_status_code() = 0;
 	return (0);
 }
