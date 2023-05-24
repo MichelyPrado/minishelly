@@ -6,25 +6,21 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 16:00:04 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/24 10:28:00 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 13:33:44 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_append(t_sys_config *ms)
+static int	fd_append_validation(int *fd, char *token)
 {
-	int				fd;
-	t_process_func	*func;
-
-	func = ms->exec->func;
-	if (!run_access(ms->tokens->token[1], W_OK))
+	if (!run_access(token, W_OK))
 	{
 		if (*get_status_code() == 126)
 		{
-			fd = open(ms->tokens->token[1], O_WRONLY \
+			*fd = open(token, O_WRONLY \
 			| O_CREAT | O_APPEND, 0644);
-			if (fd == -1)
+			if (*fd == -1)
 				return (ft_exit_in_out_error(1));
 		}
 		else
@@ -32,10 +28,21 @@ int	ft_append(t_sys_config *ms)
 	}
 	else
 	{
-		fd = open(ms->tokens->token[1], O_WRONLY | O_APPEND);
-		if (fd == -1)
+		*fd = open(token, O_WRONLY | O_APPEND);
+		if (*fd == -1)
 			return (ft_exit_in_out_error(1));
 	}
+	return (0);
+}
+
+int	ft_append(t_sys_config *ms)
+{
+	int				fd;
+	t_process_func	*func;
+
+	func = ms->exec->func;
+	if (fd_append_validation(&fd, ms->tokens->token[1]))
+		return (1);
 	if (ms->tokens->next)
 	{
 		ms->tokens = ms->tokens->next;
