@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/24 11:23:00 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:14:57 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,28 @@ int	add_delimiters(char symbol, int *j, char *dst, char *c)
 	return (0);
 }
 
+t_err	check_readline_aux(char *src, t_sys_config *ms)
+{
+	if (src == NULL)
+		return (ERR_NOLINE);
+	ms->nlen_parser = count_delimiter(src);
+	if (ms->nlen_parser == -1)
+		return (ERR_QUOTES);
+	ms->new_parser = ft_calloc(sizeof(char), ms->nlen_parser + 1);
+	return (0);
+}
+
 t_err	check_readline(char *src, t_sys_config *mini)
 {
-	int		jump;
 	int		i;
 	int		j;
+	int		jump;
 
 	i = 0;
 	j = 0;
-	jump = 0;
-	if (src == NULL)
-		return (ERR_NOLINE);
-	mini->nlen_parser = count_delimiter(src);
-	if (mini->nlen_parser == -1)
-		return (ERR_QUOTES);
-	mini->new_parser = ft_calloc(sizeof(char), mini->nlen_parser + 1);
+	jump = check_readline_aux(src, mini);
+	if (jump)
+		return (jump);
 	while (src[i])
 	{
 		jump = 0;
