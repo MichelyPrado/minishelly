@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/24 10:27:46 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:22:01 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,11 +267,12 @@ void			set_num_pipes(int num);
 
 int				*get_fd_in(void);
 int				*get_fd_out(void);
-int				dup_fd_out(int fd);
 int				*get_fd_bkp_out(void);
 int				*get_fd_bkp_in(void);
+
+// DUP FUNCTIONS
+int				dup_fd_out(int fd);
 int				dup_fd_in(int fd);
-int				exit_input_error(int status_code);
 int				ft_exit_in_out_error(int status_code);
 
 //######################################################################//
@@ -289,6 +290,7 @@ void			ft_swap_token(t_token **head, t_token **current,
 t_token			*copy_token(t_token *bk, t_token **md, t_token *end);
 char			**rm_first_item(char **array);
 void			correct_puts(t_token *md, t_token *end);
+char			*remove_quotes(char *str);
 // FUNCTIONS FOR CREATE TOKENS								(ft_tokens)
 
 t_token			*ft_token_new(char **cmds, int type);
@@ -367,8 +369,8 @@ int				ft_append(t_sys_config *ms);
 //######################################################################//
 //########################### OPERATORS ################################//
 // HEREDOC
+int				has_heredoc(t_token *t, char **env);
 void			run_here_doc(t_token *t, char **env);
-void			heredoc_output(t_sys_config *ms);
 int				ft_heredoc(t_sys_config *ms);
 
 // FDS
