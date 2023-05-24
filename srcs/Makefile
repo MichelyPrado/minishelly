@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
+#    By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/22 02:28:38 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/24 12:48:26 by msilva-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ ERROR = ❌
 HEADERS							=						./includes/minishell.h
 NAME							=						minishell
 
-CC								=						cc
+CC								=						cc -g
 CCFLAGS							=						-Wall -Wextra -Werror
 RL								=						-l readline
 

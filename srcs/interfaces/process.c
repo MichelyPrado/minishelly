@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/23 15:28:34 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:26:57 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,13 @@ int	exec_program(t_sys_config *mini)
 
 	err = 0;
 	if (mini->exec->flag == BFALSE)
+	{	
 		mini->exec->pid = fork();
+	}
 	if (mini->exec->pid == 0)
 	{
+		*get_is_fork() = 1;
+		signal(SIGQUIT, SIG_DFL);
 		err = cmd_path_valid(mini->tokens->token, mini->path);
 		if (err == -1)
 		{
@@ -111,5 +115,6 @@ void	exec(t_sys_config *mini)
 			set_status_code(WEXITSTATUS(status));
 		i++;
 	}
+	*get_is_fork() = 0;
 	clean_exec(&mini->exec);
 }

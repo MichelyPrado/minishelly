@@ -3,41 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:26:30 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/23 16:03:08 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:55:42 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	sig_handler( int sig, siginfo_t *info, void *context)
+void	sig_handler( int sig)
 {
-	(void)context;
-	if (sig == SIGINT && info->si_pid)
+	printf("CAPTUROU O SINAL: %i\n", sig);
+	if (sig == SIGINT && *get_is_fork() == 0)
+	{
+		g_fd = 0;
+		printf("calma pora: %i\n", g_fd);
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();		
+	}
+	else
 	{
 		write(1, "\n", 1);
-		rl_on_new_line ();
-		rl_replace_line ("", 0);
-		rl_redisplay ();
 	}
 }
 
-void	wait_signal(t_sa *sa)
+void	wait_signal()
 {
-	sa->sa_sigaction = sig_handler;
-	sigaction(SIGINT, sa, NULL);
+	signal(SIGINT, NULL);
+	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
-
-// void	sig_a(int sig)
-// {
-// 	const char	*signal_mini;
-
-// 	signal_mini = 0;
-// 	if (sig == SIGINT)
-// 		signal_mini = "SIGINT";
-// 	else if (sig == SIGQUIT)
-// 		signal_mini = "SIGQUIT";
-// }

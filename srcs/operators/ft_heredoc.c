@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 05:13:56 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/23 15:28:54 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:28:40 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	run_here_doc(t_token *t, char **env)
 	fd = open(HEREDOC_FILE, \
 	O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	file_name = t->token[1];
-	while (1)
+	g_fd = 1;
+	while (g_fd)
 	{
 		read_doc = readline(LABEL_HEREDOC);
 		search_for_symbol(&read_doc, '$', env);

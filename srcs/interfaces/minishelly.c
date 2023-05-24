@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishelly.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/23 15:55:35 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:50:03 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,20 @@ int	ft_valid_flow(t_sys_config *ms)
 int	minishelly(int argc, char **argv, char **environ)
 {
 	int				prop;
-	t_sa			sa;
+	//t_sa			sa;
 	t_sys_config	*mini;
 
 	prop = 0;
-	sa = (t_sa){0};
-	wait_signal(&sa);
+	
 	args_check(argc, argv);
 	*get_fd_bkp_out() = dup(1);
 	*get_fd_bkp_in() = dup(0);
 	mini = start_sys(environ);
+	wait_signal();
 	while (1)
 	{
+		//sa = (t_sa){0};
+		// wait_signal();
 		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
 			continue ;
 		mini->tokens = ft_create_tokens(mini);
@@ -87,7 +89,7 @@ int	minishelly(int argc, char **argv, char **environ)
 			continue ;
 		}
 		prepare_commands(mini);
-		//print_tokens_test(mini);
+		print_tokens_test(mini);
 		exec(mini);
 		add_history(mini->str);
 		ft_token_free(&mini->head);

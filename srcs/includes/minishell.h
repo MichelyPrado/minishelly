@@ -6,7 +6,7 @@
 /*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/23 16:29:05 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:22:16 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,6 +268,7 @@ void			set_num_pipes(int num);
 int				*get_fd(void);
 int				*get_fd_bkp_out(void);
 int				*get_fd_bkp_in(void);
+int				*get_is_fork(void);
 
 //######################################################################//
 //######################### HANDLE INPUT ###############################//
@@ -374,9 +375,8 @@ void			ft_swap_token(t_token **head, t_token **current,
 					t_token **dest);
 
 // Signals
-void			sig_a(int sig);
-void			sig_handler( int sig, siginfo_t *info, void *context);
-void			wait_signal(t_sa *sa);
+void			sig_handler( int sig);
+void			wait_signal();
 int				ft_ctrl_d(t_sys_config *mini);
 int				is_directory(char *path);
 //######################################################################//
@@ -404,4 +404,5 @@ void			ft_print_err(int status_code, char *msg);
 // JOIN FUNCTIONS											(ft_joinfunctions.c)
 
 char			**ft_listjoin(char **ls, char **lsd);
+extern	int		g_fd;
 #endif
