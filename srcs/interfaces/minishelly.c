@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/24 11:21:57 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:42:20 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,18 @@ int	ft_valid_flow(t_sys_config *ms)
 	return (0);
 }
 
+static int	is_token_null(t_sys_config *ms)
+{
+	if (!ms->tokens)
+	{
+		add_history(ms->str);
+		set_status_code(0);
+		clean_no_exec(ms);
+		return (1);
+	}
+	return (0);
+}
+
 int	minishelly(int argc, char **argv, char **environ)
 {
 	int				prop;
@@ -74,17 +86,8 @@ int	minishelly(int argc, char **argv, char **environ)
 		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
 			continue ;
 		mini->tokens = ft_create_tokens(mini);
-		// Criar validador de entradas erradas.
-		//print_tokens_test(mini);
-		if (ft_valid_flow(mini))
+		if (ft_valid_flow(mini) || is_token_null(mini))
 			continue ;
-		if (!mini->tokens)
-		{
-			add_history(mini->str);
-			set_status_code(0);
-			clean_no_exec(mini);
-			continue ;
-		}
 		prepare_commands(mini);
 		exec(mini);
 		add_history(mini->str);
@@ -94,25 +97,25 @@ int	minishelly(int argc, char **argv, char **environ)
 	return (0);
 }
 
-
-void	print_tokens_test(t_sys_config *ms)
-{
-	int		i;
-	t_token *tokens;
-
-	tokens = ms->tokens;
-	while (tokens)
-	{
-		i = 0;
-		ft_printf("Operador: %i\tnum pipes: %i\n[", tokens->type, *get_num_pipes());
-		while (tokens->token[i])
-		{
-			ft_printf("'%s', ", tokens->token[i]);
-			if (i == 15)
-				break ;
-			i++;
-		}
-		printf("]\n");
-		tokens = tokens->next;
-	}
-}
+// void	print_tokens_test(t_sys_config *ms)
+// {
+// 	int		i;
+// 	t_token *tokens;
+//
+// 	tokens = ms->tokens;
+// 	while (tokens)
+// 	{
+// 		i = 0;
+// 		ft_printf("Operador: %i\t", tokens->type);
+//		ft_printf("num pipes: %i\n[", *get_num_pipes());
+// 		while (tokens->token[i])
+// 		{
+// 			ft_printf("'%s', ", tokens->token[i]);
+// 			if (i == 15)
+// 				break ;
+// 			i++;
+// 		}
+// 		printf("]\n");
+// 		tokens = tokens->next;
+// 	}
+// }
