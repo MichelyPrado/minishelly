@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 13:45:46 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/23 18:26:12 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 10:28:42 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	ft_input(t_sys_config *ms)
 
 	func = ms->exec->func;
 	if (access(ms->tokens->token[1], F_OK) == -1)
-		return (exit_input_error(1));
+		return (ft_exit_in_out_error(1));
 	fd = open(ms->tokens->token[1], O_RDONLY);
 	if (fd == -1)
-		return (exit_input_error(ENOENT));
+		return (ft_exit_in_out_error(ENOENT));
 	if (ms->tokens->next)
 	{
 		ms->tokens = ms->tokens->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/22 19:20:43 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/24 11:23:00 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,7 @@
 
 int	add_delimiters(char symbol, int *j, char *dst, char *c)
 {
-	if (*c == '|' && check_next_eq(symbol, c))
-	{
-		*j += insert_char_in_string(dst, *j, *c);
-		*j += insert_char_in_string(dst, *j, *c);
-		return (2);
-	}
-	else if (*c == symbol && check_next_eq(symbol, c) && *c != '|')
+	if (*c == symbol && check_next_eq(symbol, c) && *c != '|')
 	{
 		*j += insert_char_in_string(dst, *j, NO_PRINT);
 		*j += insert_char_in_string(dst, *j, *c);
@@ -95,12 +89,7 @@ int	count_delimiter(char *readline)
 		if (readline[i] == '|' || readline[i] == '<' \
 		|| readline[i] == '>')
 		{
-			if (readline[i] == '|' && check_next_eq('|', &readline[i]))
-			{
-				i++;
-				continue ;
-			}
-			else if (readline[i] == '|')
+			if (readline[i] == '|')
 				*get_num_pipes() += 1;
 			else if (check_next_eq(readline[i], &readline[i]))
 				i++;

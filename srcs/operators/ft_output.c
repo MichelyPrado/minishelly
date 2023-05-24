@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 12:03:37 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/23 18:27:16 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 10:28:26 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_output(t_sys_config *ms)
 	{
 		fd = open(ms->tokens->token[1], O_WRONLY | O_TRUNC);
 		if (fd == -1)
-			return (exit_output_error(1));
+			return (ft_exit_in_out_error(1));
 	}
 	else
 	{
@@ -30,10 +30,10 @@ int	ft_output(t_sys_config *ms)
 		{
 			fd = open(ms->tokens->token[1], O_WRONLY | O_CREAT, 0644);
 			if (fd == -1)
-				return (exit_output_error(1));
+				return (ft_exit_in_out_error(1));
 		}
 		else
-			return (exit_output_error(1));
+			return (ft_exit_in_out_error(1));
 	}
 	if (ms->tokens->next)
 	{

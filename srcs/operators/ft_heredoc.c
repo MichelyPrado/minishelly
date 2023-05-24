@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 05:13:56 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/23 18:32:00 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 10:07:04 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	run_here_doc(t_token *t, char **env)
 	return ;
 }
 
-void	heredoc_output(t_sys_config *ms)
+int	ft_heredoc(t_sys_config *ms)
 {
 	int				fd;
 	int				bkp;
@@ -64,7 +64,8 @@ void	heredoc_output(t_sys_config *ms)
 		if (dup_fd_in(fd) == -1)
 			sys_exit_err(clean_data, ms, NULL);
 		close(fd);
-		func[ms->tokens->type](ms);
+		if (func[ms->tokens->type](ms))
+			return (1);
 		if (ms->exec->pid == 0)
 			close_fds(ms);
 		close(0);
@@ -72,10 +73,5 @@ void	heredoc_output(t_sys_config *ms)
 			sys_exit(clean_data, EBADF, ms);
 	}
 	unlink(HEREDOC_FILE);
-}
-
-int	ft_heredoc(t_sys_config *ms)
-{
-	heredoc_output(ms);
 	return (0);
 }

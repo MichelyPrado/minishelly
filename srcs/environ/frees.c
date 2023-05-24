@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   frees.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:29:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/22 18:23:28 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/24 11:08:57 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	clean_sys(t_sys_config *mini)
 		free(mini->new_parser);
 	if (mini->str)
 		free(mini->str);
+	close_fds(mini);
 	clean_exec(&mini->exec);
 	clean_strlist(&(mini->env));
 	clean_strlist(&(mini->prompt));

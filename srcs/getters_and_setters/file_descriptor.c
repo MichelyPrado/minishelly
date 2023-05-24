@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 22:06:59 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/23 18:27:33 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 10:29:11 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,12 @@ int	exit_input_error(int status_code)
 	return (1);
 }
 
-int	exit_output_error(int status_code)
+int	ft_exit_in_out_error(int status_code)
 {
 	close(1);
+	close(0);
 	dup2(*get_fd_bkp_out(), 1);
+	dup2(*get_fd_bkp_in(), 0);
 	set_status_code(status_code);
 	return (1);
 }

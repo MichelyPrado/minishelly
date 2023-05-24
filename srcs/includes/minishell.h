@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/23 18:15:53 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 10:27:46 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,8 +271,8 @@ int				dup_fd_out(int fd);
 int				*get_fd_bkp_out(void);
 int				*get_fd_bkp_in(void);
 int				dup_fd_in(int fd);
-int				exit_output_error(int status_code);
 int				exit_input_error(int status_code);
+int				ft_exit_in_out_error(int status_code);
 
 //######################################################################//
 //######################### HANDLE INPUT ###############################//

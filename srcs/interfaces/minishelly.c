@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/23 18:39:49 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 11:21:57 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_valid_flow(t_sys_config *ms)
 	t = ms->tokens;
 	if (!t)
 		return (0);
-	if (t->type == OP_PIPE)
+	if (t && (t->type == OP_PIPE || t->token[0][0] == '|'))
 		return (print_flow_msg(ms, "|"));
 	while (t)
 	{
@@ -75,6 +75,7 @@ int	minishelly(int argc, char **argv, char **environ)
 			continue ;
 		mini->tokens = ft_create_tokens(mini);
 		// Criar validador de entradas erradas.
+		//print_tokens_test(mini);
 		if (ft_valid_flow(mini))
 			continue ;
 		if (!mini->tokens)
@@ -85,7 +86,6 @@ int	minishelly(int argc, char **argv, char **environ)
 			continue ;
 		}
 		prepare_commands(mini);
-		//print_tokens_test(mini);
 		exec(mini);
 		add_history(mini->str);
 		ft_token_free(&mini->head);

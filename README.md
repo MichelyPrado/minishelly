@@ -125,9 +125,10 @@ HERE
 - [X] echo hi | cat |cat|cat |cat|cat|cat|cat|cat|cat arrumar
 - [X] echo "hi" | cat | cat | cat | cat | cat | cat | cat && ctrl - d
 - [X] | - testar esse pipe.
-- [ ] ls |& ls
 - [X] ls | > oi
 - [X] echo hi | grep hi > oi
+- [ ] echo "$HOME" | awk -F '/' '{ print $2 }'
+- [ ] ||||||||||||||||||||||||||||||
 # testes:
 ```
 echo hi | grep hi > oi
