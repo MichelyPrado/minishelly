@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:25:16 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/21 18:03:59 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 13:21:04 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,21 @@ int	is_directory(char *path)
 
 	if (stat(path, &sb) == 0 && S_ISDIR(sb.st_mode))
 		return (1);
+	return (0);
+}
+
+static int	run_access_free(char **token, char **tmp)
+{
+	if (run_access(*tmp, X_OK))
+	{
+		if (*token)
+			free(*token);
+		*token = *tmp;
+		return (1);
+	}
+	if (*tmp)
+		free(*tmp);
+	*tmp = NULL;
 	return (0);
 }
 
@@ -68,15 +83,7 @@ int	cmd_path_valid(char **token, char **path)
 	while (path && path[i])
 	{
 		tmp = create_prompt(3, path[i], "/", *token);
-		if (run_access(tmp, X_OK))
-		{
-			if (*token)
-				free(*token);
-			*token = tmp;
-			return (1);
-		}
-		if (tmp)
-			free(tmp);
+		run_access_free(token, &tmp);
 		i++;
 	}
 	if (run_access(*token, X_OK))

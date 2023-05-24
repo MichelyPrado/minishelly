@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:31:23 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/22 19:29:35 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/24 15:44:17 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ void	choice_dup2(t_sys_config *ms)
 		sys_exit(clean_data, EBADF, ms);
 }
 
+static void	run_until(t_sys_config *ms)
+{
+	while (ms->tokens && ms->tokens->type >= OP_OUTPUT \
+	&& ms->tokens->type <= OP_APPEND)
+		ms->tokens = ms->tokens->next;
+}
+
 int	ft_pipe(t_sys_config *mini)
 {
 	t_process_func	*func;
@@ -40,10 +47,11 @@ int	ft_pipe(t_sys_config *mini)
 	if (mini->tokens->next)
 	{
 		mini->exec->pid = fork();
-			mini->tokens = mini->tokens->next;
+		mini->tokens = mini->tokens->next;
 	}
 	if (mini->exec->pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		mini->exec->flag = BTRUE;
 		choice_dup2(mini);
 		close_fds(mini);
@@ -54,11 +62,7 @@ int	ft_pipe(t_sys_config *mini)
 		exit (0);
 	}
 	else
-	{
-		while (mini->tokens && mini->tokens->type >= OP_OUTPUT \
-		&& mini->tokens->type <= OP_APPEND)
-			mini->tokens = mini->tokens->next;
-	}
+		run_until(mini);
 	mini->exec->i++;
 	return (0);
 }
