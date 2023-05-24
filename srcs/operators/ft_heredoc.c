@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 05:13:56 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/23 15:28:54 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/23 18:32:00 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,15 @@ void	heredoc_output(t_sys_config *ms)
 	if (ms->tokens->next)
 	{
 		ms->tokens = ms->tokens->next;
-		dup2(fd, 0);
+		if (dup_fd_in(fd) == -1)
+			sys_exit_err(clean_data, ms, NULL);
 		close(fd);
 		func[ms->tokens->type](ms);
 		if (ms->exec->pid == 0)
 			close_fds(ms);
 		close(0);
-		dup2(bkp, 0);
+		if (dup2(*get_fd_bkp_in(), 0) == -1)
+			sys_exit(clean_data, EBADF, ms);
 	}
 	unlink(HEREDOC_FILE);
 }

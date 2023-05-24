@@ -127,13 +127,13 @@ HERE
 - [X] | - testar esse pipe.
 - [ ] ls |& ls
 - [X] ls | > oi
-- [ ] echo hi | grep hi > oi
+- [X] echo hi | grep hi > oi
 # testes:
 ```
 echo hi | grep hi > oi
 ```close(0);
 
 - [X] sinais para processos
-- [ ] terminar heredoc
+- [X] terminar heredoc
 - [X] historico para comandos errados.
 - [ ] exit code
