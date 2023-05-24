@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sys_config.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:44:07 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/22 20:36:47 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:00:23 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static void	init_more(t_sys_config *ms);
 
 char	*cat_user(char **env)
 {
@@ -39,16 +41,7 @@ t_sys_config	*start_sys(char **environ)
 		clean_strlist(&mini->prompt);
 		normal_exit(free, ENOMEM, mini);
 	}
-	mini->prompt[0] = create_prompt(6, L_GREEN, SHELLYNAME, \
-									L_BLUE, cat_user(mini->env), L_WHITE, PROP);
-	mini->prompt[1] = create_prompt(4, L_GREEN, PROPQUOTE, L_WHITE, PROP);
-	mini->prompt[2] = NULL;
-	mini->new_parser = NULL;
-	mini->head = NULL;
-	mini->tokens = &((t_token){0});
-	mini->nlen_parser = 0;
-	mini->path = split_paths(mini->env);
-	mini->str = NULL;
+	init_more(mini);
 	return (mini);
 }
 
@@ -66,4 +59,18 @@ void	update_unbound_vars(char *key, t_sys_config *mini)
 		clean_strlist(&mini->path);
 		mini->path = split_paths(mini->env);
 	}
+}
+
+static void	init_more(t_sys_config *ms)
+{
+	ms->prompt[0] = create_prompt(6, L_GREEN, SHELLYNAME, L_BLUE, \
+										cat_user(ms->env), L_WHITE, PROP);
+	ms->prompt[1] = create_prompt(4, L_GREEN, PROPQUOTE, L_WHITE, PROP);
+	ms->prompt[2] = NULL;
+	ms->new_parser = NULL;
+	ms->head = NULL;
+	ms->tokens = &((t_token){0});
+	ms->nlen_parser = 0;
+	ms->path = split_paths(ms->env);
+	ms->str = NULL;
 }
