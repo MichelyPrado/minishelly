@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/25 16:58:28 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:41:25 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,10 @@ void	exec(t_sys_config *mini)
 		mini->tokens = mini->tokens->next;
 	}
 	finish_process(mini, err);
+}
+
+void	clean_end_cmd(t_sys_config *ms)
+{
+	clean_no_exec(ms);
+	clean_exec(&ms->exec);
 }

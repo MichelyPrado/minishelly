@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:29:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/25 17:48:13 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:40:39 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,4 @@ void	clean_no_exec(t_sys_config *ms)
 	if (ms->str)
 		free(ms->str);
 	ms->str = NULL;
-}
-
-void	clean_end_cmd(t_sys_config *ms)
-{
-	clean_no_exec(ms);
-	clean_exec(&ms->exec);
 }

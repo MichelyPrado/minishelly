@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/25 19:34:57 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:42:25 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,9 +218,9 @@ int				b_unset(t_sys_config *mini);
 //######################################################################//
 //############################ ENVIRON #################################//
 // CLOSE FDS
-void			close_files_fds();
-void			close_bkp_terms_fds();
-void			close_terms_fds();
+void			close_files_fds(void);
+void			close_bkp_terms_fds(void);
+void			close_terms_fds(void);
 void			close_pipes_fds(t_sys_config *mini);
 
 // ENVIRON UTILS											(envp_utils)
