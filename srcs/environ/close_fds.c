@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 21:26:56 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/25 11:02:36 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 13:13:53 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,15 @@ void	close_files_fds()
 	close(*get_fd_out());
 }
 
-void	close_terms_fds()
+void	close_bkp_terms_fds()
 {
 	close(*get_fd_bkp_in());
 	close(*get_fd_bkp_out());
+}
+
+void	close_terms_fds()
+{
+	close_bkp_terms_fds();
 	close(0);
 	close(1);
 }

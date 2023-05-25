@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:07:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/24 16:07:56 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 15:26:27 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,3 +51,5 @@ int	ft_exit_in_out_error(int status_code)
 	set_status_code(status_code);
 	return (1);
 }
+
+

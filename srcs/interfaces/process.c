@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/24 21:30:56 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:54:26 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	finish_process(t_sys_config *ms, int err)
 	i = 0;
 	status = 0;
 	if (err)
-		ft_print_err(*get_status_code(), " vovozona\n");
+		ft_print_perr(*get_status_code(), NULL);
 	close_pipes_fds(ms);
 	while (i < ms->exec->i)
 	{

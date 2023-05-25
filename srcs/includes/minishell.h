@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/25 11:13:57 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:23:25 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,7 @@ int				b_unset(t_sys_config *mini);
 //############################ ENVIRON #################################//
 // CLOSE FDS
 void			close_files_fds();
+void			close_bkp_terms_fds();
 void			close_terms_fds();
 void			close_pipes_fds(t_sys_config *mini);
 
@@ -410,6 +411,7 @@ int				check_is_a_valid_var(char *var);
 // PRINT MESSAGES FUNCTIONS									(ft_print_msg)
 
 void			ft_print_err(int status_code, char *msg);
+void			ft_print_perr(int status_code, char *msg);
 // JOIN FUNCTIONS											(ft_joinfunctions.c)
 
 char			**ft_listjoin(char **ls, char **lsd);

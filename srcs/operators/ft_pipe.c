@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:31:23 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/25 12:24:15 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:24:57 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,8 @@ int	ft_pipe(t_sys_config *mini)
 		choice_dup2(mini);
 		close_pipes_fds(mini);
 		if (func[mini->tokens->type](mini))
-			exit(*get_status_code());
-		clean_sys(mini);
-		set_status_code(0);
+			sys_exit_err(clean_for_exec, mini, NULL);
+		clean_for_exec(mini);
 		exit (0);
 	}
 	else

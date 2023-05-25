@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/24 21:32:09 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/25 15:48:55 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,8 +84,9 @@ all:							title $(LIBFT) $(NAME) complete
 
 va:
 	valgrind -q --leak-check=full --show-leak-kinds=all --trace-children=yes \
-                        --track-fds=yes --track-origins=yes --suppressions=readline.supp\
-                        --trace-children-skip='/bin/,/sbin/'  ./minishell
+    --suppressions=ignorelibs.txt --track-fds=yes --track-origins=yes \
+    --trace-children-skip='*/bin/*,*/sbin/' \
+    ./minishell
 
 v: all
 	valgrind --trace-children=yes --track-fds=yes --track-origins=yes --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --quiet ./minishell

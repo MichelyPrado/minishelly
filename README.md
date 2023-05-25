@@ -128,7 +128,13 @@ HERE
 - [X] ls | > oi
 - [X] echo hi | grep hi > oi
 - [ ] echo "$HOME" | awk -F '/' '{ print $2 }'
-- [ ] ||||||||||||||||||||||||||||||
+- [X] ||||||||||||||||||||||||||||||
+- [X] env | sort | grep -v SHLVL | grep -v ^_ 
+- [X] export | sort | grep -v SHLVL | grep -v "declare -x _" | grep -v "PS.="
+- [ ] cat minishell.h | env | grep GHOST
+> corrigir leaks e open fds.
+
+- [ ] 
 # testes:
 ```
 echo hi | grep hi > oi

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 13:49:26 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/24 21:47:20 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:27:03 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,12 @@ int	exec_program(t_sys_config *mini)
 			set_status_code(126);
 			sys_exit_err(clean_for_exec, mini, " Is a directory");
 		}
+		close_bkp_terms_fds();
 		if (execve(*mini->tokens->token, mini->tokens->token, mini->env) == -1)
 		{
 			set_status_code(127);
 			sys_exit_err(clean_for_exec, mini, " command not found");
 		}
-		clean_for_exec(mini);
-		set_status_code(0);
-		exit (0);
 	}
 	mini->exec->i++;
 	return (0);

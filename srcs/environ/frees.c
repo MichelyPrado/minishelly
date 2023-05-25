@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:29:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/25 12:23:32 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 15:12:10 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	clean_for_exec(t_sys_config *mini)
 	{
 		rl_clear_history();
 		close_files_fds();
+		close_terms_fds();
 		close_pipes_fds(mini);
 		if (mini->new_parser)
 			free(mini->new_parser);
@@ -50,6 +51,8 @@ void	clean_for_exec(t_sys_config *mini)
 		ft_token_free(&mini->head);
 		mini->tokens = NULL;
 		clean_exec(&mini->exec);
+		if (mini)
+			free(mini);
 	}
 }
 
