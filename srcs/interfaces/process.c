@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/24 21:30:56 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:19:42 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,16 @@ void	exec(t_sys_config *mini)
 	while (mini->tokens)
 	{
 		if (mini->tokens->type == OP_PIPE)
+		{
 			has_heredoc(mini->tokens->next, mini->env);
+			//signal(SIGINT, sig_handler);
+
+		}
 		else
+		{
 			has_heredoc(mini->tokens, mini->env);
+			//signal(SIGINT, sig_handler);
+		}
 		err = func[mini->tokens->type](mini);
 		if (err || !mini->tokens)
 			break ;

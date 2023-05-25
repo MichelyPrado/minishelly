@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 05:13:56 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/24 21:55:58 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:44:43 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,33 +41,46 @@ int	has_heredoc(t_token *t, char **env)
 	return (has);
 }
 
+
 void	run_here_doc(t_token *t, char **env)
 {
+	int		status;
+	int		pid;
 	int		fd;
 	char	*read_doc;
 
-	read_doc = NULL;
-	fd = open(HEREDOC_FILE, \
-	O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	g_fd = 1;
-	while (g_fd)
+	pid = fork();
+	if (pid < 0)
 	{
-		read_doc = readline(LABEL_HEREDOC);
-		search_for_symbol(&read_doc, '$', env);
-		if (!read_doc)
-		{
-			printf(MSG_HEREDOC, t->token[1]);
-			return ;
-		}
-		if (!is_the_label(&read_doc, t->token[1], &fd))
-			continue ;
-		close(fd);
-		break ;
-	}
-	if (g_fd)
 		return ;
+	}
+	if (pid == 0)
+	{
+		signal(SIGINT, signal_break_heredoc);
+		read_doc = NULL;
+		fd = open(HEREDOC_FILE, \
+			O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		g_fd = 1;
+		while (g_fd != 0)
+		{
+			read_doc = readline(LABEL_HEREDOC);
+			search_for_symbol(&read_doc, '$', env);
+			if (!read_doc)
+			{
+				printf(MSG_HEREDOC, t->token[1]);
+				return ;
+			}
+			if (!is_the_label(&read_doc, t->token[1], &fd))
+				continue ;
+			close(fd);
+			break ;
+		}
+	}
+    waitpid(pid, &status, 0);
+    WIFEXITED(status);
 	return ;
-}
+	}
+
 
 int	ft_heredoc(t_sys_config *ms)
 {

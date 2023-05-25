@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
+/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/25 11:13:57 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:54:53 by msilva-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -388,6 +388,8 @@ void			sig_handler(int sig);
 void			wait_signal(void);
 int				ft_ctrl_d(t_sys_config *mini);
 int				is_directory(char *path);
+void   			signal_break_heredoc(int signal);
+
 //######################################################################//
 //############################# TOOLS ##################################//
 // LEN FUNCTIONS											(ft_lenfunctions)
