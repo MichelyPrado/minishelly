@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/22 19:20:43 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:14:57 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,7 @@
 
 int	add_delimiters(char symbol, int *j, char *dst, char *c)
 {
-	if (*c == '|' && check_next_eq(symbol, c))
-	{
-		*j += insert_char_in_string(dst, *j, *c);
-		*j += insert_char_in_string(dst, *j, *c);
-		return (2);
-	}
-	else if (*c == symbol && check_next_eq(symbol, c) && *c != '|')
+	if (*c == symbol && check_next_eq(symbol, c) && *c != '|')
 	{
 		*j += insert_char_in_string(dst, *j, NO_PRINT);
 		*j += insert_char_in_string(dst, *j, *c);
@@ -38,21 +32,28 @@ int	add_delimiters(char symbol, int *j, char *dst, char *c)
 	return (0);
 }
 
+t_err	check_readline_aux(char *src, t_sys_config *ms)
+{
+	if (src == NULL)
+		return (ERR_NOLINE);
+	ms->nlen_parser = count_delimiter(src);
+	if (ms->nlen_parser == -1)
+		return (ERR_QUOTES);
+	ms->new_parser = ft_calloc(sizeof(char), ms->nlen_parser + 1);
+	return (0);
+}
+
 t_err	check_readline(char *src, t_sys_config *mini)
 {
-	int		jump;
 	int		i;
 	int		j;
+	int		jump;
 
 	i = 0;
 	j = 0;
-	jump = 0;
-	if (src == NULL)
-		return (ERR_NOLINE);
-	mini->nlen_parser = count_delimiter(src);
-	if (mini->nlen_parser == -1)
-		return (ERR_QUOTES);
-	mini->new_parser = ft_calloc(sizeof(char), mini->nlen_parser + 1);
+	jump = check_readline_aux(src, mini);
+	if (jump)
+		return (jump);
 	while (src[i])
 	{
 		jump = 0;
@@ -95,12 +96,7 @@ int	count_delimiter(char *readline)
 		if (readline[i] == '|' || readline[i] == '<' \
 		|| readline[i] == '>')
 		{
-			if (readline[i] == '|' && check_next_eq('|', &readline[i]))
-			{
-				i++;
-				continue ;
-			}
-			else if (readline[i] == '|')
+			if (readline[i] == '|')
 				*get_num_pipes() += 1;
 			else if (check_next_eq(readline[i], &readline[i]))
 				i++;

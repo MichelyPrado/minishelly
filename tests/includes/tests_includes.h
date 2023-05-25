@@ -23,4 +23,6 @@
 # define ECHO_M     ft_token_new(ft_split("echo\ataca lhe pau no carrinho marcos!", '\a'), OP_ECHO)
 # define CMD_M(CMD, C, OP)      ft_token_new(ft_split(CMD, C), OP)
 
+int g_fd;
+
 #endif

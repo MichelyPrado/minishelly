@@ -1,38 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   close_fds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 18:21:24 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/24 16:43:28 by dapaulin         ###   ########.fr       */
+/*   Created: 2023/05/24 21:26:56 by dapaulin          #+#    #+#             */
+/*   Updated: 2023/05/25 11:02:36 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_echo(t_sys_config *mini)
+void	close_files_fds()
+{
+	close(*get_fd_in());
+	close(*get_fd_out());
+}
+
+void	close_terms_fds()
+{
+	close(*get_fd_bkp_in());
+	close(*get_fd_bkp_out());
+	close(0);
+	close(1);
+}
+
+void	close_pipes_fds(t_sys_config *mini)
 {
 	int	i;
-	int	new_line;
 
-	i = 1;
-	new_line = 1;
-	if (mini->tokens->token[1])
+	i = 0;
+	while (mini->exec && mini->exec->fd && i < *get_num_pipes())
 	{
-		if (ft_strcmp(mini->tokens->token[i], "-n") == 0 && i++)
-			new_line = 0;
-		while (mini->tokens->token[i] != NULL)
-		{
-			ft_printf("%s", mini->tokens->token[i]);
-			if (mini->tokens->token[i + 1])
-				ft_printf(" ");
-			i++;
-		}
+		close(mini->exec->fd[i][0]);
+		close(mini->exec->fd[i][1]);
+		i++;
 	}
-	if (new_line == 1)
-		ft_printf("\n");
-	*get_status_code() = 0;
-	return (0);
 }

@@ -39,7 +39,7 @@ YOUR_FILES								=				$(wildcard $(FILES)$(DIR_BUILTINS)*.c)						\
 														$(wildcard $(FILES)$(DIR_OPERATORS)*.c)						\
 														$(addprefix $(FILES)$(DIR_INTERFACES),						\
 														process.c sys_config.c wait_input.c 						\
-														process_init.c)
+														process_init.c dup_functions.c)
 OBJS_FILES								=				$(YOUR_FILES:%.c=%.o)										\
 														$(addprefix $(FILES)$(DIR_LIBFT), libft.a)					\
 														# Add your files with the function you can test

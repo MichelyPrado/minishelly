@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/23 15:55:35 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:16:57 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_valid_flow(t_sys_config *ms)
 	t = ms->tokens;
 	if (!t)
 		return (0);
-	if (t->type == OP_PIPE)
+	if (t && (t->type == OP_PIPE || t->token[0][0] == '|'))
 		return (print_flow_msg(ms, "|"));
 	while (t)
 	{
@@ -58,34 +58,34 @@ int	ft_valid_flow(t_sys_config *ms)
 	return (0);
 }
 
+static int	is_token_null(t_sys_config *ms)
+{
+	if (!ms->tokens)
+	{
+		add_history(ms->str);
+		set_status_code(0);
+		clean_no_exec(ms);
+		return (1);
+	}
+	return (0);
+}
+
 int	minishelly(int argc, char **argv, char **environ)
 {
 	int				prop;
-	t_sa			sa;
 	t_sys_config	*mini;
 
 	prop = 0;
-	sa = (t_sa){0};
-	wait_signal(&sa);
 	args_check(argc, argv);
-	*get_fd_bkp_out() = dup(1);
-	*get_fd_bkp_in() = dup(0);
+	wait_signal();
 	mini = start_sys(environ);
 	while (1)
 	{
 		if (wait_input(mini, &prop, readline(mini->prompt[prop])))
 			continue ;
 		mini->tokens = ft_create_tokens(mini);
-		// Criar validador de entradas erradas.
-		if (ft_valid_flow(mini))
+		if (ft_valid_flow(mini) || is_token_null(mini))
 			continue ;
-		if (!mini->tokens)
-		{
-			add_history(mini->str);
-			set_status_code(0);
-			clean_no_exec(mini);
-			continue ;
-		}
 		prepare_commands(mini);
 		//print_tokens_test(mini);
 		exec(mini);
@@ -96,7 +96,6 @@ int	minishelly(int argc, char **argv, char **environ)
 	return (0);
 }
 
-
 void	print_tokens_test(t_sys_config *ms)
 {
 	int		i;
@@ -106,7 +105,8 @@ void	print_tokens_test(t_sys_config *ms)
 	while (tokens)
 	{
 		i = 0;
-		ft_printf("Operador: %i\tnum pipes: %i\n[", tokens->type, *get_num_pipes());
+		ft_printf("Operador: %i\t", tokens->type);
+		ft_printf("num pipes: %i\n[", *get_num_pipes());
 		while (tokens->token[i])
 		{
 			ft_printf("'%s', ", tokens->token[i]);

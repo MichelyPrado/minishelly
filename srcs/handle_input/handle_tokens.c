@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 21:16:57 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/22 18:17:07 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:20:33 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,35 +56,6 @@ char	*ft_token_repair(char *token)
 	return (token);
 }
 
-char	*remove_quotes(char *str)
-{
-	int		i;
-	int		j;
-	int		size;
-	char	*new;
-
-	i = 0;
-	size = 0;
-	while (str[i])
-	{
-		if (str[i] != -42 && str[i] != -21)
-			size++;
-		i++;
-	}
-	new = ft_calloc(sizeof(char), size + 1);
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] != -42 && str[i] != -21)
-			new[j++] = str[i];
-		i++;
-	}
-	if (str)
-		free(str);
-	return (new);
-}
-
 t_token	*ft_create_tokens(t_sys_config *ms)
 {
 	int		i;
@@ -98,12 +69,8 @@ t_token	*ft_create_tokens(t_sys_config *ms)
 	{
 		pieces[i] = ft_token_repair(pieces[i]);
 		search_for_symbol(&pieces[i], '$', ms->env);
-		// verificar se essa linha não vai dar erro.
 		if (!ft_strlen(pieces[i]))
-		{
-			clean_strlist(&pieces);
-			return (NULL);
-		}
+			return (clean_strlist(&pieces), NULL);
 		pieces[i] = remove_quotes(pieces[i]);
 		token = ft_split(pieces[i], NO_PRINT);
 		op = tag_token(token[0]);

@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/22 02:28:38 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/24 21:32:09 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ BUILTINS						=						$(addprefix $(PATH_BUILTINS), \
 PATH_ENVIRON					=						./environ/
 ENVIRON							=						$(addprefix $(PATH_ENVIRON), \
 														envp_utils.c handle_env.c \
-														handle_path.c frees.c exit_functions.c)
+														handle_path.c frees.c exit_functions.c	\
+														close_fds.c)
 PATH_HANDLE						=						./handle_input/
 HANDLE							=						$(addprefix $(PATH_HANDLE), \
 														ft_tokens.c handle_tokens.c \
@@ -61,11 +62,11 @@ HANDLE							=						$(addprefix $(PATH_HANDLE), \
 PATH_INTERFACES					=						./interfaces/
 INTERFACES						=						$(addprefix $(PATH_INTERFACES), \
 														process.c sys_config.c wait_input.c \
-														minishelly.c process_init.c)
+														minishelly.c process_init.c dup_functions.c)
 PATH_OPERATORS					=						./operators/
 OPERATORS						=						$(addprefix $(PATH_OPERATORS), \
 														ft_pipe.c ft_output.c ft_input.c \
-														ft_append.c ft_heredoc.c)
+														ft_append.c ft_heredoc.c ft_cmd_exec.c)
 SRC								=						minishell.c			\
 														$(BUILTINS)			\
 														$(ENVIRON)			\
@@ -81,8 +82,13 @@ OBJ								=						$(SRC:%.c=%.o)
 
 all:							title $(LIBFT) $(NAME) complete
 
+va:
+	valgrind -q --leak-check=full --show-leak-kinds=all --trace-children=yes \
+                        --track-fds=yes --track-origins=yes --suppressions=readline.supp\
+                        --trace-children-skip='/bin/,/sbin/'  ./minishell
+
 v: all
-	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --quiet ./minishell
+	valgrind --trace-children=yes --track-fds=yes --track-origins=yes --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --quiet ./minishell
 
 $(OBJ): %.o: %.c $(HEADERS) 
 	@$(CC)	 -g3 -fPIE $(CCFLAGS) -c $< -o $@

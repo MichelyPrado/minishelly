@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 12:06:36 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/20 17:08:49 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 16:20:40 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,33 @@ void	correct_puts(t_token *md, t_token *end)
 			ft_node_free(&end);
 		}
 	}
+}
+
+char	*remove_quotes(char *str)
+{
+	int		i;
+	int		j;
+	int		size;
+	char	*new;
+
+	i = 0;
+	size = 0;
+	while (str[i])
+	{
+		if (str[i] != -42 && str[i] != -21)
+			size++;
+		i++;
+	}
+	new = ft_calloc(sizeof(char), size + 1);
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] != -42 && str[i] != -21)
+			new[j++] = str[i];
+		i++;
+	}
+	if (str)
+		free(str);
+	return (new);
 }
