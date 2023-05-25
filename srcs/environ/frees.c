@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:29:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/24 15:46:42 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:23:32 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 void	clean_sys(t_sys_config *mini)
 {
+	rl_clear_history();
+	close_files_fds();
+	close_terms_fds();
+	close_pipes_fds(mini);
 	if (mini->new_parser)
 		free(mini->new_parser);
 	if (mini->str)
 		free(mini->str);
-	close_fds(mini);
 	clean_exec(&mini->exec);
 	clean_strlist(&(mini->env));
 	clean_strlist(&(mini->prompt));
@@ -26,6 +29,45 @@ void	clean_sys(t_sys_config *mini)
 	clean_strlist(&(mini->path));
 	if (mini)
 		free(mini);
+}
+
+void	clean_for_exec(t_sys_config *mini)
+{
+	if (mini)
+	{
+		rl_clear_history();
+		close_files_fds();
+		close_pipes_fds(mini);
+		if (mini->new_parser)
+			free(mini->new_parser);
+		mini->new_parser = NULL;
+		if (mini->str)
+			free(mini->str);
+		mini->str = NULL;
+		clean_strlist(&mini->prompt);
+		clean_strlist(&mini->env);
+		clean_strlist(&mini->path);
+		ft_token_free(&mini->head);
+		mini->tokens = NULL;
+		clean_exec(&mini->exec);
+	}
+}
+
+void	clean_data(t_sys_config *mini)
+{
+	if (mini)
+	{
+		close_terms_fds();
+		clean_strlist(&mini->prompt);
+		clean_strlist(&mini->env);
+		clean_strlist(&mini->path);
+		if (mini->new_parser)
+			free(mini->new_parser);
+		if (mini->str)
+			free(mini->str);
+		ft_token_free(&mini->tokens);
+		clean_exec(&mini->exec);
+	}
 }
 
 void	clean_exec(t_exec **exec)
@@ -44,22 +86,6 @@ void	clean_exec(t_exec **exec)
 		free((*exec)->func);
 		free((*exec));
 		(*exec) = NULL;
-	}
-}
-
-void	clean_data(t_sys_config *mini)
-{
-	if (mini)
-	{
-		clean_strlist(&mini->prompt);
-		clean_strlist(&mini->env);
-		clean_strlist(&mini->path);
-		if (mini->new_parser)
-			free(mini->new_parser);
-		if (mini->str)
-			free(mini->str);
-		ft_token_free(&mini->tokens);
-		clean_exec(&mini->exec);
 	}
 }
 

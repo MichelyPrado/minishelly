@@ -15,3 +15,29 @@
    fun:add_history
    ...
 }
+{
+   <Readline>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:xmalloc
+   fun:xcalloc
+   fun:rl_add_undo
+   fun:rl_insert_text
+   fun:_rl_insert_char
+   fun:rl_insert
+   fun:_rl_dispatch_subseq
+   fun:readline_internal_char
+   fun:readline
+   fun:create_initial_state
+   ...
+}
+{
+   <AddHistory>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:xmalloc
+   fun:add_history
+   ...
+}

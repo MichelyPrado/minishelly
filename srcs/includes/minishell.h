@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/24 16:22:01 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 11:13:57 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,6 @@ typedef struct s_token
 {
 	char			**token;
 	t_types			type;
-
 	struct s_token	*next;
 }	t_token;
 
@@ -186,8 +185,7 @@ typedef struct s_sys_config
 }	t_sys_config;
 
 typedef int					(*t_process_func)(t_sys_config *);
-
-typedef struct sigaction	t_sa;
+extern int					g_fd;
 
 //############################# BUILTINS ##############################//
 // BUILTIN CD												(cd)
@@ -219,6 +217,11 @@ int				ft_pwd(t_sys_config *mini);
 int				b_unset(t_sys_config *mini);
 //######################################################################//
 //############################ ENVIRON #################################//
+// CLOSE FDS
+void			close_files_fds();
+void			close_terms_fds();
+void			close_pipes_fds(t_sys_config *mini);
+
 // ENVIRON UTILS											(envp_utils)
 
 size_t			keylen(char *var_env);
@@ -237,6 +240,7 @@ void			sys_exit_err(void (*f)(t_sys_config *),
 void			clean_exec(t_exec **exec);
 void			clean_data(t_sys_config *mini);
 void			clean_sys(t_sys_config *mini);
+void			clean_for_exec(t_sys_config *mini);
 void			clean_no_exec(t_sys_config *ms);
 void			clean_end_cmd(t_sys_config *ms);
 // CRUD ENVIRON												(handle_env)
@@ -259,7 +263,7 @@ int				*get_status_code(void);
 void			set_status_code(int status_code);
 
 // AMOUNT DE PIPES											(num_pipes)
-
+int				*get_is_fork(void);
 int				*get_num_pipes(void);
 void			set_num_pipes(int num);
 
@@ -380,9 +384,8 @@ void			ft_swap_token(t_token **head, t_token **current,
 					t_token **dest);
 
 // Signals
-void			sig_a(int sig);
-void			sig_handler( int sig, siginfo_t *info, void *context);
-void			wait_signal(t_sa *sa);
+void			sig_handler(int sig);
+void			wait_signal(void);
 int				ft_ctrl_d(t_sys_config *mini);
 int				is_directory(char *path);
 //######################################################################//

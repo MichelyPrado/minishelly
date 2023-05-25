@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   num_pipes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:49:53 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/22 15:35:44 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:55:44 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	*get_is_fork(void)
+{
+	static int	num;
+
+	return (&num);
+}
 
 int	*get_num_pipes(void)
 {

@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/24 16:08:41 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/24 21:32:09 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ BUILTINS						=						$(addprefix $(PATH_BUILTINS), \
 PATH_ENVIRON					=						./environ/
 ENVIRON							=						$(addprefix $(PATH_ENVIRON), \
 														envp_utils.c handle_env.c \
-														handle_path.c frees.c exit_functions.c)
+														handle_path.c frees.c exit_functions.c	\
+														close_fds.c)
 PATH_HANDLE						=						./handle_input/
 HANDLE							=						$(addprefix $(PATH_HANDLE), \
 														ft_tokens.c handle_tokens.c \
@@ -81,8 +82,13 @@ OBJ								=						$(SRC:%.c=%.o)
 
 all:							title $(LIBFT) $(NAME) complete
 
+va:
+	valgrind -q --leak-check=full --show-leak-kinds=all --trace-children=yes \
+                        --track-fds=yes --track-origins=yes --suppressions=readline.supp\
+                        --trace-children-skip='/bin/,/sbin/'  ./minishell
+
 v: all
-	valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --quiet ./minishell
+	valgrind --trace-children=yes --track-fds=yes --track-origins=yes --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --quiet ./minishell
 
 $(OBJ): %.o: %.c $(HEADERS) 
 	@$(CC)	 -g3 -fPIE $(CCFLAGS) -c $< -o $@

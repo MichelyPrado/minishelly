@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 13:19:42 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/24 13:57:40 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 11:01:29 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	turn_void(t_sys_config *mini)
 {
-	printf("%i\n", mini->tokens->type);
 	return (0);
+	(void)mini;
 }
 
 t_exec	*init_exec(void)

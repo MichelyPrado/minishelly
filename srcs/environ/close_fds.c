@@ -1,36 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   close_fds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/28 12:26:30 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/24 19:19:22 by dapaulin         ###   ########.fr       */
+/*   Created: 2023/05/24 21:26:56 by dapaulin          #+#    #+#             */
+/*   Updated: 2023/05/25 11:02:36 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	sig_handler( int sig)
+void	close_files_fds()
 {
-	printf("CAPTUROU O SINAL: %i\n", sig);
-	if (sig == SIGINT && *get_is_fork() == 0)
-	{
-		g_fd = 0;
-		printf("calma pora: %i\n", g_fd);
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-	else
-		write(1, "\n", 1);
+	close(*get_fd_in());
+	close(*get_fd_out());
 }
 
-void	wait_signal(void)
+void	close_terms_fds()
 {
-	signal(SIGINT, NULL);
-	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, SIG_IGN);
+	close(*get_fd_bkp_in());
+	close(*get_fd_bkp_out());
+	close(0);
+	close(1);
+}
+
+void	close_pipes_fds(t_sys_config *mini)
+{
+	int	i;
+
+	i = 0;
+	while (mini->exec && mini->exec->fd && i < *get_num_pipes())
+	{
+		close(mini->exec->fd[i][0]);
+		close(mini->exec->fd[i][1]);
+		i++;
+	}
 }

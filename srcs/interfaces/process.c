@@ -6,24 +6,11 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/24 16:09:03 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 21:30:56 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	close_fds(t_sys_config *mini)
-{
-	int	i;
-
-	i = 0;
-	while (mini->exec && mini->exec->fd && i < *get_num_pipes())
-	{
-		close(mini->exec->fd[i][0]);
-		close(mini->exec->fd[i][1]);
-		i++;
-	}
-}
 
 static void	finish_process(t_sys_config *ms, int err)
 {
@@ -34,7 +21,7 @@ static void	finish_process(t_sys_config *ms, int err)
 	status = 0;
 	if (err)
 		ft_print_err(*get_status_code(), " vovozona\n");
-	close_fds(ms);
+	close_pipes_fds(ms);
 	while (i < ms->exec->i)
 	{
 		waitpid(-1, &status, 0);
@@ -42,6 +29,7 @@ static void	finish_process(t_sys_config *ms, int err)
 			set_status_code(WEXITSTATUS(status));
 		i++;
 	}
+	*get_is_fork() = 0;
 	clean_exec(&ms->exec);
 }
 

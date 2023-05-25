@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_operators_aux.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msilva-p <msilva-p@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 23:14:37 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/22 15:10:02 by msilva-p         ###   ########.fr       */
+/*   Updated: 2023/05/25 11:48:27 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,10 @@ int	realloc_strings(t_token *back, t_token *end)
 		if (back && back->type >= OP_CMD && back->type <= OP_ECHO)
 		{
 			tmp = ft_listjoin(back->token, end->token);
-			free(end->token);
+			if (end->token)
+				free(end->token);
+			if (back->token)
+				free(back->token);
 			end->token = ft_calloc(sizeof(char *), 0 + 1);
 			back->token = tmp;
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 23:21:09 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/24 16:42:20 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 12:16:57 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,11 @@ static int	is_token_null(t_sys_config *ms)
 int	minishelly(int argc, char **argv, char **environ)
 {
 	int				prop;
-	t_sa			sa;
 	t_sys_config	*mini;
 
 	prop = 0;
-	sa = (t_sa){0};
-	wait_signal(&sa);
 	args_check(argc, argv);
+	wait_signal();
 	mini = start_sys(environ);
 	while (1)
 	{
@@ -89,6 +87,7 @@ int	minishelly(int argc, char **argv, char **environ)
 		if (ft_valid_flow(mini) || is_token_null(mini))
 			continue ;
 		prepare_commands(mini);
+		//print_tokens_test(mini);
 		exec(mini);
 		add_history(mini->str);
 		ft_token_free(&mini->head);
@@ -97,25 +96,25 @@ int	minishelly(int argc, char **argv, char **environ)
 	return (0);
 }
 
-// void	print_tokens_test(t_sys_config *ms)
-// {
-// 	int		i;
-// 	t_token *tokens;
-//
-// 	tokens = ms->tokens;
-// 	while (tokens)
-// 	{
-// 		i = 0;
-// 		ft_printf("Operador: %i\t", tokens->type);
-//		ft_printf("num pipes: %i\n[", *get_num_pipes());
-// 		while (tokens->token[i])
-// 		{
-// 			ft_printf("'%s', ", tokens->token[i]);
-// 			if (i == 15)
-// 				break ;
-// 			i++;
-// 		}
-// 		printf("]\n");
-// 		tokens = tokens->next;
-// 	}
-// }
+void	print_tokens_test(t_sys_config *ms)
+{
+	int		i;
+	t_token *tokens;
+
+	tokens = ms->tokens;
+	while (tokens)
+	{
+		i = 0;
+		ft_printf("Operador: %i\t", tokens->type);
+		ft_printf("num pipes: %i\n[", *get_num_pipes());
+		while (tokens->token[i])
+		{
+			ft_printf("'%s', ", tokens->token[i]);
+			if (i == 15)
+				break ;
+			i++;
+		}
+		printf("]\n");
+		tokens = tokens->next;
+	}
+}

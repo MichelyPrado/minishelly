@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 13:45:46 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/24 10:28:42 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/24 21:56:11 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ int	ft_input(t_sys_config *ms)
 	{
 		ms->tokens = ms->tokens->next;
 		if (dup_fd_in(fd) == -1)
-			sys_exit_err(clean_data, ms, NULL);
+			sys_exit_err(clean_for_exec, ms, NULL);
 		close(fd);
 		if (func[ms->tokens->type](ms))
 			return (1);
 		close(0);
 		if (dup2(*get_fd_bkp_in(), 0) == -1)
-			sys_exit(clean_data, EBADF, ms);
+			sys_exit(clean_for_exec, EBADF, ms);
 	}
 	set_status_code(0);
 	return (0);
