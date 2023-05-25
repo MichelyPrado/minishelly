@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:29:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/25 15:12:10 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 17:48:13 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void	clean_exec(t_exec **exec)
 	{
 		if ((*exec)->fd)
 		{
+			if ((*exec)->pid)
+				free((*exec)->pid);
 			while (i < *get_num_pipes())
 				free((*exec)->fd[i++]);
 			free((*exec)->fd);

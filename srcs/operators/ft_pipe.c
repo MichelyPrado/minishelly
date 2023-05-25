@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:31:23 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/25 16:24:57 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:59:15 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ int	ft_pipe(t_sys_config *mini)
 	func = (t_process_func *) mini->exec->func;
 	if (mini->tokens->next)
 	{
-		mini->exec->pid = fork();
+		mini->exec->pid[mini->exec->i] = fork();
 		mini->tokens = mini->tokens->next;
 	}
-	if (mini->exec->pid == 0)
+	if (mini->exec->pid[mini->exec->i] == 0)
 	{
 		signal(SIGQUIT, SIG_DFL);
 		mini->exec->flag = BTRUE;

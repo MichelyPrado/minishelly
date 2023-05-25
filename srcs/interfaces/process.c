@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/25 16:54:26 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 16:58:28 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	finish_process(t_sys_config *ms, int err)
 	close_pipes_fds(ms);
 	while (i < ms->exec->i)
 	{
-		waitpid(-1, &status, 0);
+		waitpid(ms->exec->pid[i], &status, 0);
 		if (WIFEXITED(status))
 			set_status_code(WEXITSTATUS(status));
 		i++;

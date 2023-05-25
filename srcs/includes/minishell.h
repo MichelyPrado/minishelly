@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/25 16:23:25 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:34:57 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ typedef enum e_first_or_end
 typedef struct s_exec
 {
 	int				i;
-	int				pid;
+	int				*pid;
 	int				**fd;
 	t_first_or_end	flag;
 	void			*func;
@@ -341,7 +341,6 @@ t_sys_config	*start_sys(char **environ);
 void			update_unbound_vars(char *key, t_sys_config *mini);
 
 // PROCESS
-void			close_fds(t_sys_config *mini);
 void			exec(t_sys_config *mini);
 int				exec_program(t_sys_config *mini);
 
@@ -350,7 +349,6 @@ int				hash_func(char *cmd, t_keyword_map *keymap);
 
 // Wait input
 t_err			wait_input(t_sys_config *mini, int *prop, char *line);
-char			*create_prompt(int amount, ...);
 
 // PROCESS INIT
 int				turn_void(t_sys_config *mini);
@@ -377,9 +375,6 @@ int				ft_append(t_sys_config *ms);
 int				has_heredoc(t_token *t, char **env);
 void			run_here_doc(t_token *t, char **env);
 int				ft_heredoc(t_sys_config *ms);
-
-// FDS
-void			close_fds(t_sys_config *mini);
 
 void			ft_swap_token(t_token **head, t_token **current,
 					t_token **dest);

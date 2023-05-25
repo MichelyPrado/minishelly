@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 05:13:56 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/24 21:55:58 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:19:09 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,14 @@ void	run_here_doc(t_token *t, char **env)
 		read_doc = readline(LABEL_HEREDOC);
 		search_for_symbol(&read_doc, '$', env);
 		if (!read_doc)
-		{
+		{			
 			printf(MSG_HEREDOC, t->token[1]);
 			return ;
 		}
 		if (!is_the_label(&read_doc, t->token[1], &fd))
 			continue ;
+		if (read_doc)
+			free(read_doc);
 		close(fd);
 		break ;
 	}
