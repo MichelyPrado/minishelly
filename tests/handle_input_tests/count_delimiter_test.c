@@ -7,7 +7,7 @@ MU_TEST(passing_a_string_with_two_pipes_should_be_26) {
 	int				result;
 
 	// ACT
-	result = count_delimiter(str);
+	result = count_delimiter(str, 0);
 
 	// ASSERTS
 	mu_assert_int_eq(expected, result);
@@ -20,7 +20,7 @@ MU_TEST(passing_a_string_with_OP_AND_and_OP_OR_should_be_35) {
 	int				result;
 
 	// ACT
-	result = count_delimiter(str);
+	result = count_delimiter(str, 0);
 
 	// ASSERTS
 	mu_assert_int_eq(expected, result);
@@ -33,7 +33,7 @@ MU_TEST(passing_a_string_with_all_OP_with_spaces_should_be) {
 	int				result;
 
 	// ACT
-	result = count_delimiter(str);
+	result = count_delimiter(str, 0);
 
 	// ASSERTS
 	mu_assert_int_eq(expected, result);
@@ -46,7 +46,7 @@ MU_TEST(passing_a_empty_string_should_be_0) {
 	int				result;
 
 	// ACT
-	result = count_delimiter(str);
+	result = count_delimiter(str, 0);
 
 	// ASSERTS
 	mu_assert_int_eq(expected, result);
@@ -59,7 +59,7 @@ MU_TEST(passing_a_NULL_should_be_0) {
 	int				result;
 
 	// ACT
-	result = count_delimiter(str);
+	result = count_delimiter(str, 0);
 
 	// ASSERTS
 	mu_assert_int_eq(expected, result);
@@ -72,7 +72,7 @@ MU_TEST(passing_a_string_without_OP_should_be_string_len_15) {
 	int				result;
 
 	// ACT
-	result = count_delimiter(str);
+	result = count_delimiter(str, 0);
 
 	// ASSERTS
 	mu_assert_int_eq(expected, result);
@@ -85,7 +85,7 @@ MU_TEST(passing_a_string_with_open_and_close_double_quotes_should_be_23) {
 	int				result;
 
 	// ACT
-	result = count_delimiter(str);
+	result = count_delimiter(str, 0);
 
 	// ASSERTS
 	mu_assert_int_eq(expected, result);
@@ -98,7 +98,7 @@ MU_TEST(passing_a_string_with_open_and_close_simple_quotes_should_be_31) {
 	int				result;
 
 	// ACT
-	result = count_delimiter(str);
+	result = count_delimiter(str, 0);
 
 	// ASSERTS
 	mu_assert_int_eq(expected, result);
@@ -111,7 +111,7 @@ MU_TEST(passing_a_string_with_open_and_no_close_double_quotes_should_be_minus_1)
 	int				result;
 
 	// ACT
-	result = count_delimiter(str);
+	result = count_delimiter(str, 0);
 
 	// ASSERTS
 	mu_assert_int_eq(expected, result);
@@ -124,7 +124,7 @@ MU_TEST(passing_a_string_with_open_and_no_close_simple_quotes_should_be_minus_1)
 	int				result;
 
 	// ACT
-	result = count_delimiter(str);
+	result = count_delimiter(str, 0);
 
 	// ASSERTS
 	mu_assert_int_eq(expected, result);
@@ -137,7 +137,7 @@ MU_TEST(test) {
 	int				result;
 
 	// ACT
-	result = count_delimiter(str);
+	result = count_delimiter(str, 0);
 
 	// ASSERTS
 	mu_assert_int_eq(expected, result);
@@ -150,7 +150,7 @@ MU_TEST(test2) {
 	int				result;
 
 	// ACT
-	result = count_delimiter(str);
+	result = count_delimiter(str, 0);
 
 	// ASSERTS
 	mu_assert_int_eq(expected, result);

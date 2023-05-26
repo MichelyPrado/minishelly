@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:29:10 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/25 12:23:32 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 20:30:17 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	clean_for_exec(t_sys_config *mini)
 	{
 		rl_clear_history();
 		close_files_fds();
+		close_terms_fds();
 		close_pipes_fds(mini);
 		if (mini->new_parser)
 			free(mini->new_parser);
@@ -50,6 +51,8 @@ void	clean_for_exec(t_sys_config *mini)
 		ft_token_free(&mini->head);
 		mini->tokens = NULL;
 		clean_exec(&mini->exec);
+		if (mini)
+			free(mini);
 	}
 }
 
@@ -79,6 +82,8 @@ void	clean_exec(t_exec **exec)
 	{
 		if ((*exec)->fd)
 		{
+			if ((*exec)->pid)
+				free((*exec)->pid);
 			while (i < *get_num_pipes())
 				free((*exec)->fd[i++]);
 			free((*exec)->fd);
@@ -100,10 +105,4 @@ void	clean_no_exec(t_sys_config *ms)
 	if (ms->str)
 		free(ms->str);
 	ms->str = NULL;
-}
-
-void	clean_end_cmd(t_sys_config *ms)
-{
-	clean_no_exec(ms);
-	clean_exec(&ms->exec);
 }

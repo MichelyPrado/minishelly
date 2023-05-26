@@ -6,14 +6,12 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:14:22 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/16 00:46:44 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:32:22 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/* Responsável por descobrir o tamanho de caracteres
-das keys das variaveis de env */
 size_t	keylen(char *var_env)
 {
 	char	*p;
@@ -25,8 +23,6 @@ size_t	keylen(char *var_env)
 	return (p - var_env);
 }
 
-/* Está função é reponsavel por realizar os
-allocs de env*/
 char	**alloc_env(char **env, int slots)
 {
 	int		amount;
@@ -39,8 +35,6 @@ char	**alloc_env(char **env, int slots)
 	return (new_env);
 }
 
-/* valida se env está vazia e alloca um espaço
-e insere valor se sim. */
 int	env_empty(char ***env, char *key, char *value)
 {
 	if (!(*env))

@@ -6,13 +6,13 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:44:49 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/25 10:38:44 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:41:41 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int ft_ctrl_d(t_sys_config *mini)
+int	ft_ctrl_d(t_sys_config *mini)
 {
 	printf("Você saiu do Minishelly!\n");
 	rl_clear_history();

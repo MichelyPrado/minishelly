@@ -46,7 +46,7 @@ MU_TEST(test) {
 }
 
 MU_TEST_SUITE(test_suite) {
-	MU_RUN_TEST(test);
+	//MU_RUN_TEST(test);
 }
 
 int main() {

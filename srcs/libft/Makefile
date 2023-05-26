@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/01 22:44:13 by msilva-p          #+#    #+#              #
-#    Updated: 2023/04/19 13:59:18 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/25 21:15:24 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,7 @@ INC		:= -I $(INCDIR)
 NAME	:= libft.a
 
 # Regras
-all: title $(NAME) complete
+all: $(NAME)
 
 $(NAME): $(OBJS)
 	@ar rcs $(NAME) $(OBJS) ./includes/libft.h

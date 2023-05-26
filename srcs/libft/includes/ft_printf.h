@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 16:51:37 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 11:45:29 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:33:56 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,5 @@ int				match_iflags(char *flags, t_bool *f1, t_typeint **f, char c);
 int				match_xflags(char *flags, t_bool *f1, t_bool *f2, char flag);
 void			format_iflags(t_typeint **format, int size);
 void			format_xflags(t_typehex **format, int size);
+char			*create_prompt(int amount, ...);
 #endif
