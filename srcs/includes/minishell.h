@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/25 21:56:30 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 22:52:49 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,7 +318,7 @@ int				jump_quotes(char *src, t_sys_config *mini, char quote, int *j);
 
 int				add_delimiters(char symbol, int *j, char *dst, char *c);
 t_err			check_readline(char *src, t_sys_config *mini);
-int				count_delimiter(char *str);
+int				count_delimiter(char *str, int j);
 // HANDLE OPERATORS AUX
 
 char			**rm_first_item(char **array);
