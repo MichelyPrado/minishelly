@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 05:13:56 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/25 18:19:09 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 22:11:23 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	is_the_label(char **read_doc, char *file_name, int *fd)
 {
 	if (ft_strncmp(*read_doc, file_name, ft_strlen(file_name) + 1))
 	{
-		dup2(*fd, 1);
+		dup_fd_out(*fd);
 		ft_printf("%s\n", *read_doc);
 		dup2(*get_fd_bkp_out(), 1);
 		if (*read_doc)
@@ -30,14 +30,29 @@ static int	is_the_label(char **read_doc, char *file_name, int *fd)
 int	has_heredoc(t_token *t, char **env)
 {
 	int	has;
+	int	pid;
+	int	status;
 
 	has = 0;
-	while (t && t->type != OP_PIPE)
+	pid = fork();
+	wait_signal_shield();
+	if (pid == 0)
 	{
-		if (t->type == OP_UNTIL)
-			run_here_doc(t, env);
-		t = t->next;
+		wait_signal_heredoc();
+		while (t && t->type != OP_PIPE)
+		{
+			if (t->type == OP_UNTIL)
+			{
+				run_here_doc(t, env);
+			}
+			t = t->next;
+		}
+		clean_for_exec(*get_ms());
+		exit (0);
 	}
+	waitpid(pid, &status, 0);
+	WIFEXITED(status);
+	wait_signal();
 	return (has);
 }
 
@@ -48,14 +63,14 @@ void	run_here_doc(t_token *t, char **env)
 
 	read_doc = NULL;
 	fd = open(HEREDOC_FILE, \
-	O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	g_fd = 1;
-	while (g_fd)
+	while (g_fd != 0)
 	{
 		read_doc = readline(LABEL_HEREDOC);
 		search_for_symbol(&read_doc, '$', env);
 		if (!read_doc)
-		{			
+		{
 			printf(MSG_HEREDOC, t->token[1]);
 			return ;
 		}
@@ -66,8 +81,6 @@ void	run_here_doc(t_token *t, char **env)
 		close(fd);
 		break ;
 	}
-	if (g_fd)
-		return ;
 	return ;
 }
 

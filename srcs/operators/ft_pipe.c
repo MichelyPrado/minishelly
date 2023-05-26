@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:31:23 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/25 16:59:15 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 21:44:48 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	ft_pipe(t_sys_config *mini)
 {
 	t_process_func	*func;
 
-	*get_is_fork() = 1 ;
+	wait_signal_shield();
+	*get_is_fork() = 1;
 	func = (t_process_func *) mini->exec->func;
 	if (mini->tokens->next)
 	{

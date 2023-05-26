@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/25 19:42:25 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 21:56:30 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,6 +267,7 @@ void			set_status_code(int status_code);
 int				*get_is_fork(void);
 int				*get_num_pipes(void);
 void			set_num_pipes(int num);
+t_sys_config	**get_ms(void);
 
 // FILE DESCRIPTORS											(file_descriptor)
 
@@ -348,6 +349,7 @@ int				exec_program(t_sys_config *mini);
 int				hash_func(char *cmd, t_keyword_map *keymap);
 
 // Wait input
+
 t_err			wait_input(t_sys_config *mini, int *prop, char *line);
 
 // PROCESS INIT
@@ -380,8 +382,9 @@ void			ft_swap_token(t_token **head, t_token **current,
 					t_token **dest);
 
 // Signals
-void			sig_handler(int sig);
+void			wait_signal_shield(void);
 void			wait_signal(void);
+void			wait_signal_heredoc(void);
 int				ft_ctrl_d(t_sys_config *mini);
 int				is_directory(char *path);
 //######################################################################//

@@ -6,19 +6,17 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:26:30 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/24 19:19:22 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 22:28:51 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	sig_handler( int sig)
+void	sig_handler(int sig)
 {
-	printf("CAPTUROU O SINAL: %i\n", sig);
-	if (sig == SIGINT && *get_is_fork() == 0)
+	if (sig == SIGINT)
 	{
 		g_fd = 0;
-		printf("calma pora: %i\n", g_fd);
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -28,9 +26,28 @@ void	sig_handler( int sig)
 		write(1, "\n", 1);
 }
 
+void	sig_child(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+	}
+	else if (sig == SIGQUIT)
+	{
+		ft_putstr_fd("Quit (core dumped)\n", 1);
+		rl_replace_line("", 0);
+	}
+}
+
+void	wait_signal_shield(void)
+{
+	signal(SIGINT, &sig_child);
+	signal(SIGQUIT, &sig_child);
+}
+
 void	wait_signal(void)
 {
-	signal(SIGINT, NULL);
-	signal(SIGINT, sig_handler);
+	signal(SIGINT, &sig_handler);
 	signal(SIGQUIT, SIG_IGN);
 }

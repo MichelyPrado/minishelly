@@ -6,7 +6,7 @@
 #    By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/19 14:03:52 by dapaulin          #+#    #+#              #
-#    Updated: 2023/05/25 15:48:55 by dapaulin         ###   ########.fr        #
+#    Updated: 2023/05/25 22:31:32 by dapaulin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ TOOLS							=						$(addprefix $(PATH_TOOLS), \
 														ft_joinfunctions.c)
 PATH_SIGNALS					=						./signals/
 SIGNALS							=						$(addprefix $(PATH_SIGNALS), \
-														signals.c ft_ctrl_d.c)
+														signals.c ft_ctrl_d.c ft_heredoc.c)
 PATH_BUILTINS					=						./builtins/
 BUILTINS						=						$(addprefix $(PATH_BUILTINS), \
 														cd.c echo.c env.c exit.c export.c \
@@ -80,7 +80,7 @@ OBJ								=						$(SRC:%.c=%.o)
 
 
 
-all:							title $(LIBFT) $(NAME) complete
+all:							$(LIBFT) $(NAME)
 
 va:
 	valgrind -q --leak-check=full --show-leak-kinds=all --trace-children=yes \

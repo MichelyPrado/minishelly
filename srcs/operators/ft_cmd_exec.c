@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 13:49:26 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/25 16:59:08 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 21:44:42 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ int	exec_program(t_sys_config *mini)
 	int	err;
 
 	err = 0;
+	wait_signal_shield();
+	*get_is_fork() = 1;
 	if (mini->exec->flag == BFALSE)
 		mini->exec->pid[mini->exec->i] = fork();
 	if (mini->exec->pid[mini->exec->i] == 0)
 	{
-		*get_is_fork() = 1;
-		signal(SIGQUIT, SIG_DFL);
 		err = cmd_path_valid(mini->tokens->token, mini->path);
 		if (err == -1)
 		{
