@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 05:13:56 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/25 22:11:23 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 23:41:10 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ int	has_heredoc(t_token *t, char **env)
 		while (t && t->type != OP_PIPE)
 		{
 			if (t->type == OP_UNTIL)
-			{
 				run_here_doc(t, env);
-			}
 			t = t->next;
 		}
 		clean_for_exec(*get_ms());
@@ -52,6 +50,8 @@ int	has_heredoc(t_token *t, char **env)
 	}
 	waitpid(pid, &status, 0);
 	WIFEXITED(status);
+	if (WIFSIGNALED(status))
+		*get_status_code() = 128 + WTERMSIG(status);
 	wait_signal();
 	return (has);
 }

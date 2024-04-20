@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 15:38:03 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/25 21:48:59 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 23:37:20 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void	finish_process(t_sys_config *ms, int err)
 		waitpid(ms->exec->pid[i], &status, 0);
 		if (WIFEXITED(status))
 			set_status_code(WEXITSTATUS(status));
+		else if (WIFSIGNALED(status))
+			*get_status_code() = 128 + WTERMSIG(status);
 		i++;
 	}
 	wait_signal();

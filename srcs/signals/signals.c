@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 12:26:30 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/25 22:28:51 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 23:38:02 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ void	sig_child(int sig)
 	{
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
+		set_status_code(130);
 	}
 	else if (sig == SIGQUIT)
 	{
 		ft_putstr_fd("Quit (core dumped)\n", 1);
 		rl_replace_line("", 0);
+		set_status_code(131);
 	}
 }
 
