@@ -9,6 +9,10 @@
 
 # 🐚 Sobre 
 
+
+https://github.com/ThreeDP/minishelly/assets/37334813/26f3ea0b-0879-400e-ac61-54111c149b91
+
+
 Este projeto consiste em uma replica do bash, desenvolvida em linguagem C utilizando a metodologia XP com TDD. O projeto foi realizado em dupla e conta com diversas funcionalidades que tornam a experiência de uso semelhante ao bash original.
 
 ## O que é um bash?
@@ -59,6 +63,10 @@ O desenvolvimento dessa replica do bash em C teve um impacto significativo em no
 
 # Compilar o minishelly
 > Execute os seguintes comandos dentro da pasta srcs para compilar o programa e começar a utilizar.
+
+
+https://github.com/ThreeDP/minishelly/assets/37334813/af6157fd-35e9-4436-ac7b-dceb2d76a8cc
+
 
 **Dependências necessárias**
 - biblioteca readline.
