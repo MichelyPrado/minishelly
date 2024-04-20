@@ -6,14 +6,12 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 09:21:28 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/21 18:26:01 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:32:57 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/* Exclui a variavel informada caso ela
-exista em env. */
 void	ft_unset(t_sys_config *mini, char *key)
 {
 	int		i;
@@ -40,8 +38,6 @@ void	ft_unset(t_sys_config *mini, char *key)
 	mini->env = aux;
 }
 
-/* Cria uma nova variavel em env se não existir ou
-edita caso exista. */
 void	ft_export(char ***env, char *key, char *value)
 {
 	int		i;
@@ -65,8 +61,6 @@ void	ft_export(char ***env, char *key, char *value)
 	(*env)[i] = ft_strjoin(key, value);
 }
 
-/* Realiza uma busca na env pela key paramentro
-e retorna o indice. */
 ssize_t	search_envp(char **envp, char *key)
 {
 	int		i;
@@ -87,7 +81,6 @@ ssize_t	search_envp(char **envp, char *key)
 	return (-1);
 }
 
-/* Edita uma variavel que já exista em env */
 int	edit_envp(char ***env, char *key, char *new_value)
 {
 	int	i;
@@ -102,8 +95,6 @@ int	edit_envp(char ***env, char *key, char *new_value)
 	return (1);
 }
 
-/* Pega todas as variaveis de ambiente e alloca
-na struct.*/
 void	get_envp(char **envp, t_sys_config *data)
 {
 	int	i;

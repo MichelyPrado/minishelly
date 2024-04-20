@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 18:28:44 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/04/19 11:35:19 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:33:25 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,31 @@ void	format_iflags(t_typeint **format, int size)
 	}
 	(*format)->bytes -= size;
 	(*format)->bytes -= (*format)->bytes_s;
+}
+
+char	*create_prompt(int amount, ...)
+{
+	int		i;
+	char	*str;
+	char	*prompt;
+	char	*tmp;
+	va_list	ap;
+
+	i = 0;
+	tmp = NULL;
+	prompt = NULL;
+	va_start(ap, amount);
+	while (i < amount)
+	{
+		str = va_arg(ap, char *);
+		if (!str)
+			str = "";
+		prompt = ft_strjoin(tmp, str);
+		if (tmp)
+			free(tmp);
+		tmp = prompt;
+		i++;
+	}
+	va_end(ap);
+	return (prompt);
 }

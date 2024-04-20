@@ -1,42 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   num_pipes.c                                        :+:      :+:    :+:   */
+/*   ft_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/16 15:49:53 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/25 22:30:18 by dapaulin         ###   ########.fr       */
+/*   Created: 2023/05/25 22:28:29 by dapaulin          #+#    #+#             */
+/*   Updated: 2023/05/25 23:38:11 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	*get_is_fork(void)
+void	signal_break_heredoc(int signal)
 {
-	static int	num;
+	t_sys_config	*ms;
 
-	return (&num);
+	ms = *get_ms();
+	if (signal == SIGINT)
+	{
+		clean_for_exec(ms);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		rl_replace_line("", 0);
+		set_status_code(130);
+		exit(0);
+	}
 }
 
-int	*get_num_pipes(void)
+void	wait_signal_heredoc(void)
 {
-	static int	num;
-
-	return (&num);
-}
-
-void	set_num_pipes(int num)
-{
-	int	*sc;
-
-	sc = get_num_pipes();
-	*sc = num;
-}
-
-t_sys_config	**get_ms(void)
-{
-	static t_sys_config	*ms;
-
-	return (&ms);
+	signal(SIGINT, &signal_break_heredoc);
+	signal(SIGQUIT, SIG_IGN);
 }

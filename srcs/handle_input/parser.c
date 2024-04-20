@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 16:11:18 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/24 18:14:57 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 23:11:34 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_err	check_readline_aux(char *src, t_sys_config *ms)
 {
 	if (src == NULL)
 		return (ERR_NOLINE);
-	ms->nlen_parser = count_delimiter(src);
+	ms->nlen_parser = count_delimiter(src, 0);
 	if (ms->nlen_parser == -1)
 		return (ERR_QUOTES);
 	ms->new_parser = ft_calloc(sizeof(char), ms->nlen_parser + 1);
@@ -71,30 +71,37 @@ t_err	check_readline(char *src, t_sys_config *mini)
 	return (NO_ERR);
 }
 
-int	count_delimiter(char *readline)
+int	jump_quotes_aux(char *readline, int i)
 {
-	int		i;
-	int		j;
-	int		jump;
+	int	j;
+	int	jump;
 
-	i = -1;
 	j = 0;
 	jump = 0;
+	jump = check_quotes(&readline[i], DQUOTE, jump);
+	if (jump == -1)
+		return (-1);
+	j += jump;
+	jump = check_quotes(&readline[i], SQUOTE, jump);
+	if (jump == -1)
+		return (-1);
+	j += jump;
+	return (j);
+}
+
+int	count_delimiter(char *readline, int j)
+{
+	int		i;
+
+	i = -1;
 	if (readline == NULL)
 		return (0);
 	while (readline[++i])
 	{
-		jump = 0;
-		jump = check_quotes(&readline[i], DQUOTE, jump);
-		if (jump == -1)
+		if (jump_quotes_aux(readline, i) == -1)
 			return (-1);
-		i += jump;
-		jump = check_quotes(&readline[i], SQUOTE, jump);
-		if (jump == -1)
-			return (-1);
-		i += jump;
-		if (readline[i] == '|' || readline[i] == '<' \
-		|| readline[i] == '>')
+		i += jump_quotes_aux(readline, i);
+		if (readline[i] == '|' || readline[i] == '<' || readline[i] == '>')
 		{
 			if (readline[i] == '|')
 				*get_num_pipes() += 1;

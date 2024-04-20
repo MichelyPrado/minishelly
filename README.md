@@ -1,20 +1,37 @@
 <div align="center" >
   <img src="./imgs/MiniShelly-logo.png" alt="Libft" width="175" height="175">
-  <h1>&#128679; MiniShelly</h1>
-  <p>Interpretador de linha de comando em Construção</p>
 </div>
 
 ***
-
 
 [![TESTS CHECK](https://github.com/ThreeDP/minishelly/actions/workflows/tests.yml/badge.svg)](https://github.com/ThreeDP/minishelly/actions/workflows/tests.yml/badge.svg)
 [![NORM CHECK](https://github.com/ThreeDP/minishelly/actions/workflows/norm.yml/badge.svg)](https://github.com/ThreeDP/get_next_line/actions/workflows/norm.yml)
 
 # 🐚 Sobre 
-> O projeto Minishell da Escola 42 é uma tarefa que desafia os estudantes a criar um interpretador de linha de comando básico em linguagem C. O objetivo é implementar uma série de funções que permitam a execução de comandos internos (builtins) e externos, como em um shell real. Além disso, é necessário implementar recursos como redirecionamento de entrada e saída, pipes, expansão de variáveis e tratamento de sinais. O projeto tem como finalidade aprimorar habilidades em programação em linguagem C, gerenciamento de memória e trabalho com processos no sistema operacional Unix/Linux.
 
-# Funções
-> Aqui temos algumas das funções que já estão implementadas no MiniShelly.
+
+https://github.com/ThreeDP/minishelly/assets/37334813/26f3ea0b-0879-400e-ac61-54111c149b91
+
+
+Este projeto consiste em uma replica do bash, desenvolvida em linguagem C utilizando a metodologia XP com TDD. O projeto foi realizado em dupla e conta com diversas funcionalidades que tornam a experiência de uso semelhante ao bash original.
+
+## O que é um bash?
+
+O Bash é um interpretador de comandos de texto que funciona como uma interface entre o usuário e o sistema operacional. Ele permite a execução de comandos, scripts e programas de forma interativa ou automatizada. O Bash é uma ferramenta essencial para administradores de sistemas e desenvolvedores, pois facilita a execução de tarefas complexas e repetitivas.
+
+## Impacto do Projeto
+
+O desenvolvimento dessa replica do bash em C teve um impacto significativo em nosso aprendizado e habilidades como engenheiros de software. Através desse projeto, adquirimos conhecimento em linguagem C, metodologia XP, TDD e diversas funcionalidades do bash. Além disso, a prática de trabalhar em dupla nos permitiu aprimorar nossas habilidades de colaboração e comunicação.
+
+# Habilidades Adquiridas
+
+- Trabalho em equipe: desenvolvemos o projeto em dupla, o que exigiu comunicação eficaz, colaboração constante e empatia ao entender as dificuldades do outro.
+- Resolução de problemas: enfrentamos desafios durante o desenvolvimento do projeto e encontramos soluções criativas para superá-los.
+- Linguagem C: aprofundamos nosso conhecimento em C ao implementar as funcionalidades do interpretador de comandos.
+- Metodologia XP com TDD: Utilizamos a metodologia XP (Extreme Programming) com TDD (Test-Driven Development) para desenvolver o projeto, o que nos ajudou a garantir a qualidade do código e a facilitar a manutenção e evolução do software.
+
+# Funções Desenvolvidas
+> O minishelly possui a implementação das seguintes funções de um interpretador de comandos bash.
 
 - [x] Builtins
   - [x] echo -n
@@ -24,20 +41,16 @@
   - [x] pwd
   - [x] cd
   - [x] exit
-- [ ] Exec commands
-  - [x] run command
+- [X] Exec commands
   - [x] pipe
-  - [ ] operator &&
-  - [ ] operator ||
   - [X] operator >
   - [X] operator <
   - [X] operator >>
   - [X] operator <<
-  - [ ] operator *
-- [ ] Signals
-  - [ ] ctrl-C
-  - [ ] ctrl-D
-  - [ ] ctrl-\
+- [X] Signals
+  - [X] ctrl-C
+  - [X] ctrl-D
+  - [X] ctrl-\
 - [x] String parser
   - [x] expand environ var
   - [x] expand $? exit code
@@ -48,8 +61,20 @@
   - [x] prompt history
   - [x] prompt wait if there was no closing quote
 
-# Run
+# Compilar o minishelly
 > Execute os seguintes comandos dentro da pasta srcs para compilar o programa e começar a utilizar.
+
+
+https://github.com/ThreeDP/minishelly/assets/37334813/af6157fd-35e9-4436-ac7b-dceb2d76a8cc
+
+
+**Dependências necessárias**
+- biblioteca readline.
+- sistema operacional unix.
+
+```bash
+sudo apt install libreadline-dev
+```
 
 **Compilação:**
 ```bash
@@ -71,8 +96,16 @@ make re
 make re
 ```
 
-# Testing
+# Para executar os testes unitários
 > Para executar os testes execute os comandos dentro da pasta tests.
+
+**Dependências necessárias**
+- valgrind.
+- sistema operacional unix.
+
+```bash
+sudo apt install valgrind
+```
 
 **Executar todos os testes:**
 ```bash
@@ -87,54 +120,5 @@ make
 make run-test TEST_NAME=<test_obj_dir>/<test_name>
 ```
 
-### Exit Codes
-
-- EACCES (13)
-> Erro de permissão de acesso execve
-
-- ENOMEM (12)
-> Erro de alocação de momeria.
-
-### Alterações no parser
 
 
-### Refactory
-- [ ] Alter name of function correct_puts
-- [X] Ajustar a concatenação de strings
-- [ ] Terminar função heredoc
-- [ ] Corrigir bug de concatenação de comando ex: echo oi > gol carla
-- [ ] Validar linhas de entrada antes de fazer os tokens
-
-### Correct
-- [ ] Corrigir o comportamento do heredoc quando passado mais de um
-  pipe ou mais de um heredoc.
-
-```
-cat <<HERE <<DOC
-oi
-HERE
-time
-DOC
-
-cat <<HERE | ls
-oi
-HERE
-```
-- [X] command echoi da leak.
-- [X] Erro na expanção comando "echo '$USER'"$USER""
-- [X] echo hi | cat |cat|cat |cat|cat|cat|cat|cat|cat arrumar
-- [X] echo "hi" | cat | cat | cat | cat | cat | cat | cat && ctrl - d
-- [X] | - testar esse pipe.
-- [X] ls | > oi
-- [X] echo hi | grep hi > oi
-- [ ] echo "$HOME" | awk -F '/' '{ print $2 }'
-- [ ] ||||||||||||||||||||||||||||||
-# testes:
-```
-echo hi | grep hi > oi
-```close(0);
-
-- [X] sinais para processos
-- [X] terminar heredoc
-- [X] historico para comandos errados.
-- [ ] exit code

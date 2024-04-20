@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 15:47:13 by msilva-p          #+#    #+#             */
-/*   Updated: 2023/05/25 11:13:57 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 22:52:49 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ typedef enum e_first_or_end
 typedef struct s_exec
 {
 	int				i;
-	int				pid;
+	int				*pid;
 	int				**fd;
 	t_first_or_end	flag;
 	void			*func;
@@ -218,8 +218,9 @@ int				b_unset(t_sys_config *mini);
 //######################################################################//
 //############################ ENVIRON #################################//
 // CLOSE FDS
-void			close_files_fds();
-void			close_terms_fds();
+void			close_files_fds(void);
+void			close_bkp_terms_fds(void);
+void			close_terms_fds(void);
 void			close_pipes_fds(t_sys_config *mini);
 
 // ENVIRON UTILS											(envp_utils)
@@ -266,6 +267,7 @@ void			set_status_code(int status_code);
 int				*get_is_fork(void);
 int				*get_num_pipes(void);
 void			set_num_pipes(int num);
+t_sys_config	**get_ms(void);
 
 // FILE DESCRIPTORS											(file_descriptor)
 
@@ -316,7 +318,7 @@ int				jump_quotes(char *src, t_sys_config *mini, char quote, int *j);
 
 int				add_delimiters(char symbol, int *j, char *dst, char *c);
 t_err			check_readline(char *src, t_sys_config *mini);
-int				count_delimiter(char *str);
+int				count_delimiter(char *str, int j);
 // HANDLE OPERATORS AUX
 
 char			**rm_first_item(char **array);
@@ -340,7 +342,6 @@ t_sys_config	*start_sys(char **environ);
 void			update_unbound_vars(char *key, t_sys_config *mini);
 
 // PROCESS
-void			close_fds(t_sys_config *mini);
 void			exec(t_sys_config *mini);
 int				exec_program(t_sys_config *mini);
 
@@ -348,8 +349,8 @@ int				exec_program(t_sys_config *mini);
 int				hash_func(char *cmd, t_keyword_map *keymap);
 
 // Wait input
+
 t_err			wait_input(t_sys_config *mini, int *prop, char *line);
-char			*create_prompt(int amount, ...);
 
 // PROCESS INIT
 int				turn_void(t_sys_config *mini);
@@ -377,15 +378,13 @@ int				has_heredoc(t_token *t, char **env);
 void			run_here_doc(t_token *t, char **env);
 int				ft_heredoc(t_sys_config *ms);
 
-// FDS
-void			close_fds(t_sys_config *mini);
-
 void			ft_swap_token(t_token **head, t_token **current,
 					t_token **dest);
 
 // Signals
-void			sig_handler(int sig);
+void			wait_signal_shield(void);
 void			wait_signal(void);
+void			wait_signal_heredoc(void);
 int				ft_ctrl_d(t_sys_config *mini);
 int				is_directory(char *path);
 //######################################################################//
@@ -410,6 +409,7 @@ int				check_is_a_valid_var(char *var);
 // PRINT MESSAGES FUNCTIONS									(ft_print_msg)
 
 void			ft_print_err(int status_code, char *msg);
+void			ft_print_perr(int status_code, char *msg);
 // JOIN FUNCTIONS											(ft_joinfunctions.c)
 
 char			**ft_listjoin(char **ls, char **lsd);

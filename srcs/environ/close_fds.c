@@ -6,22 +6,27 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 21:26:56 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/25 11:02:36 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 19:40:12 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	close_files_fds()
+void	close_files_fds(void)
 {
 	close(*get_fd_in());
 	close(*get_fd_out());
 }
 
-void	close_terms_fds()
+void	close_bkp_terms_fds(void)
 {
 	close(*get_fd_bkp_in());
 	close(*get_fd_bkp_out());
+}
+
+void	close_terms_fds(void)
+{
+	close_bkp_terms_fds();
 	close(0);
 	close(1);
 }

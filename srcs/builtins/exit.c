@@ -6,7 +6,7 @@
 /*   By: dapaulin <dapaulin@student.42sp.org.br     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 18:12:28 by dapaulin          #+#    #+#             */
-/*   Updated: 2023/05/21 13:47:09 by dapaulin         ###   ########.fr       */
+/*   Updated: 2023/05/25 18:30:10 by dapaulin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ int	ft_exit(t_sys_config *mini)
 			if (!(ft_strlen(mini->tokens->token[1]) > 19))
 			{
 				err = 2;
-				ft_print_err(2, " numeric argument required");
+				ft_print_err(2, " numeric argument required\n");
 			}
 		}
 	}
 	else
-		ft_print_err(1, " too many arguments");
+		ft_print_err(1, " too many arguments\n");
 	clean_sys(mini);
 	exit(err);
 }
